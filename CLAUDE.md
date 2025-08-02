@@ -7,20 +7,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Mini-Claude is an educational AI chatbot project that demonstrates modern AI development practices through Test-Driven Development (TDD). The project has evolved into a full-stack application featuring:
 
 - **Production-ready web application** (Next.js + TypeScript)
-- **Real-time AI chat interface** with Anthropic Claude integration
+- **Real-time AI chat interface** with Google Gemini integration
+- **Voice synthesis capability** with ElevenLabs integration (in progress)
 - **Scalable database architecture** (Neon PostgreSQL)
+- **Claude Code hook system** for agent-specific context loading
 - **Complete TDD test coverage** (>95% coverage maintained)
 - **Cloud deployment** ready for Vercel
 - **Educational learning path** for transformer architecture and LoRA fine-tuning
+
+**GitHub Repository**: https://github.com/ScientiaCapital/mini-claude-project
 
 ## Current Project State (Completed ✅)
 
 ### Phase 1: TDD Foundation & Infrastructure
 - ✅ Complete Next.js application with TypeScript
 - ✅ Neon PostgreSQL database with full schema
-- ✅ Anthropic Claude API integration
-- ✅ Comprehensive test suite (API, Database, Components)
+- ✅ Google Gemini API integration (replaced Anthropic)
+- ✅ Claude Code hook system for agent-specific context
+- ✅ Comprehensive test suite (API, Database, Components, Hooks)
 - ✅ Production deployment configuration
+- ✅ GitHub repository setup and CI/CD
 - ✅ HuggingFace CLI integration for model management
 
 ### Phase 2: Core Functionality  
@@ -138,6 +144,82 @@ huggingface-cli scan-cache
 huggingface-cli upload username/mini-claude-lora ./outputs/checkpoint-final
 ```
 
+## Claude Code Hook System
+
+### Agent-Specific Context Loading
+
+The project implements a sophisticated Claude Code hook system that provides agent-specific context and knowledge preservation. This enables specialized agents to work effectively within their domain expertise.
+
+#### Hook Configuration
+Located in `.claude/settings.json`:
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-task-context.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": ".claude/hooks/post-agent-update.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/validate-agent-work.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### Specialized Agent Types
+
+1. **neon-database-architect**: Database schema optimization and query performance
+2. **vercel-deployment-specialist**: Production deployment and CI/CD management
+3. **security-auditor-expert**: API security audits and vulnerability assessment
+4. **api-integration-specialist**: Google Gemini and ElevenLabs integration
+5. **nextjs-performance-optimizer**: Performance optimization and Core Web Vitals
+6. **project-docs-curator**: Documentation maintenance and learning materials
+
+#### Hook Workflow
+
+1. **Pre-Task Context Loading** (`pre-task-context.sh`):
+   - Detects agent type from Task tool parameters
+   - Loads agent-specific context and best practices
+   - Provides relevant architectural information
+   - Shares current project state and constraints
+
+2. **Post-Task Knowledge Update** (`post-agent-update.sh`):
+   - Saves agent-specific learnings and solutions
+   - Updates knowledge base with successful patterns
+   - Creates agent-specific documentation artifacts
+
+3. **Work Validation** (`validate-agent-work.sh`):
+   - Runs agent-specific validation checks
+   - Verifies deployment health, security, or performance
+   - Ensures quality standards are maintained
+
+### Hook System Benefits
+
+- **Contextual Awareness**: Each agent has immediate access to relevant project information
+- **Knowledge Preservation**: Successful patterns and solutions are automatically captured
+- **Quality Assurance**: Automatic validation ensures consistent standards
+- **Specialization**: Agents can focus on their domain without losing project context
+- **Learning Continuity**: Knowledge persists across coding sessions
+
 ## Architecture Overview
 
 ### Current Production Stack
@@ -160,11 +242,12 @@ huggingface-cli upload username/mini-claude-lora ./outputs/checkpoint-final
    - `messages` table - Individual messages with full history
    - Optimized indexes for performance
 
-4. **AI Integration**: Anthropic Claude API
-   - Model: claude-3-sonnet-20240229
+4. **AI Integration**: Google Gemini + ElevenLabs
+   - Primary Model: gemini-1.5-flash
+   - Voice Synthesis: ElevenLabs API (in progress)
    - Conversation context maintained
    - Error handling and rate limiting
-   - Response streaming support
+   - Audio response generation capability
 
 5. **Deployment**: Vercel + GitHub Integration
    - Automatic deployments from main branch
@@ -206,19 +289,23 @@ mini-claude-project/
    - Model versioning and A/B testing
 
 2. **Advanced Features** (Weeks 7-12)
-   - Voice synthesis integration (ElevenLabs)
+   - ✅ Voice synthesis integration (ElevenLabs) - In Progress
+   - ✅ Claude Code hook system for agent specialization
    - Multi-modal support (images, documents)
    - RAG integration for knowledge base
    - Real-time streaming responses
+   - Agent-specific knowledge preservation
 
 ## Key Technical Decisions
 
 ### Current Architecture Decisions
 1. **Next.js over Python**: Better for production deployment and scalability
-2. **Anthropic Claude over Local Models**: Higher quality responses, lower infrastructure costs
-3. **Neon PostgreSQL**: Serverless, auto-scaling database with excellent Vercel integration
-4. **TypeScript**: Type safety for production reliability
-5. **TDD Philosophy**: Every feature implemented tests-first for reliability
+2. **Google Gemini over Local Models**: High quality responses, competitive pricing
+3. **ElevenLabs for Voice Synthesis**: Professional voice quality and API reliability
+4. **Neon PostgreSQL**: Serverless, auto-scaling database with excellent Vercel integration
+5. **TypeScript**: Type safety for production reliability
+6. **Claude Code Hook System**: Agent-specific context loading and knowledge preservation
+7. **TDD Philosophy**: Every feature implemented tests-first for reliability
 
 ### Future Learning Decisions  
 1. **LoRA over Full Fine-tuning**: Parameter efficiency for educational constraints
@@ -353,5 +440,61 @@ npm run build         # Must build successfully
 - **Weeks 5-6**: LoRA fine-tuning integration
 - **Weeks 7-8**: Advanced AI features
 - **Weeks 9-12**: Production optimization
+
+## ElevenLabs Voice Synthesis Integration
+
+### Current Implementation Status
+
+The project is actively integrating ElevenLabs voice synthesis to provide audio responses alongside text chat. This enables a more natural conversational experience.
+
+#### Integration Progress
+
+✅ **Completed**:
+- Infrastructure setup for voice synthesis API calls
+- Chat API route prepared with voice_enabled parameter
+- Database schema supports voice preferences
+- Testing framework includes voice synthesis test cases
+
+🔄 **In Progress**:
+- ElevenLabs API integration in `/api/chat` route
+- Audio file generation and storage (Vercel Blob or CDN)
+- Voice selection and customization options
+- Real-time audio streaming capability
+
+📋 **Planned**:
+- Voice preference persistence per user
+- Audio caching for improved performance
+- Multiple voice options and customization
+- Voice synthesis optimization for cost and latency
+
+#### Technical Implementation
+
+```typescript
+// Voice synthesis will be integrated in the chat API
+interface VoiceSynthesisRequest {
+  text: string
+  voice_id: string
+  voice_settings?: {
+    stability: number
+    similarity_boost: number
+  }
+}
+
+// Response will include audio URL
+interface ChatResponse {
+  reply: string
+  message_id: string
+  conversation_id: string
+  audio_url?: string // ElevenLabs generated audio
+}
+```
+
+#### Next Steps
+
+1. **Complete ElevenLabs API integration** - Add voice synthesis to chat responses
+2. **Implement audio storage** - Use Vercel Blob for audio file hosting
+3. **Add voice selection UI** - Allow users to choose preferred voices
+4. **Optimize performance** - Implement audio caching and streaming
+5. **Add comprehensive testing** - Ensure voice synthesis works reliably
 
 Follow the detailed learning progression in **ProjectTasks.md** for educational components.

@@ -7,16 +7,168 @@ This document captures the technical context, architectural decisions, and engin
 ## Current Implementation Status (Updated)
 
 ### ✅ **Production Architecture Completed**
-**Stack**: Next.js 14 + TypeScript + Neon PostgreSQL + Anthropic Claude + Vercel
+**Stack**: Next.js 14 + TypeScript + Neon PostgreSQL + Google Gemini + ElevenLabs + Vercel
 
 **Key Engineering Decisions Made:**
 1. **Next.js over Python Flask/FastAPI**: Better TypeScript integration, Vercel deployment
-2. **Anthropic Claude over local models**: Higher quality, lower infrastructure complexity
-3. **Neon PostgreSQL over SQLite**: Serverless scaling, better production reliability
-4. **TDD-first development**: 95%+ test coverage maintained throughout
+2. **Google Gemini over Anthropic/local models**: Competitive pricing, high quality responses, Google ecosystem integration
+3. **ElevenLabs for voice synthesis**: Professional voice quality, extensive voice library, reliable API
+4. **Neon PostgreSQL over SQLite**: Serverless scaling, better production reliability
+5. **Claude Code hook system**: Agent-specific context loading and knowledge preservation
+6. **TDD-first development**: 95%+ test coverage maintained throughout
 
-### 🔄 **Future Learning Components** 
-Educational transformer implementation and LoRA fine-tuning remain planned for deep learning understanding.
+### 🔄 **Current Development Focus**
+- **Voice synthesis integration**: ElevenLabs API integration in progress
+- **Agent specialization**: Claude Code hook system enables domain-specific agents
+- **Future learning components**: Transformer implementation and LoRA fine-tuning remain planned for deep learning understanding
+
+## Claude Code Hook System Architecture
+
+### Agent Context Loading Pattern
+
+The project implements a sophisticated agent context system that loads specialized knowledge based on the agent type being invoked. This enables domain-specific expertise while maintaining project coherence.
+
+#### Agent Classification System
+
+```typescript
+interface AgentContext {
+  subagent_type: 'neon-database-architect' | 
+                 'vercel-deployment-specialist' | 
+                 'security-auditor-expert' | 
+                 'api-integration-specialist' | 
+                 'nextjs-performance-optimizer' | 
+                 'project-docs-curator'
+  required_context: string[]
+  memory_focus: string[]
+  documentation_responsibilities: string[]
+}
+```
+
+#### Context Loading Pipeline
+
+1. **Pre-Task Hook Execution**:
+   ```bash
+   # .claude/hooks/pre-task-context.sh
+   AGENT_TYPE=$(echo "$INPUT" | jq -r '.params.subagent_type // empty')
+   load_context_for_agent "$AGENT_TYPE"
+   ```
+
+2. **Agent-Specific Context Injection**:
+   - **Database Architect**: Schema patterns, query optimization, Neon-specific features
+   - **Deployment Specialist**: Vercel configuration, environment variables, CI/CD patterns
+   - **Security Auditor**: Security best practices, vulnerability patterns, compliance requirements
+   - **API Integration**: Google Gemini patterns, ElevenLabs configuration, rate limiting
+   - **Performance Optimizer**: Core Web Vitals, bundle optimization, Next.js performance patterns
+   - **Documentation Curator**: Learning progression, documentation standards, knowledge gaps
+
+3. **Knowledge Preservation Pipeline**:
+   ```bash
+   # .claude/hooks/post-agent-update.sh
+   save_agent_knowledge "$AGENT_TYPE" "$TASK_OUTPUT" "$SOLUTION_PATTERNS"
+   update_documentation_artifacts "$AGENT_TYPE"
+   ```
+
+### Agent-Specific Context Requirements
+
+#### Database Architect Context
+- Current Neon PostgreSQL schema and relationships
+- Query performance optimization patterns
+- Connection pooling and serverless database best practices
+- Data migration and versioning strategies
+
+#### Deployment Specialist Context  
+- Vercel deployment configuration and environment management
+- CI/CD pipeline status and optimization opportunities
+- Performance monitoring and alerting setup
+- Deployment rollback and recovery procedures
+
+#### Security Auditor Context
+- API key management and rotation policies
+- OWASP security checklist compliance
+- Vulnerability assessment results and remediation
+- Data privacy and compliance requirements
+
+#### API Integration Specialist Context
+- Google Gemini API configuration and best practices
+- ElevenLabs voice synthesis integration patterns
+- Rate limiting and error handling strategies
+- API cost optimization and usage monitoring
+
+#### Performance Optimizer Context
+- Current Core Web Vitals scores and trends
+- Bundle analysis and code splitting opportunities
+- Image optimization and CDN configuration
+- Runtime performance profiling results
+
+#### Documentation Curator Context
+- Learning milestone progress and gaps
+- Documentation quality standards and templates
+- User feedback and knowledge transfer requirements
+- Educational content effectiveness metrics
+
+### Hook System Implementation
+
+#### Settings Configuration
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-task-context.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task", 
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/post-agent-update.sh"
+          },
+          {
+            "type": "command", 
+            "command": ".claude/hooks/validate-agent-work.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### Knowledge Persistence Structure
+```
+.claude/
+├── knowledge/
+│   ├── agents/
+│   │   ├── neon-database-architect/
+│   │   │   ├── successful-patterns.md
+│   │   │   ├── optimization-history.json
+│   │   │   └── troubleshooting-guide.md
+│   │   ├── vercel-deployment-specialist/
+│   │   │   ├── deployment-patterns.md
+│   │   │   ├── environment-config.json
+│   │   │   └── performance-metrics.json
+│   │   └── ...
+│   └── shared/
+│       ├── architecture-decisions.md
+│       ├── tdd-patterns.md
+│       └── integration-patterns.md
+```
+
+### Benefits of Agent Specialization
+
+1. **Contextual Expertise**: Each agent loads only relevant knowledge for their domain
+2. **Knowledge Continuity**: Successful patterns are preserved across sessions
+3. **Quality Assurance**: Agent-specific validation ensures domain standards
+4. **Learning Amplification**: Specialized context accelerates problem-solving
+5. **Documentation Automation**: Agent work automatically updates relevant documentation
 
 ## Transformer Architecture Context
 
@@ -103,8 +255,24 @@ Alpaca-style JSON format for compatibility:
 
 ## Model Selection Rationale
 
-### MVP Model: DialoGPT-medium
-**Why DialoGPT-medium?**
+### Production Model: Google Gemini 1.5 Flash
+**Why Google Gemini?**
+- High-quality responses with competitive pricing
+- Excellent conversation context handling
+- Fast response times suitable for real-time chat
+- Strong instruction following capabilities
+- Google ecosystem integration benefits
+
+### Voice Synthesis: ElevenLabs
+**Why ElevenLabs?**
+- Professional voice quality with natural speech patterns
+- Extensive voice library with customization options
+- Reliable API with good documentation
+- Real-time voice synthesis capabilities
+- Competitive pricing for production use
+
+### MVP Model: DialoGPT-medium (Educational)
+**Why DialoGPT-medium for learning?**
 - Pre-trained on conversational data (147M Reddit conversations)
 - Optimal size for learning (345M parameters)
 - Runs on CPU with acceptable latency (<2s)
@@ -200,13 +368,21 @@ lobehub/lobe-chat
 ```
 
 ### API Design
-RESTful API with WebSocket support:
+RESTful API with voice synthesis support:
 ```
-POST /chat/completions      # OpenAI-compatible
-WS   /chat/stream          # Real-time streaming
-GET  /models               # Available models
-POST /fine-tune            # Trigger LoRA training
+POST /api/chat             # Google Gemini chat with optional voice synthesis
+GET  /api/health           # System health monitoring
+POST /api/voice/synthesize # ElevenLabs voice generation (planned)
+GET  /api/voice/voices     # Available voice options (planned)
+WS   /chat/stream          # Real-time streaming (planned)
+POST /fine-tune            # LoRA training (educational)
 ```
+
+#### Current API Implementation
+- **Primary Chat Endpoint**: `/api/chat` - Google Gemini integration with conversation persistence
+- **Voice Synthesis**: ElevenLabs integration in progress for audio response generation
+- **Health Monitoring**: Production-ready health checks for deployment monitoring
+- **Database Integration**: Neon PostgreSQL for conversation history and user management
 
 ## Technical Constraints
 
