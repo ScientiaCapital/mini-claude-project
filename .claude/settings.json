@@ -1,0 +1,54 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-task-context.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/post-agent-update.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/validate-agent-work.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[HOOK] User prompt received, checking project context...'"
+          }
+        ]
+      }
+    ]
+  },
+  "tools": {
+    "allowed": "*",
+    "confirmBeforeUse": {
+      "Bash": false,
+      "Edit": false,
+      "Write": false,
+      "Task": false
+    }
+  },
+  "memory": {
+    "enabled": true,
+    "autoSave": true
+  }
+}

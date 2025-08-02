@@ -1,0 +1,65 @@
+{
+  "name": "Pre-Task Context Review Hook",
+  "version": "1.0.0",
+  "description": "Ensures every agent starts with complete project context",
+  "execution_order": [
+    {
+      "step": 1,
+      "action": "read_core_docs",
+      "description": "Load essential project documentation",
+      "required_files": [
+        "CLAUDE.md",
+        "ProjectContextEngineering.md", 
+        "ProjectTasks.md"
+      ],
+      "failure_action": "abort_task"
+    },
+    {
+      "step": 2,
+      "action": "search_memory", 
+      "description": "Review current architecture knowledge",
+      "search_terms": [
+        "NEON database schema and connection",
+        "Vercel deployment configuration",
+        "Current tech stack (Next.js + TypeScript)",
+        "Google Gemini + ElevenLabs integration",
+        "TDD testing patterns",
+        "Production environment status"
+      ],
+      "failure_action": "continue_with_warning"
+    },
+    {
+      "step": 3,
+      "action": "check_context7",
+      "description": "Get latest library documentation if needed",
+      "conditions": {
+        "if_task_involves": [
+          "external libraries",
+          "API integrations", 
+          "new frameworks",
+          "deployment tools"
+        ]
+      },
+      "failure_action": "continue_with_warning"
+    },
+    {
+      "step": 4,
+      "action": "synthesize_context",
+      "description": "Combine all information before starting task",
+      "outputs": [
+        "current_project_state",
+        "relevant_architecture_details",
+        "applicable_patterns_and_solutions",
+        "potential_blockers_or_dependencies"
+      ],
+      "failure_action": "request_clarification"
+    }
+  ],
+  "success_criteria": [
+    "All core documentation read and understood",
+    "Current architecture knowledge retrieved",
+    "Task context fully synthesized",
+    "Ready to proceed with full project awareness"
+  ],
+  "estimated_execution_time": "30-60 seconds"
+}

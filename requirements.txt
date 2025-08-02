@@ -1,0 +1,42 @@
+# Core dependencies for Mini-Claude
+# Following TDD - pytest is our first requirement!
+
+# Testing (TDD essentials)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-timeout>=2.1.0
+pytest-asyncio>=0.21.0
+
+# ML/AI Core
+torch>=2.0.0
+transformers>=4.36.0
+datasets>=2.14.0
+accelerate>=0.25.0
+
+# LoRA and Fine-tuning
+peft>=0.7.0
+bitsandbytes>=0.41.0
+
+# Web Interface
+gradio>=4.0.0
+fastapi>=0.104.0
+uvicorn>=0.24.0
+websockets>=12.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Development tools
+black>=23.0.0
+ruff>=0.1.0
+mypy>=1.7.0
+
+# Experiment tracking (optional)
+# wandb>=0.16.0
+
+# Jupyter for notebooks
+jupyterlab>=4.0.0
+ipywidgets>=8.1.0

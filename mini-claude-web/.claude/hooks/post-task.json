@@ -1,0 +1,82 @@
+{
+  "name": "Post-Task Knowledge Updates Hook",
+  "version": "1.0.0", 
+  "description": "Preserves learnings and updates project knowledge base",
+  "execution_order": [
+    {
+      "step": 1,
+      "action": "update_memory",
+      "description": "Create entities and observations for new learnings",
+      "capture_types": [
+        "successful_implementation_patterns",
+        "error_solutions_and_fixes",
+        "performance_improvements_discovered",
+        "architectural_decisions_made",
+        "library_integration_lessons",
+        "deployment_configuration_changes"
+      ],
+      "memory_categories": [
+        "technical_solutions",
+        "project_architecture", 
+        "debugging_patterns",
+        "performance_optimizations",
+        "security_best_practices"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "check_documentation",
+      "description": "Flag if core docs need updates",
+      "review_files": [
+        "CLAUDE.md",
+        "ProjectContextEngineering.md",
+        "ProjectTasks.md",
+        "README.md",
+        "DEPLOYMENT.md"
+      ],
+      "flag_conditions": [
+        "new_architecture_components_added",
+        "deployment_process_changed", 
+        "testing_patterns_updated",
+        "api_integrations_modified",
+        "performance_targets_achieved"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "preserve_knowledge",
+      "description": "Record successful patterns and solutions",
+      "knowledge_types": [
+        "code_patterns_that_worked",
+        "debugging_techniques_used",
+        "integration_approaches_successful",
+        "test_strategies_effective",
+        "deployment_configurations_stable"
+      ],
+      "format": "structured_observations_with_context"
+    },
+    {
+      "step": 4,
+      "action": "update_project_context",
+      "description": "Refresh architecture knowledge for next task",
+      "update_areas": [
+        "current_system_state",
+        "working_configurations",
+        "known_limitations",
+        "optimization_opportunities",
+        "next_logical_improvements"
+      ]
+    }
+  ],
+  "success_criteria": [
+    "All new learnings captured in memory",
+    "Documentation update flags set appropriately", 
+    "Successful patterns preserved for reuse",
+    "Project context refreshed for team consistency"
+  ],
+  "integration_with_team": {
+    "share_learnings": true,
+    "update_collective_knowledge": true,
+    "maintain_consistency": true
+  }
+}

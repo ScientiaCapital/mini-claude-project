@@ -1,0 +1,129 @@
+{
+  "agent_context_requirements": {
+    "fullstack-tdd-engineer": {
+      "role": "Comprehensive fullstack development with TDD practices",
+      "required_context": [
+        "current_tech_stack_details",
+        "tdd_patterns_and_principles", 
+        "test_coverage_requirements",
+        "api_integration_patterns",
+        "database_schema_and_operations",
+        "deployment_configurations"
+      ],
+      "memory_focus": [
+        "successful_tdd_implementations",
+        "effective_testing_strategies",
+        "clean_architecture_patterns",
+        "performance_optimization_techniques"
+      ],
+      "documentation_responsibilities": [
+        "code_quality_standards",
+        "testing_documentation", 
+        "api_documentation",
+        "architecture_decision_records"
+      ]
+    },
+    "error-fix-specialist": {
+      "role": "Systematic debugging and issue resolution",
+      "required_context": [
+        "known_issues_and_solutions",
+        "debugging_patterns_and_tools",
+        "error_logs_and_patterns",
+        "system_dependencies_and_versions",
+        "deployment_troubleshooting_guides"
+      ],
+      "memory_focus": [
+        "error_patterns_and_solutions",
+        "debugging_methodologies",
+        "root_cause_analysis_techniques",
+        "preventive_measures_implemented"
+      ],
+      "documentation_responsibilities": [
+        "troubleshooting_guides",
+        "known_issues_documentation",
+        "debugging_methodology_updates"
+      ]
+    },
+    "project-docs-curator": {
+      "role": "Documentation maintenance and learning materials",
+      "required_context": [
+        "documentation_current_state",
+        "learning_milestone_progress",
+        "project_evolution_history",
+        "user_learning_objectives",
+        "documentation_quality_standards"
+      ],
+      "memory_focus": [
+        "documentation_improvement_patterns",
+        "effective_learning_material_structures",
+        "user_feedback_on_documentation",
+        "knowledge_gap_identification"
+      ],
+      "documentation_responsibilities": [
+        "maintaining_core_project_docs",
+        "creating_learning_materials",
+        "updating_progress_tracking",
+        "ensuring_documentation_accuracy"
+      ]
+    },
+    "security-audit-specialist": {
+      "role": "API security and production safety",
+      "required_context": [
+        "current_api_key_management",
+        "security_best_practices",
+        "vulnerability_assessment_results",
+        "production_environment_security",
+        "compliance_requirements"
+      ],
+      "memory_focus": [
+        "security_vulnerability_patterns",
+        "effective_security_implementations",
+        "audit_findings_and_resolutions",
+        "security_best_practice_updates"
+      ],
+      "documentation_responsibilities": [
+        "security_audit_reports",
+        "security_best_practices_documentation",
+        "compliance_tracking_updates"
+      ]
+    },
+    "nextjs-speed-optimizer": {
+      "role": "Performance and deployment optimization",
+      "required_context": [
+        "current_performance_metrics",
+        "deployment_pipeline_status",
+        "optimization_opportunities",
+        "user_experience_requirements",
+        "resource_usage_patterns"
+      ],
+      "memory_focus": [
+        "successful_optimization_techniques",
+        "performance_improvement_patterns",
+        "deployment_efficiency_gains",
+        "user_experience_enhancements"
+      ],
+      "documentation_responsibilities": [
+        "performance_benchmarking_reports",
+        "optimization_strategy_documentation",
+        "deployment_best_practices_updates"
+      ]
+    }
+  },
+  "shared_context_requirements": {
+    "all_agents": [
+      "current_project_architecture",
+      "neon_database_configuration",
+      "vercel_deployment_status",
+      "google_gemini_integration",
+      "elevenlabs_voice_integration",
+      "tdd_philosophy_and_practices"
+    ]
+  },
+  "context_refresh_triggers": [
+    "major_architecture_changes",
+    "new_api_integrations",
+    "deployment_configuration_updates",
+    "security_policy_changes",
+    "performance_requirement_changes"
+  ]
+}

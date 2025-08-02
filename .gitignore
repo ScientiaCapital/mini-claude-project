@@ -1,0 +1,71 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.production
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Next.js
+.next/
+out/
+.vercel
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.npm
+.eslintcache
+.cache
+.pytest_cache/
+
+# Production
+/build
+
+# Claude Code
+.claude/knowledge/agents/*/
+.claude/knowledge/shared/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Models (large files)
+models/
+*.bin
+*.safetensors
+*.ckpt
+
+# Cloned repositories
+resources/repos/
