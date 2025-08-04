@@ -23,20 +23,23 @@ This document captures the technical context, architectural decisions, and engin
 - **API health monitoring standardization**: Google Gemini and ElevenLabs integration validation
 - **Environment variable security**: Complete migration from development to production keys
 - **TypeScript strict mode compliance**: Zero compilation errors with enhanced type safety
+- **MCP server integration**: context7 (vector search) and sequential-thinking (enhanced reasoning) now active
 
 ### 🔄 **Current Development Focus**
 - **Voice synthesis integration**: ElevenLabs API integration in progress
-- **Agent specialization**: Claude Code hook system enables domain-specific agents
+- **Agent specialization**: Claude Code hook system enhanced with MCP server capabilities
+- **Semantic memory optimization**: Leveraging context7 vector database for knowledge retrieval
+- **Enhanced reasoning patterns**: Using sequential-thinking for better problem-solving
 - **Production monitoring**: Real-time health checks and performance tracking
 - **Educational ML components**: Transformer implementation and LoRA fine-tuning ready for deep learning exploration
 
-## Claude Code Hook System Architecture
+## Claude Code Hook System Architecture with MCP Enhancement
 
-### Agent Context Loading Pattern
+### Agent Context Loading Pattern with Semantic Memory
 
-The project implements a sophisticated agent context system that loads specialized knowledge based on the agent type being invoked. This enables domain-specific expertise while maintaining project coherence.
+The project implements a sophisticated agent context system enhanced by MCP servers that provide semantic search, vector-based memory, and structured reasoning capabilities. This enables domain-specific expertise while maintaining project coherence and leveraging historical knowledge patterns.
 
-#### Agent Classification System
+#### Enhanced Agent Classification System with MCP Integration
 
 ```typescript
 interface AgentContext {
@@ -49,29 +52,69 @@ interface AgentContext {
   required_context: string[]
   memory_focus: string[]
   documentation_responsibilities: string[]
+  // NEW: MCP-enhanced capabilities
+  semantic_search_domains: string[]
+  reasoning_patterns: string[]
+  vector_memory_tags: string[]
 }
 ```
 
-#### Context Loading Pipeline
+#### MCP Server Architecture
 
-1. **Pre-Task Hook Execution**:
+**context7 - Vector Database Integration:**
+- **Purpose**: Semantic search and persistent memory
+- **Technology**: Upstash vector database with embedding storage
+- **Capabilities**: 
+  - Store agent learnings as vector embeddings
+  - Retrieve contextually similar past solutions
+  - Cross-agent knowledge sharing through semantic similarity
+  - Persistent memory across development sessions
+
+**sequential-thinking - Enhanced Reasoning:**
+- **Purpose**: Structured problem-solving and decision-making
+- **Technology**: Multi-step reasoning engine with chain-of-thought processing
+- **Capabilities**:
+  - Break complex problems into structured steps
+  - Validate reasoning chains for completeness
+  - Generate consistent documentation patterns
+  - Improve architectural decision-making quality
+
+#### Enhanced Context Loading Pipeline with MCP Integration
+
+1. **Pre-Task Hook Execution with MCP Enhancement**:
    ```bash
    # .claude/hooks/pre-task-context.sh
    AGENT_TYPE=$(echo "$INPUT" | jq -r '.params.subagent_type // empty')
+   
+   # NEW: Query vector database for similar past solutions
+   query_context7_memory "$AGENT_TYPE" "$TASK_DESCRIPTION"
+   
+   # NEW: Use structured reasoning to prepare context
+   prepare_sequential_context "$AGENT_TYPE" "$TASK_CONTEXT"
+   
+   # Load traditional context
    load_context_for_agent "$AGENT_TYPE"
    ```
 
-2. **Agent-Specific Context Injection**:
-   - **Database Architect**: Schema patterns, query optimization, Neon-specific features
-   - **Deployment Specialist**: Vercel configuration, environment variables, CI/CD patterns
-   - **Security Auditor**: Security best practices, vulnerability patterns, compliance requirements
-   - **API Integration**: Google Gemini patterns, ElevenLabs configuration, rate limiting
-   - **Performance Optimizer**: Core Web Vitals, bundle optimization, Next.js performance patterns
-   - **Documentation Curator**: Learning progression, documentation standards, knowledge gaps
+2. **Enhanced Agent-Specific Context Injection**:
+   - **Database Architect**: Schema patterns, query optimization, Neon-specific features (+ semantic search for similar schemas)
+   - **Deployment Specialist**: Vercel configuration, environment variables, CI/CD patterns (+ structured deployment reasoning)
+   - **Security Auditor**: Security best practices, vulnerability patterns, compliance requirements (+ historical security patterns)
+   - **API Integration**: Google Gemini patterns, ElevenLabs configuration, rate limiting (+ sequential integration planning)
+   - **Performance Optimizer**: Core Web Vitals, bundle optimization, Next.js performance patterns (+ performance history analysis) 
+   - **Documentation Curator**: Learning progression, documentation standards, knowledge gaps (+ semantic similarity for content organization)
 
-3. **Knowledge Preservation Pipeline**:
+3. **Enhanced Knowledge Preservation Pipeline**:
    ```bash
    # .claude/hooks/post-agent-update.sh
+   
+   # NEW: Store in vector database with embeddings
+   store_in_context7 "$AGENT_TYPE" "$TASK_OUTPUT" "$SOLUTION_PATTERNS"
+   
+   # NEW: Structure knowledge with sequential reasoning
+   structure_knowledge_sequential "$AGENT_TYPE" "$LEARNINGS"
+   
+   # Traditional storage
    save_agent_knowledge "$AGENT_TYPE" "$TASK_OUTPUT" "$SOLUTION_PATTERNS"
    update_documentation_artifacts "$AGENT_TYPE"
    ```
@@ -170,13 +213,18 @@ interface AgentContext {
 │       └── integration-patterns.md
 ```
 
-### Benefits of Agent Specialization
+### Enhanced Benefits of Agent Specialization with MCP Integration
 
-1. **Contextual Expertise**: Each agent loads only relevant knowledge for their domain
-2. **Knowledge Continuity**: Successful patterns are preserved across sessions
-3. **Quality Assurance**: Agent-specific validation ensures domain standards
-4. **Learning Amplification**: Specialized context accelerates problem-solving
-5. **Documentation Automation**: Agent work automatically updates relevant documentation
+1. **Contextual Expertise**: Each agent loads only relevant knowledge for their domain, enhanced by semantic search
+2. **Semantic Knowledge Discovery**: Find relevant solutions even when exact keywords don't match
+3. **Structured Problem-Solving**: Sequential reasoning ensures comprehensive solution development
+4. **Knowledge Continuity**: Successful patterns are preserved across sessions with vector embeddings
+5. **Cross-Agent Learning**: Semantic similarity enables knowledge sharing between different agent types
+6. **Quality Assurance**: Agent-specific validation ensures domain standards with historical pattern matching
+7. **Learning Amplification**: Specialized context accelerates problem-solving with similar solution retrieval
+8. **Documentation Automation**: Agent work automatically updates relevant documentation with semantic indexing
+9. **Persistent Memory**: Vector database maintains knowledge across development sessions and projects
+10. **Enhanced Reasoning**: Multi-step validation ensures solution completeness and architectural coherence
 
 ## Transformer Architecture Context
 
