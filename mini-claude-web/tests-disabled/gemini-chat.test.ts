@@ -5,6 +5,7 @@
  */
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { NextRequest } from 'next/server'
+import type { MockSqlFunction } from '../types/mocks'
 
 describe('POST /api/chat with Google Gemini', () => {
   beforeEach(() => {
@@ -35,7 +36,8 @@ describe('POST /api/chat with Google Gemini', () => {
     }))
 
     // Mock database operations
-    const mockSql = jest.fn()
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql
       .mockResolvedValueOnce([{ id: 'conv_123' }]) // Create conversation
       .mockResolvedValueOnce([]) // Get history (empty)
       .mockResolvedValueOnce([{ id: 'msg_user_123' }]) // Save user message
@@ -94,7 +96,8 @@ describe('POST /api/chat with Google Gemini', () => {
       { role: 'assistant', content: 'Hi there!' }
     ]
 
-    const mockSql = jest.fn()
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql
       .mockResolvedValueOnce(mockHistory) // Get conversation history
       .mockResolvedValueOnce([{ id: 'msg_user_123' }]) // Save user message
       .mockResolvedValueOnce([{ id: 'msg_assistant_123' }]) // Save assistant message
@@ -136,8 +139,8 @@ describe('POST /api/chat with Google Gemini', () => {
       }))
     }))
 
-    const mockSql = jest.fn()
-      .mockResolvedValueOnce([]) // Get history (empty)
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql.mockResolvedValueOnce([]) // Get history (empty)
 
     jest.doMock('@/lib/database', () => ({
       getNeonConnection: jest.fn().mockResolvedValue(mockSql)
@@ -178,8 +181,8 @@ describe('POST /api/chat with Google Gemini', () => {
       GoogleGenerativeAI: mockGoogleGenerativeAI
     }))
 
-    const mockSql = jest.fn()
-      .mockResolvedValueOnce([]) // Get history
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql.mockResolvedValueOnce([]) // Get history
       .mockResolvedValueOnce([{ id: 'msg_user' }]) // Save user message
       .mockResolvedValueOnce([{ id: 'msg_assistant' }]) // Save assistant message
       .mockResolvedValueOnce([]) // Update conversation
@@ -218,8 +221,8 @@ describe('POST /api/chat with Google Gemini', () => {
       }))
     }))
 
-    const mockSql = jest.fn()
-      .mockResolvedValueOnce([]) // Get history
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql.mockResolvedValueOnce([]) // Get history
       .mockResolvedValueOnce([{ id: 'msg_user' }]) // Save user message
       .mockResolvedValueOnce([{ id: 'msg_assistant' }]) // Save assistant message
       .mockResolvedValueOnce([]) // Update conversation
@@ -263,8 +266,8 @@ describe('POST /api/chat with Google Gemini', () => {
       }))
     }))
 
-    const mockSql = jest.fn()
-      .mockResolvedValueOnce([]) // Get history
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql.mockResolvedValueOnce([]) // Get history
       .mockResolvedValueOnce([{ id: 'msg_user_456' }]) // Save user message
       .mockResolvedValueOnce([{ id: 'msg_assistant_789' }]) // Save assistant message
       .mockResolvedValueOnce([]) // Update conversation

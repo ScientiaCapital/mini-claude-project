@@ -1,0 +1,430 @@
+{
+  "sessionId": "test-session_1754324761004",
+  "agentType": "test-session",
+  "startTime": "2025-08-04T16:26:01.004Z",
+  "toolCalls": [
+    {
+      "tool": "test-session_1754324761004",
+      "parameters": {
+        "tool": "Write",
+        "params": {
+          "file_path": "test.js",
+          "content": "test"
+        },
+        "timestamp": 1754324761293
+      },
+      "timestamp": "2025-08-04T16:26:01.293Z",
+      "success": true
+    }
+  ],
+  "gitSnapshotBefore": {
+    "hash": "57d37e8ff7ccbf74bfecd0f6a45bb7de142064be",
+    "status": " M CLAUDE.md\n M ProjectContextEngineering.md\n M ProjectTasks.md\n M mini-claude-web/.claude/agents/context-requirements.json\n M mini-claude-web/.claude/hooks/post-agent-update.sh\n M mini-claude-web/.claude/hooks/pre-task-context.sh\n M mini-claude-web/.claude/hooks/validate-agent-work.sh\n M mini-claude-web/.claude/settings.json\n M mini-claude-web/package.json\n M mini-claude-web/src/app/api/chat/route.ts\n M mini-claude-web/src/app/api/health/route.ts\n M mini-claude-web/tests/api/chat.test.ts\n M mini-claude-web/tsconfig.tsbuildinfo\n M src/__init__.py\n?? .claude/guardrails/\n?? .github/\n?? DELIVERABLES_SUMMARY.md\n?? data/\n?? demo_lora_efficiency.py\n?? demo_pipeline.py\n?? docs/implementation_roadmap_tdd.md\n?? docs/learning_priority_queue.md\n?? docs/research_analysis_2025.md\n?? mini-claude-web/.claude/knowledge/\n?? mini-claude-web/docs/\n?? mini-claude-web/scripts/\n?? mini-claude-web/src/app/api/monitoring/\n?? mini-claude-web/src/app/monitoring/\n?? mini-claude-web/src/components/\n?? mini-claude-web/src/config/\n?? mini-claude-web/src/lib/circuit-breaker.ts\n?? mini-claude-web/src/lib/monitoring.ts\n?? mini-claude-web/src/middleware.ts\n?? mini-claude-web/tests/api/monitoring.test.ts\n?? mini-claude-web/tests/lib/monitoring.test.ts\n?? mini-claude-web/vercel.json\n?? src/data/\n?? src/ml/\n?? test_basic_lora.py\n?? tests/data/\n?? tests/integration/\n?? tests/ml/\n?? tests/test_experiment_tracking.py\n?? tests/test_github_workflow.py\n?? tests/test_lora.py\n?? vercel.json\n",
+    "timestamp": "2025-08-04T16:26:01.035Z",
+    "stage": "before"
+  },
+  "fileStateBefore": {
+    "/Users/tmk/projects/mini-claude-project/.claude/agents/context-requirements.json": {
+      "size": 4148,
+      "mtime": "2025-08-02T16:55:20.991Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/GUARDRAIL_VALIDATION_REPORT.md": {
+      "size": 10951,
+      "mtime": "2025-08-02T19:49:39.622Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/checkpoint-manager.js": {
+      "size": 17553,
+      "mtime": "2025-08-02T19:23:27.145Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/execution-monitor.js": {
+      "size": 21990,
+      "mtime": "2025-08-02T19:17:42.469Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/logs/integration-test_1754164097350.json": {
+      "size": 40751,
+      "mtime": "2025-08-02T19:48:17.505Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/logs/integration-test_1754164097350_verification.json": {
+      "size": 2436,
+      "mtime": "2025-08-02T19:48:17.520Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/pre-commit-hook.js": {
+      "size": 13671,
+      "mtime": "2025-08-02T19:50:43.558Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/reliability-data.json": {
+      "size": 32581,
+      "mtime": "2025-08-02T19:48:17.520Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/reliability-tracker.js": {
+      "size": 18798,
+      "mtime": "2025-08-02T19:21:07.852Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-data/component-test-report.json": {
+      "size": 1590,
+      "mtime": "2025-08-02T19:48:16.920Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-data/comprehensive-validation-report.json": {
+      "size": 11248,
+      "mtime": "2025-08-02T19:48:17.522Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-data/precommit-blocking-test-report.json": {
+      "size": 2231,
+      "mtime": "2025-08-02T19:48:17.180Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-data/reliability-scoring-test-report.json": {
+      "size": 3806,
+      "mtime": "2025-08-02T19:48:17.229Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-data/validation-summary.json": {
+      "size": 141,
+      "mtime": "2025-08-02T19:48:17.522Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-guardrail-components.js": {
+      "size": 16536,
+      "mtime": "2025-08-02T19:41:51.005Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-guardrail-system.js": {
+      "size": 21073,
+      "mtime": "2025-08-04T16:25:49.211Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-phantom-scenarios.js": {
+      "size": 28051,
+      "mtime": "2025-08-02T19:38:20.394Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-precommit-phantom-blocking.js": {
+      "size": 20332,
+      "mtime": "2025-08-02T19:43:44.114Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-reliability-scoring.js": {
+      "size": 23742,
+      "mtime": "2025-08-02T19:45:35.169Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/test-runner.js": {
+      "size": 23512,
+      "mtime": "2025-08-02T19:47:45.847Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/guardrails/verify-agent.js": {
+      "size": 25547,
+      "mtime": "2025-08-02T19:19:36.675Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/hooks/post-agent-update.sh": {
+      "size": 4781,
+      "mtime": "2025-08-02T17:18:45.743Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/hooks/post-task.json": {
+      "size": 2448,
+      "mtime": "2025-08-02T16:55:00.234Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/hooks/pre-task-context.sh": {
+      "size": 3667,
+      "mtime": "2025-08-02T17:18:00.290Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/hooks/pre-task.json": {
+      "size": 1937,
+      "mtime": "2025-08-02T16:54:44.545Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/hooks/validate-agent-work.sh": {
+      "size": 3530,
+      "mtime": "2025-08-02T17:19:11.369Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/knowledge/agents/project-docs-curator/docs_update_20250802_115949.json": {
+      "size": 299,
+      "mtime": "2025-08-02T17:59:49.298Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/settings.json": {
+      "size": 1026,
+      "mtime": "2025-08-02T17:17:30.967Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/.claude/settings.local.json": {
+      "size": 2281,
+      "mtime": "2025-08-04T15:54:58.751Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/CLAUDE.md": {
+      "size": 21040,
+      "mtime": "2025-08-02T18:49:00.464Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/DELIVERABLES_SUMMARY.md": {
+      "size": 6021,
+      "mtime": "2025-08-02T18:41:05.290Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/ProjectContextEngineering.md": {
+      "size": 17092,
+      "mtime": "2025-08-02T18:48:17.405Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/ProjectTasks.md": {
+      "size": 28849,
+      "mtime": "2025-08-02T18:46:55.184Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/README.md": {
+      "size": 3183,
+      "mtime": "2025-08-02T14:38:35.465Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/processed/demo_final.json": {
+      "size": 31109,
+      "mtime": "2025-08-02T19:10:15.296Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/processed/demo_final_train.json": {
+      "size": 15499,
+      "mtime": "2025-08-02T19:10:15.296Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/processed/demo_final_val.json": {
+      "size": 6511,
+      "mtime": "2025-08-02T19:10:15.297Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/processed/processed_dataset.json": {
+      "size": 28788,
+      "mtime": "2025-08-02T18:41:31.370Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/processed/processed_dataset_train.json": {
+      "size": 14944,
+      "mtime": "2025-08-02T18:41:31.370Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/processed/processed_dataset_val.json": {
+      "size": 6634,
+      "mtime": "2025-08-02T18:41:31.371Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/synthetic/balanced_dataset_10.json": {
+      "size": 9800,
+      "mtime": "2025-08-02T18:39:43.370Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/synthetic/conversational_sample_15.json": {
+      "size": 13867,
+      "mtime": "2025-08-02T18:39:43.370Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/synthetic/demo_balanced.json": {
+      "size": 12395,
+      "mtime": "2025-08-02T19:10:15.285Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/data/synthetic/demo_conversational.json": {
+      "size": 16188,
+      "mtime": "2025-08-02T19:10:15.285Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/demo_lora_efficiency.py": {
+      "size": 8937,
+      "mtime": "2025-08-02T18:38:46.958Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/demo_pipeline.py": {
+      "size": 5496,
+      "mtime": "2025-08-02T18:42:32.520Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/docs/huggingface_cli_guide.md": {
+      "size": 4641,
+      "mtime": "2025-08-02T14:37:06.619Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/docs/implementation_roadmap_tdd.md": {
+      "size": 27371,
+      "mtime": "2025-08-02T18:27:52.893Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/docs/learning_priority_queue.md": {
+      "size": 9119,
+      "mtime": "2025-08-02T18:25:45.551Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/docs/research_analysis_2025.md": {
+      "size": 5352,
+      "mtime": "2025-08-02T18:24:50.707Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/agents/context-requirements.json": {
+      "size": 2536,
+      "mtime": "2025-08-04T16:23:16.195Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/hooks/post-agent-update.sh": {
+      "size": 1491,
+      "mtime": "2025-08-04T16:23:40.544Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/hooks/post-task.json": {
+      "size": 2448,
+      "mtime": "2025-08-02T17:47:29.043Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/hooks/pre-task-context.sh": {
+      "size": 1720,
+      "mtime": "2025-08-04T16:23:28.786Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/hooks/pre-task.json": {
+      "size": 1937,
+      "mtime": "2025-08-02T17:47:29.043Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/hooks/validate-agent-work.sh": {
+      "size": 4460,
+      "mtime": "2025-08-04T16:24:04.069Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/hooks.log": {
+      "size": 303,
+      "mtime": "2025-08-04T16:25:59.427Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/knowledge/test-agent/entry_20250804_102559.json": {
+      "size": 218,
+      "mtime": "2025-08-04T16:25:59.417Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/knowledge/test-agent/knowledge.json": {
+      "size": 277,
+      "mtime": "2025-08-04T16:25:59.422Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/settings.json": {
+      "size": 566,
+      "mtime": "2025-08-04T16:23:01.617Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/settings.local.json": {
+      "size": 1082,
+      "mtime": "2025-08-02T17:47:29.048Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.claude/validation.log": {
+      "size": 89,
+      "mtime": "2025-08-04T16:26:01.001Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.env.example": {
+      "size": 471,
+      "mtime": "2025-08-02T15:07:53.320Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.env.local": {
+      "size": 543,
+      "mtime": "2025-08-02T16:18:46.696Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.env.test": {
+      "size": 269,
+      "mtime": "2025-08-02T15:10:21.704Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.vercel/README.txt": {
+      "size": 520,
+      "mtime": "2025-08-02T16:00:18.686Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/.vercel/project.json": {
+      "size": 120,
+      "mtime": "2025-08-02T16:00:18.686Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/DEPLOYMENT.md": {
+      "size": 7346,
+      "mtime": "2025-08-02T15:12:12.279Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/README.md": {
+      "size": 5018,
+      "mtime": "2025-08-02T15:11:09.484Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/docs/monitoring-operations.md": {
+      "size": 6560,
+      "mtime": "2025-08-04T16:20:01.000Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/jest.config.js": {
+      "size": 927,
+      "mtime": "2025-08-02T15:05:38.255Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/jest.setup.js": {
+      "size": 1426,
+      "mtime": "2025-08-02T17:31:53.637Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/next-env.d.ts": {
+      "size": 201,
+      "mtime": "2025-08-02T15:58:20.480Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/next.config.js": {
+      "size": 696,
+      "mtime": "2025-08-02T15:07:28.105Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/package-lock.json": {
+      "size": 400058,
+      "mtime": "2025-08-02T17:44:45.481Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/package.json": {
+      "size": 2040,
+      "mtime": "2025-08-04T16:20:42.828Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/postcss.config.js": {
+      "size": 81,
+      "mtime": "2025-08-02T15:10:13.023Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/scripts/monitor-health.ts": {
+      "size": 4913,
+      "mtime": "2025-08-04T16:19:23.355Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/api/chat/route.ts": {
+      "size": 7489,
+      "mtime": "2025-08-04T16:18:51.233Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/api/health/route.ts": {
+      "size": 3104,
+      "mtime": "2025-08-04T16:15:39.599Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/api/monitoring/alerts/route.ts": {
+      "size": 2744,
+      "mtime": "2025-08-04T16:15:10.631Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/api/monitoring/dashboard/route.ts": {
+      "size": 2073,
+      "mtime": "2025-08-04T16:14:54.089Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/api/monitoring/metrics/route.ts": {
+      "size": 2808,
+      "mtime": "2025-08-04T16:14:38.493Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/globals.css": {
+      "size": 528,
+      "mtime": "2025-08-02T15:09:30.373Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/layout.tsx": {
+      "size": 1297,
+      "mtime": "2025-08-02T15:09:19.844Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/monitoring/page.tsx": {
+      "size": 9207,
+      "mtime": "2025-08-04T16:17:49.624Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/app/page.tsx": {
+      "size": 5539,
+      "mtime": "2025-08-02T15:09:55.637Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/components/ui/Card.tsx": {
+      "size": 383,
+      "mtime": "2025-08-04T16:17:56.117Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/config/monitoring.config.ts": {
+      "size": 2950,
+      "mtime": "2025-08-04T16:21:02.730Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/lib/circuit-breaker.ts": {
+      "size": 2733,
+      "mtime": "2025-08-04T16:18:29.711Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/lib/database.ts": {
+      "size": 6270,
+      "mtime": "2025-08-02T17:36:47.742Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/lib/monitoring.ts": {
+      "size": 20592,
+      "mtime": "2025-08-04T16:13:43.675Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/src/middleware.ts": {
+      "size": 1599,
+      "mtime": "2025-08-04T16:18:08.672Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/tailwind.config.js": {
+      "size": 348,
+      "mtime": "2025-08-02T15:10:05.474Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/tests/api/chat.test.ts": {
+      "size": 21608,
+      "mtime": "2025-08-02T19:11:01.916Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/tests/api/elevenlabs-voice.test.ts": {
+      "size": 12580,
+      "mtime": "2025-08-02T17:45:26.423Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/tests/api/gemini-chat.test.ts": {
+      "size": 10271,
+      "mtime": "2025-08-02T17:21:30.600Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/tests/api/gemini-integration.test.ts": {
+      "size": 4397,
+      "mtime": "2025-08-02T17:33:09.544Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/tests/api/monitoring.test.ts": {
+      "size": 5760,
+      "mtime": "2025-08-04T16:14:19.780Z"
+    },
+    "/Users/tmk/projects/mini-claude-project/mini-claude-web/tests/database/connection.test.ts": {
+      "size": 2967,
+      "mtime": "2025-08-02T15:06:11.294Z"
+    }
+  },
+  "claims": [],
+  "verificationStatus": "pending"
+}

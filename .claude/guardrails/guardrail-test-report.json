@@ -1,0 +1,109 @@
+{
+  "timestamp": "2025-08-04T16:30:57.044Z",
+  "tests": [
+    {
+      "name": "Hook Directory Structure",
+      "startTime": 1754325057046,
+      "status": "PASSED",
+      "message": "All hook directories and files exist",
+      "duration": 0
+    },
+    {
+      "name": "Pre-Task Context Loading",
+      "startTime": 1754325057046,
+      "status": "PASSED",
+      "message": "Pre-task context loading works for all agent types",
+      "duration": 27
+    },
+    {
+      "name": "Post-Task Knowledge Preservation",
+      "startTime": 1754325057073,
+      "status": "PASSED",
+      "message": "Knowledge preservation system functional",
+      "duration": 17
+    },
+    {
+      "name": "Agent Work Validation",
+      "startTime": 1754325057090,
+      "status": "PASSED",
+      "message": "Work validation system operational",
+      "duration": 8
+    },
+    {
+      "name": "Verify Agent Component",
+      "startTime": 1754325057098,
+      "status": "PASSED",
+      "message": "Agent verification component functional",
+      "duration": 3
+    },
+    {
+      "name": "Execution Monitor Component",
+      "startTime": 1754325057101,
+      "status": "PASSED",
+      "message": "Execution monitor tracking correctly",
+      "duration": 84
+    },
+    {
+      "name": "Reliability Tracker Component",
+      "startTime": 1754325057185,
+      "status": "PASSED",
+      "message": "Reliability tracking functional",
+      "duration": 3
+    },
+    {
+      "name": "Phantom File Creation Detection",
+      "startTime": 1754325057188,
+      "status": "PASSED",
+      "message": "Detected 1 phantom actions",
+      "duration": 0
+    },
+    {
+      "name": "Subtle Phantom Work Detection",
+      "startTime": 1754325057188,
+      "status": "PASSED",
+      "message": "Subtle phantom work detected correctly",
+      "duration": 0
+    },
+    {
+      "name": "Legitimate Work Validation",
+      "startTime": 1754325057188,
+      "status": "PASSED",
+      "message": "Legitimate work validated correctly",
+      "duration": 0
+    },
+    {
+      "name": "Hook-Guardrail Integration",
+      "startTime": 1754325057188,
+      "status": "PASSED",
+      "message": "Hook and guardrail systems integrated successfully",
+      "duration": 70
+    },
+    {
+      "name": "Monitoring System Integration",
+      "startTime": 1754325057258,
+      "status": "PASSED",
+      "message": "Monitoring system integrated with guardrails",
+      "duration": 0
+    },
+    {
+      "name": "Failure Recovery Procedures",
+      "startTime": 1754325057258,
+      "status": "PASSED",
+      "message": "Recovery procedures functional",
+      "duration": 661
+    },
+    {
+      "name": "Health Dashboard Creation",
+      "startTime": 1754325057919,
+      "status": "PASSED",
+      "message": "Health dashboard created successfully",
+      "duration": 0
+    }
+  ],
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "warnings": 0
+  }
+}

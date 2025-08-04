@@ -29,13 +29,15 @@ describe('Environment Configuration', () => {
 
   test('API keys have correct format', () => {
     const anthropicKey = process.env.ANTHROPIC_API_KEY
-    expect(anthropicKey).toMatch(/^[a-zA-Z0-9-_]+$/)
-    expect(anthropicKey.length).toBeGreaterThan(10)
+    expect(anthropicKey).toBeDefined()
+    expect(anthropicKey!).toMatch(/^[a-zA-Z0-9-_]+$/)
+    expect(anthropicKey!.length).toBeGreaterThan(10)
   })
 
   test('NextAuth secret is sufficiently complex', () => {
     const secret = process.env.NEXTAUTH_SECRET
-    expect(secret.length).toBeGreaterThanOrEqual(32)
+    expect(secret).toBeDefined()
+    expect(secret!.length).toBeGreaterThanOrEqual(32)
   })
 
   test('optional environment variables have defaults', () => {
@@ -68,7 +70,8 @@ describe('Development Environment', () => {
 describe('Configuration Validation', () => {
   test('should validate database connection string components', () => {
     const dbUrl = process.env.NEON_DATABASE_URL
-    const url = new URL(dbUrl)
+    expect(dbUrl).toBeDefined()
+    const url = new URL(dbUrl!)
     
     expect(url.protocol).toBe('postgresql:')
     expect(url.hostname).toBeDefined()
@@ -83,9 +86,11 @@ describe('Configuration Validation', () => {
       ANTHROPIC_API_KEY: /^[a-zA-Z0-9-_]+$/,
     }
     
-    Object.entries(keys).forEach(([envVar, pattern]) => {
+    Object.entries(keys).forEach((entry) => {
+      const [envVar, pattern] = entry
       const value = process.env[envVar]
-      expect(value).toMatch(pattern, `${envVar} should match expected pattern`)
+      expect(value).toBeDefined()
+      expect(value!).toMatch(pattern)
     })
   })
 })

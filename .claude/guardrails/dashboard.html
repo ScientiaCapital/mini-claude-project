@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guardrail System Health Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: #333; color: white; padding: 20px; border-radius: 8px; }
+        .component { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .status { display: inline-block; padding: 4px 12px; border-radius: 4px; font-weight: bold; }
+        .status.operational { background: #4CAF50; color: white; }
+        .status.warning { background: #ff9800; color: white; }
+        .status.error { background: #f44336; color: white; }
+        .metric { display: inline-block; margin: 10px 20px 10px 0; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #333; }
+        .metric-label { font-size: 14px; color: #666; }
+        h2 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .timestamp { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Guardrail System Health Dashboard</h1>
+            <div class="timestamp">Last Updated: 2025-08-04T16:30:57.919Z</div>
+        </div>
+        
+        <div class="component">
+            <h2>Hook System</h2>
+            <div class="status operational">operational</div>
+            <div style="margin-top: 20px;">
+                <div class="metric">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">Pre-Task Hooks</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">Post-Task Hooks</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">Validation Hooks</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="component">
+            <h2>Guardrail Components</h2>
+            <div class="status operational">operational</div>
+            <ul>
+                <li>verifyAgent: <strong>active</strong></li><li>executionMonitor: <strong>active</strong></li><li>reliabilityTracker: <strong>active</strong></li><li>checkpointManager: <strong>active</strong></li>
+            </ul>
+        </div>
+        
+        <div class="component">
+            <h2>Phantom Work Detection</h2>
+            <div class="status operational">operational</div>
+            <div style="margin-top: 20px;">
+                <div class="metric">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">Last 24 Hours</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">Last Week</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">Total Detections</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="component">
+            <h2>System Reliability</h2>
+            <div class="metric">
+                <div class="metric-value">100%</div>
+                <div class="metric-label">Overall Score</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-refresh every 30 seconds
+        setTimeout(() => location.reload(), 30000);
+    </script>
+</body>
+</html>

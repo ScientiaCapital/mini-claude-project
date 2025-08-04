@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-08-02T19:48:17.520Z",
+  "success": false,
+  "successRate": 0.4,
+  "criticalIssues": 2,
+  "readyForProduction": false
+}

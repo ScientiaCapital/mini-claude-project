@@ -3,6 +3,7 @@
  * Tests for the voice synthesis module that handles ElevenLabs integration
  */
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
+import type { MockSqlFunction } from '../types/mocks'
 
 // Mock ElevenLabs SDK
 jest.mock('@elevenlabs/elevenlabs-js', () => ({
@@ -20,7 +21,7 @@ describe('Voice Synthesis Utility', () => {
     const { synthesizeVoice } = await import('@/lib/voice-synthesis')
     
     const mockAudioBuffer = Buffer.from('mock-audio-data')
-    const mockConvert = jest.fn().mockResolvedValue(mockAudioBuffer)
+    const mockConvert = jest.fn().mockResolvedValue(mockAudioBuffer) as jest.Mock
     
     jest.doMock('@elevenlabs/elevenlabs-js', () => ({
       ElevenLabs: jest.fn(() => ({
@@ -49,7 +50,7 @@ describe('Voice Synthesis Utility', () => {
   test('synthesizeVoice should use default voice when not specified', async () => {
     const { synthesizeVoice } = await import('@/lib/voice-synthesis')
     
-    const mockConvert = jest.fn().mockResolvedValue(Buffer.from('audio'))
+    const mockConvert = jest.fn().mockResolvedValue(Buffer.from('audio')) as jest.Mock
     
     jest.doMock('@elevenlabs/elevenlabs-js', () => ({
       ElevenLabs: jest.fn(() => ({
@@ -73,7 +74,7 @@ describe('Voice Synthesis Utility', () => {
   test('synthesizeVoice should handle API errors gracefully', async () => {
     const { synthesizeVoice } = await import('@/lib/voice-synthesis')
     
-    const mockConvert = jest.fn().mockRejectedValue(new Error('API rate limit exceeded'))
+    const mockConvert = jest.fn().mockRejectedValue(new Error('API rate limit exceeded')) as jest.Mock
     
     jest.doMock('@elevenlabs/elevenlabs-js', () => ({
       ElevenLabs: jest.fn(() => ({
@@ -145,7 +146,7 @@ describe('Voice Synthesis Utility', () => {
     
     // Mock storage failure
     jest.doMock('@/lib/audio-storage', () => ({
-      uploadAudio: jest.fn().mockRejectedValue(new Error('Storage error'))
+      uploadAudio: jest.fn().mockRejectedValue(new Error('Storage error')) as jest.Mock
     }))
 
     const audioBuffer = Buffer.from('test-audio-data')

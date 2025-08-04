@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd mini-claude-web && npm run build",
+  "outputDirectory": "mini-claude-web/.next",
+  "installCommand": "cd mini-claude-web && npm install",
+  "devCommand": "cd mini-claude-web && npm run dev",
+  "framework": "nextjs",
+  "rootDirectory": "mini-claude-web"
+}

@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-08-02T19:48:17.179Z",
+  "summary": {
+    "totalTests": 4,
+    "passedTests": 2,
+    "failedTests": 2
+  },
+  "results": [
+    {
+      "scenario": "Phantom Work Blocking",
+      "phantomSessionId": "test-phantom-agent_1754164096978",
+      "expected": "Pre-commit should block phantom work",
+      "actual": "ALLOWED",
+      "passed": false,
+      "details": {
+        "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+      }
+    },
+    {
+      "scenario": "Legitimate Work Allowing",
+      "sessionId": "test-legitimate-agent_1754164097023",
+      "expected": "Pre-commit should allow legitimate work",
+      "actual": "ALLOWED",
+      "passed": true,
+      "details": {
+        "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+      }
+    },
+    {
+      "scenario": "Mixed Scenario Handling",
+      "sessions": [
+        "test-mixed-phantom-agent_1754164097079",
+        "test-mixed-legitimate-agent_1754164097080"
+      ],
+      "expected": "Pre-commit should block when any phantom work is present",
+      "actual": "ALLOWED",
+      "passed": false,
+      "details": {
+        "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+      }
+    },
+    {
+      "scenario": "No Recent Sessions",
+      "expected": "Pre-commit should allow when no recent sessions exist",
+      "actual": "ALLOWED",
+      "passed": true,
+      "details": {
+        "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+      }
+    }
+  ]
+}

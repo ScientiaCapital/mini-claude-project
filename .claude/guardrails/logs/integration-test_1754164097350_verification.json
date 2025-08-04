@@ -1,0 +1,73 @@
+{
+  "sessionInfo": {
+    "agentType": "integration-test",
+    "taskDescription": "Test data flow",
+    "duration": "0m 0s",
+    "toolCallsCount": 1,
+    "claimsCount": 1,
+    "hasWriteToolCalls": false
+  },
+  "phantomWorkCheck": {
+    "detected": false,
+    "count": 0,
+    "riskLevel": "LOW",
+    "phantoms": []
+  },
+  "fileVerification": {
+    "expectedCount": 0,
+    "existingCount": 0,
+    "missingCount": 0,
+    "emptyCount": 0,
+    "successRate": 1,
+    "files": [],
+    "missingFiles": [],
+    "emptyFiles": []
+  },
+  "testVerification": {
+    "skipped": true,
+    "reason": "Tests skipped by user option"
+  },
+  "buildVerification": {
+    "skipped": true,
+    "reason": "Build verification skipped by user option"
+  },
+  "gitVerification": {
+    "hasUncommittedChanges": true,
+    "untrackedFiles": [
+      ".claude/guardrails/",
+      ".github/",
+      "DELIVERABLES_SUMMARY.md",
+      "data/",
+      "demo_lora_efficiency.py",
+      "demo_pipeline.py",
+      "docs/implementation_roadmap_tdd.md",
+      "docs/learning_priority_queue.md",
+      "docs/research_analysis_2025.md",
+      "src/data/",
+      "src/ml/",
+      "test_basic_lora.py",
+      "tests/data/",
+      "tests/ml/",
+      "tests/test_experiment_tracking.py",
+      "tests/test_github_workflow.py",
+      "tests/test_lora.py"
+    ],
+    "modifiedFiles": [
+      "CLAUDE.md",
+      "ProjectContextEngineering.md",
+      "ProjectTasks.md",
+      "mini-claude-web/.claude/agents/context-requirements.json",
+      "mini-claude-web/package.json",
+      "mini-claude-web/tests/api/chat.test.ts",
+      "mini-claude-web/tsconfig.tsbuildinfo",
+      "src/__init__.py"
+    ],
+    "totalChanges": 25,
+    "status": " M CLAUDE.md\n M ProjectContextEngineering.md\n M ProjectTasks.md\n M mini-claude-web/.claude/agents/context-requirements.json\n M mini-claude-web/package.json\n M mini-claude-web/tests/api/chat.test.ts\n M mini-claude-web/tsconfig.tsbuildinfo\n M src/__init__.py\n?? .claude/guardrails/\n?? .github/\n?? DELIVERABLES_SUMMARY.md\n?? data/\n?? demo_lora_efficiency.py\n?? demo_pipeline.py\n?? docs/implementation_roadmap_tdd.md\n?? docs/learning_priority_queue.md\n?? docs/research_analysis_2025.md\n?? src/data/\n?? src/ml/\n?? test_basic_lora.py\n?? tests/data/\n?? tests/ml/\n?? tests/test_experiment_tracking.py\n?? tests/test_github_workflow.py\n?? tests/test_lora.py\n"
+  },
+  "overall": {
+    "score": 1,
+    "status": "PASS",
+    "issues": []
+  }
+}
