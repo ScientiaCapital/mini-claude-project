@@ -49,7 +49,7 @@ describe('Database Schema Validation', () => {
       expect(schema).toBeDefined()
       expect(schema.exists).toBe(true)
     }
-  })
+  }, 30000) // Increased timeout for NEON database operations
 
   test('conversations table has correct columns', async () => {
     const schema = await getTableSchema('conversations')
@@ -65,7 +65,7 @@ describe('Database Schema Validation', () => {
     expectedColumns.forEach(column => {
       expect(schema.columns).toContain(column)
     })
-  })
+  }, 30000) // Increased timeout for NEON database operations
 
   test('messages table has correct columns and types', async () => {
     const schema = await getTableSchema('messages')
@@ -75,25 +75,31 @@ describe('Database Schema Validation', () => {
       conversation_id: 'uuid',
       role: 'text',
       content: 'text',
-      created_at: 'timestamptz'
+      created_at: ['timestamptz', 'timestamp with time zone'] // PostgreSQL can return either
     }
     
-    Object.entries(expectedColumns).forEach(([column, type]) => {
-      expect(schema.columns).toHaveProperty(column)
-      expect(schema.columnTypes[column]).toBe(type)
+    Object.entries(expectedColumns).forEach(([column, expectedType]) => {
+      expect(schema.columns).toContain(column)
+      
+      if (Array.isArray(expectedType)) {
+        // For timestamp columns, accept either format
+        expect(expectedType).toContain(schema.columnTypes[column])
+      } else {
+        expect(schema.columnTypes[column]).toBe(expectedType)
+      }
     })
-  })
+  }, 30000) // Increase timeout for database operations
 
   test('messages table has proper foreign key constraints', async () => {
     const schema = await getTableSchema('messages')
     
     expect(schema.foreignKeys).toContain('conversation_id')
     expect(schema.constraints.conversation_id.references).toBe('conversations.id')
-  })
+  }, 30000) // Increased timeout for NEON database operations
 
   test('users table has unique constraint on email', async () => {
     const schema = await getTableSchema('users')
     
     expect(schema.constraints.email.unique).toBe(true)
-  })
+  }, 30000) // Increased timeout for NEON database operations
 })
