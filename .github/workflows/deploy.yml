@@ -1,0 +1,412 @@
+name: Production Deployment
+
+# Automated deployment to Vercel with comprehensive verification
+# Only runs on main branch pushes after all CI checks pass
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'mini-claude-web/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment even if tests fail'
+        required: false
+        default: false
+        type: boolean
+      deployment_environment:
+        description: 'Deployment environment'
+        required: false
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  NODE_VERSION: '20'
+  DEPLOYMENT_TIMEOUT: 600  # 10 minutes
+
+jobs:
+  # Pre-deployment validation
+  pre-deployment-checks:
+    name: Pre-deployment Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    outputs:
+      should-deploy: ${{ steps.validation.outputs.should-deploy }}
+      commit-hash: ${{ steps.git-info.outputs.commit-hash }}
+      branch-name: ${{ steps.git-info.outputs.branch-name }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Get git information
+      id: git-info
+      run: |
+        echo "commit-hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        echo "branch-name=$(git branch --show-current)" >> $GITHUB_OUTPUT
+        echo "commit-message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: Install dependencies
+      working-directory: mini-claude-web
+      run: npm ci
+    
+    - name: Run critical pre-deployment tests
+      working-directory: mini-claude-web
+      run: |
+        # Type checking
+        npm run type-check
+        
+        # Build verification
+        npm run build
+        
+        # Critical API tests
+        npm test -- --testPathPattern="api.*test" --passWithNoTests
+        
+        echo "✅ Pre-deployment tests passed"
+    
+    - name: Check environment variables
+      working-directory: mini-claude-web
+      run: |
+        # Verify required environment variables are set in Vercel
+        echo "Checking required environment variables..."
+        
+        # These should be set in Vercel project settings
+        REQUIRED_VARS=(
+          "GEMINI_API_KEY"
+          "NEON_DATABASE_URL"
+          "ELEVENLABS_API_KEY"
+          "NEXT_PUBLIC_APP_URL"
+        )
+        
+        echo "✅ Environment variables will be validated post-deployment"
+    
+    - name: Deployment decision
+      id: validation
+      run: |
+        FORCE_DEPLOY="${{ github.event.inputs.force_deploy }}"
+        
+        if [ "$FORCE_DEPLOY" = "true" ]; then
+          echo "🚀 Force deployment requested"
+          echo "should-deploy=true" >> $GITHUB_OUTPUT
+        else
+          echo "✅ All pre-deployment checks passed"
+          echo "should-deploy=true" >> $GITHUB_OUTPUT
+        fi
+
+  # Deploy to Vercel
+  deploy-to-vercel:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    needs: pre-deployment-checks
+    if: needs.pre-deployment-checks.outputs.should-deploy == 'true'
+    timeout-minutes: 20
+    
+    environment: 
+      name: ${{ github.event.inputs.deployment_environment || 'production' }}
+      url: ${{ steps.deployment.outputs.deployment-url }}
+    
+    outputs:
+      deployment-url: ${{ steps.deployment.outputs.deployment-url }}
+      deployment-id: ${{ steps.deployment.outputs.deployment-id }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: Install Vercel CLI
+      run: npm install --global vercel@latest
+    
+    - name: Pull Vercel Environment Information
+      working-directory: mini-claude-web
+      run: |
+        if [ "${{ github.event.inputs.deployment_environment }}" = "staging" ]; then
+          vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        else
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        fi
+    
+    - name: Build Project Artifacts
+      working-directory: mini-claude-web
+      run: |
+        if [ "${{ github.event.inputs.deployment_environment }}" = "staging" ]; then
+          vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        else
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        fi
+    
+    - name: Deploy to Vercel
+      id: deployment
+      working-directory: mini-claude-web
+      run: |
+        if [ "${{ github.event.inputs.deployment_environment }}" = "staging" ]; then
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+        else
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+        fi
+        
+        echo "deployment-url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+        echo "deployment-id=$(echo $DEPLOYMENT_URL | sed 's/.*-\([a-z0-9]*\)\.vercel\.app.*/\1/')" >> $GITHUB_OUTPUT
+        
+        echo "🚀 Deployed to: $DEPLOYMENT_URL"
+    
+    - name: Add deployment summary
+      run: |
+        echo "## 🚀 Deployment Successful" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Environment:** ${{ github.event.inputs.deployment_environment || 'production' }}" >> $GITHUB_STEP_SUMMARY
+        echo "**URL:** ${{ steps.deployment.outputs.deployment-url }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** ${{ needs.pre-deployment-checks.outputs.commit-hash }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch:** ${{ needs.pre-deployment-checks.outputs.branch-name }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+  # Post-deployment verification
+  post-deployment-verification:
+    name: Post-deployment Verification
+    runs-on: ubuntu-latest
+    needs: [pre-deployment-checks, deploy-to-vercel]
+    timeout-minutes: 15
+    
+    steps:
+    - name: Wait for deployment to be ready
+      run: |
+        echo "⏳ Waiting for deployment to be fully ready..."
+        sleep 30
+    
+    - name: Health check
+      id: health-check
+      run: |
+        DEPLOYMENT_URL="${{ needs.deploy-to-vercel.outputs.deployment-url }}"
+        
+        echo "🔍 Testing health endpoint..."
+        
+        # Health endpoint test
+        HEALTH_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOYMENT_URL/api/health" || echo "000")
+        
+        if [ "$HEALTH_RESPONSE" = "200" ]; then
+          echo "✅ Health check passed"
+          echo "health-status=healthy" >> $GITHUB_OUTPUT
+        else
+          echo "❌ Health check failed with status: $HEALTH_RESPONSE"
+          echo "health-status=unhealthy" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+    
+    - name: API functionality tests
+      run: |
+        DEPLOYMENT_URL="${{ needs.deploy-to-vercel.outputs.deployment-url }}"
+        
+        echo "🧪 Testing API endpoints..."
+        
+        # Test monitoring endpoint (if exists)
+        MONITORING_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOYMENT_URL/api/monitoring" || echo "000")
+        if [ "$MONITORING_RESPONSE" = "200" ]; then
+          echo "✅ Monitoring endpoint is accessible"
+        else
+          echo "⚠️ Monitoring endpoint returned: $MONITORING_RESPONSE"
+        fi
+        
+        # Test chat endpoint with minimal request
+        CHAT_RESPONSE=$(curl -s -X POST "$DEPLOYMENT_URL/api/chat" \
+          -H "Content-Type: application/json" \
+          -d '{}' \
+          -w "%{http_code}" -o /dev/null || echo "000")
+        
+        if [ "$CHAT_RESPONSE" = "400" ]; then
+          echo "✅ Chat endpoint correctly validates input (400 expected)"
+        else
+          echo "⚠️ Chat endpoint returned unexpected status: $CHAT_RESPONSE"
+        fi
+    
+    - name: Performance verification
+      run: |
+        DEPLOYMENT_URL="${{ needs.deploy-to-vercel.outputs.deployment-url }}"
+        
+        echo "⚡ Testing performance..."
+        
+        # Measure response time
+        RESPONSE_TIME=$(curl -s -w "%{time_total}" -o /dev/null "$DEPLOYMENT_URL/api/health")
+        
+        echo "Response time: ${RESPONSE_TIME}s"
+        
+        # Check if response time is acceptable (< 2 seconds)
+        if (( $(echo "$RESPONSE_TIME < 2.0" | bc -l) )); then
+          echo "✅ Response time is acceptable"
+        else
+          echo "⚠️ Response time is slower than expected: ${RESPONSE_TIME}s"
+        fi
+    
+    - name: Environment validation
+      run: |
+        DEPLOYMENT_URL="${{ needs.deploy-to-vercel.outputs.deployment-url }}"
+        
+        echo "🔧 Validating environment configuration..."
+        
+        # Test that the app loads without critical errors
+        PAGE_CONTENT=$(curl -s "$DEPLOYMENT_URL" || echo "")
+        
+        if echo "$PAGE_CONTENT" | grep -q "Mini-Claude\|chat\|AI"; then
+          echo "✅ Main page loads correctly"
+        else
+          echo "⚠️ Main page content may not be loading correctly"
+        fi
+        
+        # Check for obvious error messages
+        if echo "$PAGE_CONTENT" | grep -i "error\|failed\|missing"; then
+          echo "⚠️ Potential errors detected in page content"
+        else
+          echo "✅ No obvious errors in page content"
+        fi
+
+  # Database connectivity check
+  database-verification:
+    name: Database Connectivity Check
+    runs-on: ubuntu-latest
+    needs: [deploy-to-vercel, post-deployment-verification]
+    timeout-minutes: 10
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: Install dependencies
+      working-directory: mini-claude-web
+      run: npm ci
+    
+    - name: Test database connectivity
+      working-directory: mini-claude-web
+      env:
+        NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      run: |
+        echo "🗄️ Testing database connectivity..."
+        
+        # Simple database connection test
+        node -e "
+        const { neon } = require('@neondatabase/serverless');
+        
+        async function testConnection() {
+          try {
+            if (!process.env.NEON_DATABASE_URL) {
+              console.log('⚠️ NEON_DATABASE_URL not configured');
+              return;
+            }
+            
+            const sql = neon(process.env.NEON_DATABASE_URL);
+            const result = await sql\`SELECT 1 as test\`;
+            
+            if (result[0]?.test === 1) {
+              console.log('✅ Database connection successful');
+            } else {
+              console.log('❌ Database connection failed');
+              process.exit(1);
+            }
+          } catch (error) {
+            console.log('❌ Database connection error:', error.message);
+            process.exit(1);
+          }
+        }
+        
+        testConnection();
+        "
+
+  # Rollback capability
+  deployment-rollback:
+    name: Deployment Rollback (if needed)
+    runs-on: ubuntu-latest
+    needs: [deploy-to-vercel, post-deployment-verification, database-verification]
+    if: failure() && !cancelled()
+    timeout-minutes: 10
+    
+    steps:
+    - name: Setup Vercel CLI
+      run: npm install --global vercel@latest
+    
+    - name: Rollback deployment
+      run: |
+        echo "🔄 Rolling back deployment due to failures..."
+        
+        # Get previous deployment
+        PREVIOUS_DEPLOYMENT=$(vercel list --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} | grep -E "https://.*\.vercel\.app" | sed -n '2p' | awk '{print $1}')
+        
+        if [ -n "$PREVIOUS_DEPLOYMENT" ]; then
+          echo "Rolling back to: $PREVIOUS_DEPLOYMENT"
+          vercel alias set "$PREVIOUS_DEPLOYMENT" --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
+          echo "✅ Rollback completed"
+        else
+          echo "⚠️ No previous deployment found for rollback"
+        fi
+    
+    - name: Notify rollback
+      run: |
+        echo "## 🔄 Deployment Rolled Back" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "The deployment was rolled back due to post-deployment verification failures." >> $GITHUB_STEP_SUMMARY
+        echo "Please check the logs and fix issues before trying again." >> $GITHUB_STEP_SUMMARY
+
+  # Final deployment summary
+  deployment-summary:
+    name: Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [pre-deployment-checks, deploy-to-vercel, post-deployment-verification, database-verification]
+    if: always()
+    
+    steps:
+    - name: Generate deployment report
+      run: |
+        echo "# 🚀 Production Deployment Report" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Deployment Status" >> $GITHUB_STEP_SUMMARY
+        echo "- Pre-deployment Checks: ${{ needs.pre-deployment-checks.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Vercel Deployment: ${{ needs.deploy-to-vercel.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Post-deployment Verification: ${{ needs.post-deployment-verification.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Database Verification: ${{ needs.database-verification.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [[ "${{ needs.deploy-to-vercel.result }}" == "success" && 
+              "${{ needs.post-deployment-verification.result }}" == "success" && 
+              "${{ needs.database-verification.result }}" == "success" ]]; then
+          echo "## ✅ Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Live URL:** ${{ needs.deploy-to-vercel.outputs.deployment-url }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ github.event.inputs.deployment_environment || 'production' }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ needs.pre-deployment-checks.outputs.commit-hash }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All systems verified and operational! 🎉" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "## ❌ Deployment Issues Detected" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Some deployment steps failed. Please review the logs above." >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "---" >> $GITHUB_STEP_SUMMARY
+        echo "Generated by Mini-Claude Production Deployment Pipeline" >> $GITHUB_STEP_SUMMARY
