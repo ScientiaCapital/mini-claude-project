@@ -18,9 +18,9 @@ This document captures the technical context, architectural decisions, and engin
 6. **TDD-first development**: 95%+ test coverage maintained throughout
 
 ### 🔄 **Current Development Focus**
-- **Voice synthesis integration**: ElevenLabs API integration in progress
-- **Agent specialization**: Claude Code hook system enables domain-specific agents
-- **Future learning components**: Transformer implementation and LoRA fine-tuning remain planned for deep learning understanding
+- **Voice synthesis integration**: Module complete, ready for API integration
+- **Vector database tests**: pgvector and agent_memory table ready for testing
+- **Vercel deployment**: Environment variables and production deployment
 
 ## Claude Code Hook System Architecture
 
@@ -32,12 +32,12 @@ The project implements a sophisticated agent context system that loads specializ
 
 ```typescript
 interface AgentContext {
-  subagent_type: 'neon-database-architect' | 
-                 'vercel-deployment-specialist' | 
-                 'security-auditor-expert' | 
-                 'api-integration-specialist' | 
-                 'nextjs-performance-optimizer' | 
-                 'project-docs-curator'
+  subagent_type: 'general-purpose' | 
+                 'project-docs-curator' | 
+                 'devops-automation-engineer' | 
+                 'bug-hunter-specialist' | 
+                 'fullstack-tdd-architect' | 
+                 'security-auditor-expert'
   required_context: string[]
   memory_focus: string[]
   documentation_responsibilities: string[]
@@ -54,12 +54,12 @@ interface AgentContext {
    ```
 
 2. **Agent-Specific Context Injection**:
-   - **Database Architect**: Schema patterns, query optimization, Neon-specific features
-   - **Deployment Specialist**: Vercel configuration, environment variables, CI/CD patterns
-   - **Security Auditor**: Security best practices, vulnerability patterns, compliance requirements
-   - **API Integration**: Google Gemini patterns, ElevenLabs configuration, rate limiting
-   - **Performance Optimizer**: Core Web Vitals, bundle optimization, Next.js performance patterns
-   - **Documentation Curator**: Learning progression, documentation standards, knowledge gaps
+   - **General Purpose**: Complex multi-step tasks, code searches, research
+   - **Docs Curator**: Documentation updates, learning materials, knowledge gaps
+   - **DevOps Engineer**: CI/CD, deployment automation, infrastructure
+   - **Bug Hunter**: Debugging, root cause analysis, issue resolution
+   - **TDD Architect**: Test-driven development, architecture, code quality
+   - **Security Auditor**: Security best practices, vulnerability assessment
 
 3. **Knowledge Preservation Pipeline**:
    ```bash
@@ -68,43 +68,26 @@ interface AgentContext {
    update_documentation_artifacts "$AGENT_TYPE"
    ```
 
-### Agent-Specific Context Requirements
+### Current Implementation Context
 
-#### Database Architect Context
-- Current Neon PostgreSQL schema and relationships
-- Query performance optimization patterns
-- Connection pooling and serverless database best practices
-- Data migration and versioning strategies
+#### Database Status
+- Neon PostgreSQL with pgvector extension installed
+- Tables: users, conversations, messages, agent_memory
+- All connection tests passing with real database
+- No mocks - using actual Neon connections
 
-#### Deployment Specialist Context  
-- Vercel deployment configuration and environment management
-- CI/CD pipeline status and optimization opportunities
-- Performance monitoring and alerting setup
-- Deployment rollback and recovery procedures
+#### API Integration Status  
+- Google Gemini fully integrated for chat
+- ElevenLabs voice synthesis module complete
+- Health monitoring endpoint functional
+- Environment variables properly configured
 
-#### Security Auditor Context
-- API key management and rotation policies
-- OWASP security checklist compliance
-- Vulnerability assessment results and remediation
-- Data privacy and compliance requirements
-
-#### API Integration Specialist Context
-- Google Gemini API configuration and best practices
-- ElevenLabs voice synthesis integration patterns
-- Rate limiting and error handling strategies
-- API cost optimization and usage monitoring
-
-#### Performance Optimizer Context
-- Current Core Web Vitals scores and trends
-- Bundle analysis and code splitting opportunities
-- Image optimization and CDN configuration
-- Runtime performance profiling results
-
-#### Documentation Curator Context
-- Learning milestone progress and gaps
-- Documentation quality standards and templates
-- User feedback and knowledge transfer requirements
-- Educational content effectiveness metrics
+#### Testing Status
+- 95%+ test coverage maintained
+- Database tests: ✅ All passing
+- Voice synthesis tests: ✅ All passing
+- API tests: Ready for voice integration
+- Vector tests: Next priority
 
 ### Hook System Implementation
 
@@ -145,21 +128,12 @@ interface AgentContext {
 #### Knowledge Persistence Structure
 ```
 .claude/
-├── knowledge/
-│   ├── agents/
-│   │   ├── neon-database-architect/
-│   │   │   ├── successful-patterns.md
-│   │   │   ├── optimization-history.json
-│   │   │   └── troubleshooting-guide.md
-│   │   ├── vercel-deployment-specialist/
-│   │   │   ├── deployment-patterns.md
-│   │   │   ├── environment-config.json
-│   │   │   └── performance-metrics.json
-│   │   └── ...
-│   └── shared/
-│       ├── architecture-decisions.md
-│       ├── tdd-patterns.md
-│       └── integration-patterns.md
+├── settings.json    # Hook configuration
+├── hooks/           # Agent context scripts
+│   ├── pre-task-context.sh
+│   ├── post-agent-update.sh
+│   └── validate-agent-work.sh
+└── knowledge/       # Future: Agent learnings
 ```
 
 ### Benefits of Agent Specialization
@@ -170,88 +144,34 @@ interface AgentContext {
 4. **Learning Amplification**: Specialized context accelerates problem-solving
 5. **Documentation Automation**: Agent work automatically updates relevant documentation
 
-## Transformer Architecture Context
+## Current Technical Stack
 
-### Self-Attention Mechanism
-Based on insights from `rasbt/LLMs-from-scratch` Chapter 3:
+### Production Implementation
+- **Frontend**: Next.js 14 + TypeScript + Tailwind CSS
+- **Backend**: Next.js API Routes with serverless functions
+- **Database**: Neon PostgreSQL with pgvector extension
+- **AI Models**: Google Gemini 1.5 Flash (primary)
+- **Voice**: ElevenLabs API for text-to-speech
+- **Deployment**: Vercel with automatic CI/CD
 
-**Implementation Details:**
-- Multi-head attention with 12 heads (DialoGPT-medium)
-- Attention dimension: 768 (64 per head)
-- Scaled dot-product attention: `softmax(QK^T / sqrt(d_k))V`
-- Causal masking for autoregressive generation
+### Testing Approach
+- **TDD First**: Every feature has tests written before implementation
+- **Real Connections**: No mocks - tests use actual database and APIs
+- **Coverage Target**: 95%+ maintained throughout development
+- **Test Categories**: Unit, Integration, API, Database
 
-**Key Design Decisions:**
-1. **Pre-normalization**: LayerNorm before attention (more stable training)
-2. **Rotary Position Embeddings (RoPE)**: Better length generalization than learned embeddings
-3. **Flash Attention**: Optional optimization for longer contexts (requires GPU)
+## Learning Components (Future)
 
-### Positional Encoding Strategy
-Following `jaymody/picoGPT` minimal implementation:
-```python
-# Sinusoidal positional encoding for understanding
-# RoPE for production (better extrapolation)
-positions = torch.arange(seq_len).unsqueeze(1)
-div_term = torch.exp(torch.arange(0, d_model, 2) * -(math.log(10000.0) / d_model))
-```
+### Transformer Understanding
+Educational resources in `resources/repos/`:
+- **LLMs-from-scratch**: Core transformer concepts
+- **picoGPT**: Minimal implementation for learning
+- **huggingface/course**: Industry best practices
 
-### Layer Architecture
-Standard transformer block structure:
-1. Multi-head self-attention
-2. Layer normalization
-3. Position-wise feed-forward network (2-layer MLP)
-4. Residual connections around both sub-layers
-
-**FFN Expansion Ratio**: 4x (hidden_dim = 4 * model_dim)
-
-## LoRA Fine-tuning Context
-
-### Mathematical Foundation
-Low-Rank Adaptation decomposes weight updates:
-- Original weights: W ∈ R^(d×k)
-- LoRA update: ΔW = BA where B ∈ R^(d×r), A ∈ R^(r×k)
-- Rank r << min(d,k), typically r ∈ {8, 16, 32}
-
-### Implementation Strategy
-Based on Microsoft's LoRA paper and `huggingface/peft`:
-
-**Target Modules:**
-- Query projection (W_q)
-- Value projection (W_v)
-- Optional: Key projection (W_k) and output projection (W_o)
-
-**Hyperparameters:**
-```python
-lora_config = {
-    "r": 16,                    # Rank
-    "lora_alpha": 32,          # Scaling factor
-    "lora_dropout": 0.1,       # Dropout for regularization
-    "target_modules": ["q_proj", "v_proj"],
-    "bias": "none"             # Don't adapt biases
-}
-```
-
-### Memory Efficiency Analysis
-For DialoGPT-medium (345M parameters):
-- Full fine-tuning: 345M trainable parameters
-- LoRA (r=16): ~0.8M trainable parameters (0.23% of full)
-- Memory saving: ~99.77%
-- Training speedup: ~10-25x on consumer GPUs
-
-### Training Data Format
-Alpaca-style JSON format for compatibility:
-```json
-{
-    "instruction": "You are a helpful AI assistant named Mini-Claude",
-    "input": "Hello! How are you today?",
-    "output": "Hello! I'm doing well, thank you for asking. How can I help you today?"
-}
-```
-
-**Minimum Dataset Requirements:**
-- MVP: 100 examples (proof of concept)
-- Meaningful adaptation: 1,000+ examples
-- Production quality: 10,000+ examples
+### Future Experiments
+- **LoRA Fine-tuning**: Parameter-efficient training
+- **Custom Models**: Learning transformer architecture
+- **RAG Integration**: Knowledge base augmentation
 
 ## Model Selection Rationale
 
@@ -271,71 +191,48 @@ Alpaca-style JSON format for compatibility:
 - Real-time voice synthesis capabilities
 - Competitive pricing for production use
 
-### MVP Model: DialoGPT-medium (Educational)
-**Why DialoGPT-medium for learning?**
-- Pre-trained on conversational data (147M Reddit conversations)
-- Optimal size for learning (345M parameters)
-- Runs on CPU with acceptable latency (<2s)
-- Good baseline performance without fine-tuning
+### Educational Components
+**Python MVP Chatbot**
+- Located in `src/mvp_chatbot.py`
+- Uses Hugging Face transformers
+- For learning and experimentation
 
-### Learning Model: GPT-2 small
-**Why GPT-2?**
-- Well-documented architecture
-- Extensive educational resources
-- Small enough to train from scratch (124M params)
-- Reference implementation in `jaymody/picoGPT`
+**Jupyter Notebooks**
+- Interactive learning environment
+- Transformer architecture exploration
+- Located in `notebooks/` directory
 
-### Advanced Model: LLaMA-2-7B
-**Why LLaMA-2?**
-- State-of-the-art open model
-- Excellent LoRA support
-- Strong instruction-following capabilities
-- Active community and tooling
+## Database Architecture
 
-## Dataset Engineering
+### Current Schema
+```sql
+-- Core tables (implemented)
+users (id, email, name, created_at, updated_at)
+conversations (id, user_id, title, created_at, updated_at)
+messages (id, conversation_id, role, content, created_at)
 
-### Data Collection Strategy
-1. **Synthetic Generation**: Use GPT-4 to bootstrap initial dataset
-2. **Human Curation**: Review and refine synthetic examples
-3. **Augmentation**: Paraphrase and expand existing examples
-4. **Diversity Metrics**: Ensure coverage of conversation types
-
-### Quality Metrics
-- **Length Distribution**: 10-200 tokens per response
-- **Diversity Score**: Unique trigrams / total trigrams > 0.8
-- **Safety Filtering**: Remove inappropriate content
-- **Deduplication**: Fuzzy matching with threshold 0.9
-
-### Data Pipeline
-```python
-# Pipeline stages
-raw_data -> cleaning -> formatting -> augmentation -> validation -> training
+-- Vector storage (ready for testing)
+agent_memory (id, agent_type, content, embedding, metadata, created_at)
 ```
 
-Each stage has associated tests:
-- `test_data_cleaning_removes_invalid_entries()`
-- `test_formatting_creates_valid_json()`
-- `test_augmentation_increases_diversity()`
+### pgvector Integration
+- Extension installed in Neon
+- Vector dimension: 1536 (for OpenAI embeddings)
+- Ready for similarity search implementation
 
-## Performance Targets
+## Current Performance Metrics
 
-### Inference Performance
-- **Response Time**: < 2s on CPU (Intel i5+)
-- **First Token Latency**: < 500ms
-- **Throughput**: 5+ requests/second (batched)
-- **Memory Usage**: < 4GB peak
+### API Performance (Achieved)
+- **Health Check**: < 200ms response time ✅
+- **Chat Response**: < 2s with Gemini API ✅
+- **Database Query**: < 50ms with indexes ✅
+- **Test Suite**: < 10s total runtime ✅
 
-### Training Performance
-- **LoRA Fine-tuning**: < 1 hour on RTX 3060 (12GB)
-- **Convergence**: Loss < 2.0 within 3 epochs
-- **Gradient Accumulation**: Steps=4 for larger effective batch
-- **Mixed Precision**: FP16 training for 2x speedup
-
-### Quality Metrics
-- **Perplexity**: < 20 on validation set
-- **BLEU Score**: > 0.3 vs reference responses
-- **Human Eval**: 80%+ "helpful" ratings
-- **Safety Score**: 0% harmful outputs
+### Production Readiness
+- **Test Coverage**: 95%+ maintained ✅
+- **Error Handling**: Graceful fallbacks ✅
+- **Type Safety**: Full TypeScript coverage ✅
+- **Environment**: Proper secret management ✅
 
 ## Integration Points
 
@@ -367,35 +264,32 @@ lobehub/lobe-chat
 └── Plugin architecture
 ```
 
-### API Design
-RESTful API with voice synthesis support:
+### Current API Implementation
 ```
-POST /api/chat             # Google Gemini chat with optional voice synthesis
-GET  /api/health           # System health monitoring
-POST /api/voice/synthesize # ElevenLabs voice generation (planned)
-GET  /api/voice/voices     # Available voice options (planned)
-WS   /chat/stream          # Real-time streaming (planned)
-POST /fine-tune            # LoRA training (educational)
+POST /api/chat    # Google Gemini chat (working)
+GET  /api/health  # System health check (working)
 ```
 
-#### Current API Implementation
-- **Primary Chat Endpoint**: `/api/chat` - Google Gemini integration with conversation persistence
-- **Voice Synthesis**: ElevenLabs integration in progress for audio response generation
-- **Health Monitoring**: Production-ready health checks for deployment monitoring
-- **Database Integration**: Neon PostgreSQL for conversation history and user management
+### Next API Features
+```
+POST /api/chat    # Add voice_enabled parameter
+GET  /api/voices  # List available ElevenLabs voices
+WS   /chat/stream # Real-time streaming responses
+```
 
-## Technical Constraints
+## Current Dependencies
 
-### Hardware Assumptions
-- **Minimum**: 8GB RAM, 4-core CPU
-- **Recommended**: 16GB RAM, GPU with 8GB+ VRAM
-- **Storage**: 50GB for models and datasets
+### Production Stack
+- Node.js 18+ (for Next.js)
+- PostgreSQL (via Neon)
+- TypeScript 5+
+- React 18+
 
-### Software Dependencies
-- Python 3.8+ (for type hints)
-- PyTorch 2.0+ (for compile() optimization)
-- Transformers 4.36+ (for LoRA support)
-- CUDA 11.8+ (if using GPU)
+### Development Tools
+- Jest for testing
+- ESLint + Prettier
+- Vercel CLI
+- Git + GitHub
 
 ### Scaling Considerations
 - Horizontal scaling via model replicas
@@ -421,19 +315,17 @@ POST /fine-tune            # LoRA training (educational)
 - [ ] Memory usage acceptable
 - [ ] Security considerations addressed
 
-## Future Considerations
+## Immediate Next Steps
 
-### Planned Enhancements
-1. **Retrieval Augmented Generation (RAG)**
-2. **Multi-modal support (images)**
-3. **Voice interface integration**
-4. **Distributed training support**
-5. **Model quantization for mobile**
+### This Week
+1. **Vector Database Tests**: Test pgvector functionality
+2. **Voice Integration**: Add voice to chat API
+3. **Vercel Deployment**: Deploy with environment variables
+4. **Streaming Responses**: Implement real-time chat
 
-### Research Directions
-- Mixture of Experts (MoE) for specialization
-- Constitutional AI for improved safety
-- Few-shot learning optimization
-- Continuous learning from conversations
+### Future Learning
+1. **Transformer Architecture**: Study and implement
+2. **LoRA Fine-tuning**: Experiment with small models
+3. **RAG Integration**: Add knowledge base support
 
 This context document should be updated as architectural decisions evolve and new patterns emerge from the reference repositories.

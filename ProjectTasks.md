@@ -2,32 +2,26 @@
 
 ## Test-Driven Development (TDD) Task Breakdown for Mini-Claude
 
-**Status**: Foundation phase complete ✅ | Learning phase ready 🎯
+**Status**: Production MVP complete ✅ | Voice integration in progress 🎯
 
 This document outlines the project tasks following TDD principles, where tests are written before implementation. Each task includes specific test cases, implementation guidance, and learning objectives aligned with the 12-week timeline.
 
 ## 🎉 **CURRENT STATUS UPDATE**
 
-### ✅ **COMPLETED: Production MVP Infrastructure + API Migration (Weeks 1-2)**
+### ✅ **COMPLETED: Production MVP with Real Database**
 - **Next.js 14 + TypeScript**: Full web application with TDD test coverage
-- **Neon PostgreSQL**: Production database with schema and connection handling
-- **Google Gemini API**: Complete migration from Anthropic with enhanced chat functionality
-- **ElevenLabs Integration**: Voice synthesis infrastructure ready (in progress)
-- **Claude Code Hook System**: Agent-specific context loading and knowledge preservation
+- **Neon PostgreSQL**: All database tests passing with real connections
+- **Google Gemini API**: Chat functionality fully integrated
+- **Voice Synthesis Module**: ElevenLabs implementation complete with tests
+- **pgvector Extension**: Installed with agent_memory table ready
 - **GitHub Repository**: https://github.com/ScientiaCapital/mini-claude-project
-- **Vercel-ready deployment**: Complete CI/CD pipeline and health monitoring
-- **95%+ test coverage**: All core functionality validated through TDD
+- **Test Coverage**: 95%+ maintained with no mocks
 
-### 📚 **CURRENT LEARNING OBJECTIVE** 
-The production MVP with Google Gemini and Claude Code hooks provides a **stable foundation** for:
-1. **Voice synthesis integration** (ElevenLabs API)
-2. **Agent specialization** through the hook system
-3. **Deep learning exploration** with transformer education and LoRA fine-tuning
-
-### 🎯 **NEXT PHASE: Voice Integration + Deep Learning**
-1. **Complete ElevenLabs voice synthesis** integration
-2. **Test and optimize agent specialization** through hook system
-3. **Continue with transformer architecture implementation** and **LoRA fine-tuning**
+### 🎯 **IMMEDIATE NEXT STEPS**
+1. **Vector Database Tests**: Implement and test pgvector functionality
+2. **Voice API Integration**: Add voice synthesis to chat endpoint
+3. **Vercel Deployment**: Deploy with production environment variables
+4. **Streaming Responses**: Add real-time chat capabilities
 
 ## 🏗️ **CURRENT ARCHITECTURE OVERVIEW**
 
@@ -52,29 +46,33 @@ Repository: GitHub with automated workflows
 ```
 mini-claude-web/
 ├── src/
-│   ├── app/api/chat/route.ts     ✅ Working chat endpoint
+│   ├── app/api/chat/route.ts     ✅ Google Gemini chat
 │   ├── app/api/health/route.ts   ✅ Health monitoring
-│   ├── lib/database.ts           ✅ Neon connection & schema
-│   └── components/               ✅ React UI components
+│   ├── lib/database.ts           ✅ Real Neon connection
+│   ├── lib/voice-synthesis.ts    ✅ ElevenLabs module
+│   └── components/               ✅ React UI
 ├── tests/
-│   ├── database/                 ✅ DB connection tests
-│   ├── api/                      ✅ API route tests  
-│   └── setup/                    ✅ Environment tests
-├── DEPLOYMENT.md                 ✅ Complete deployment guide
-└── README.md                     ✅ Project documentation
+│   ├── database/                 ✅ All tests passing
+│   ├── voice-synthesis/          ✅ Voice tests passing
+│   └── api/                      🎯 Ready for voice
+├── scripts/init-db.mjs           ✅ Database setup
+└── .env.local                    🔑 Real API keys
 ```
 
 ### Key Features Working
-- **Real-time chat** with Google Gemini integration
-- **Voice synthesis** with ElevenLabs (in progress)
-- **Agent specialization** through Claude Code hook system
-- **Conversation persistence** in PostgreSQL
-- **Health monitoring** for production deployment
-- **Error handling** with graceful fallbacks
-- **Type safety** throughout with TypeScript
-- **95%+ test coverage** following TDD principles
-- **Production deployment** ready for Vercel
-- **GitHub repository** with CI/CD workflows
+- **Real-time chat** with Google Gemini ✅
+- **Database tests** with real Neon connection ✅
+- **Voice synthesis module** fully tested ✅
+- **pgvector** installed and ready ✅
+- **Health monitoring** endpoint working ✅
+- **Type safety** with TypeScript ✅
+- **95%+ test coverage** maintained ✅
+
+### Ready to Implement
+- **Voice in chat API** (module ready)
+- **Vector similarity search** (database ready)
+- **Vercel deployment** (config ready)
+- **Streaming responses** (architecture ready)
 
 ## TDD Principles for AI/ML Development
 
@@ -108,160 +106,96 @@ def test_reproducibility():
     assert response1 == response2
 ```
 
-## Week 1-2: Foundation and MVP Chatbot
+## Current Tasks: Vector Tests and Voice Integration
 
-### Task 1: Basic Chatbot Response System
-**Learning Objective**: Understand model pipelines and basic NLP
+### Task 1: Implement Vector Database Tests
+**Status**: Ready to implement 🎯
 
-#### Tests First:
-```python
-# tests/unit/test_basic_chatbot.py
-def test_chatbot_initialization():
-    """Test that chatbot can be created"""
-    chatbot = BasicChatbot()
-    assert chatbot is not None
-    assert hasattr(chatbot, 'generate')
+#### Tests to Write:
+```typescript
+// tests/database/vector.test.ts
+describe('pgvector functionality', () => {
+  test('should store embeddings in agent_memory', async () => {
+    const embedding = new Array(1536).fill(0.1)
+    const result = await storeAgentMemory({
+      agent_type: 'general-purpose',
+      content: 'Test memory',
+      embedding
+    })
+    expect(result.id).toBeDefined()
+  })
 
-def test_chatbot_responds_to_greeting():
-    """Test appropriate response to greeting"""
-    chatbot = BasicChatbot()
-    response = chatbot.generate("Hello!")
-    assert isinstance(response, str)
-    assert len(response) > 5
-    assert any(greeting in response.lower() for greeting in ['hi', 'hello', 'hey'])
-
-def test_chatbot_handles_empty_input():
-    """Test edge case of empty input"""
-    chatbot = BasicChatbot()
-    response = chatbot.generate("")
-    assert isinstance(response, str)
-    assert "understand" in response.lower() or "say" in response.lower()
-
-def test_chatbot_memory_initialization():
-    """Test conversation memory setup"""
-    chatbot = BasicChatbot()
-    assert hasattr(chatbot, 'conversation_history')
-    assert len(chatbot.conversation_history) == 0
+  test('should perform similarity search', async () => {
+    // Store test embeddings
+    const embedding1 = new Array(1536).fill(0.1)
+    const embedding2 = new Array(1536).fill(0.9)
+    
+    await storeAgentMemory({ content: 'Similar', embedding: embedding1 })
+    await storeAgentMemory({ content: 'Different', embedding: embedding2 })
+    
+    // Search for similar
+    const results = await searchSimilar(embedding1, 5)
+    expect(results[0].content).toBe('Similar')
+  })
+})
 ```
 
-#### Implementation:
-```python
-# src/mvp_chatbot.py
-from transformers import pipeline, Conversation
+### Task 2: Integrate Voice Synthesis in Chat API
+**Status**: Module ready, integration needed 🎯
 
-class BasicChatbot:
-    def __init__(self, model_name="microsoft/DialoGPT-medium"):
-        self.pipeline = pipeline("conversational", model=model_name)
-        self.conversation_history = []
-    
-    def generate(self, user_input):
-        if not user_input.strip():
-            return "I didn't catch that. Could you please say something?"
-        
-        conversation = Conversation(user_input)
-        result = self.pipeline(conversation)
-        response = result.generated_responses[-1]
-        
-        self.conversation_history.append({
-            "user": user_input,
-            "assistant": response
-        })
-        
-        return response
+#### Implementation Plan:
+```typescript
+// src/app/api/chat/route.ts updates
+export async function POST(request: Request) {
+  const { messages, voice_enabled, voice_id } = await request.json()
+  
+  // Get Gemini response
+  const reply = await generateChatResponse(messages)
+  
+  // Generate voice if enabled
+  let audio_url = undefined
+  if (voice_enabled && reply) {
+    const voiceResponse = await synthesizeVoice({
+      text: reply,
+      voice_id: voice_id || 'default_voice_id'
+    })
+    audio_url = voiceResponse.audio_url
+  }
+  
+  return NextResponse.json({
+    reply,
+    audio_url,
+    message_id: generateId(),
+    conversation_id: conversationId
+  })
+}
 ```
 
-### Task 2: Gradio Web Interface
-**Learning Objective**: Create user-friendly interfaces for AI models
+### Task 3: Deploy to Vercel
+**Status**: Ready to deploy 🎯
 
-#### Tests First:
-```python
-# tests/integration/test_web_interface.py
-def test_gradio_app_creation():
-    """Test Gradio app can be created"""
-    from src.web.app import create_app
-    app = create_app()
-    assert app is not None
-    assert hasattr(app, 'launch')
+#### Deployment Checklist:
+```bash
+# 1. Set environment variables in Vercel
+NEON_DATABASE_URL=postgresql://...
+GOOGLE_API_KEY=your-key
+ELEVENLABS_API_KEY=your-key
+NEXTAUTH_SECRET=your-secret
 
-def test_chat_function_integration():
-    """Test chat function works with Gradio"""
-    from src.web.app import chat_fn
-    history = []
-    message = "Hello"
-    new_msg, new_history = chat_fn(message, history)
-    assert new_msg == ""  # Message box cleared
-    assert len(new_history) == 1
-    assert new_history[0][0] == "Hello"
-    assert isinstance(new_history[0][1], str)
+# 2. Deploy commands
+cd mini-claude-web
+vercel          # Preview deployment
+vercel --prod   # Production deployment
 
-@pytest.mark.slow
-def test_gradio_launch():
-    """Test Gradio app can launch"""
-    from src.web.app import create_app
-    app = create_app()
-    # Launch with prevent_thread_lock for testing
-    app.launch(prevent_thread_lock=True, show_error=True)
-    app.close()
+# 3. Verify deployment
+curl https://your-app.vercel.app/api/health
 ```
 
-#### Implementation Reference:
-- Study: `AK391/ai-gradio` for interface patterns
-- Reference: `lobehub/lobe-chat` for UI best practices
-
-## Week 3-4: Understanding Transformers
-
-### Task 3: Implement Attention Mechanism
-**Learning Objective**: Deep understanding of transformer architecture
-
-#### Tests First:
-```python
-# tests/unit/test_transformer_components.py
-def test_attention_scores_computation():
-    """Test scaled dot-product attention computation"""
-    from src.models.transformer_components import scaled_dot_product_attention
-    
-    # Create simple test tensors
-    seq_len, d_k = 4, 8
-    Q = torch.randn(1, seq_len, d_k)
-    K = torch.randn(1, seq_len, d_k)
-    V = torch.randn(1, seq_len, d_k)
-    
-    output, attention_weights = scaled_dot_product_attention(Q, K, V)
-    
-    assert output.shape == (1, seq_len, d_k)
-    assert attention_weights.shape == (1, seq_len, seq_len)
-    assert torch.allclose(attention_weights.sum(dim=-1), torch.ones(1, seq_len))
-
-def test_causal_mask_application():
-    """Test that future tokens are masked"""
-    from src.models.transformer_components import create_causal_mask
-    
-    seq_len = 5
-    mask = create_causal_mask(seq_len)
-    
-    # Check lower triangular structure
-    for i in range(seq_len):
-        for j in range(seq_len):
-            if j > i:
-                assert mask[i, j] == float('-inf')
-            else:
-                assert mask[i, j] == 0.0
-
-def test_positional_encoding():
-    """Test positional encoding generation"""
-    from src.models.transformer_components import get_positional_encoding
-    
-    seq_len, d_model = 10, 512
-    pos_encoding = get_positional_encoding(seq_len, d_model)
-    
-    assert pos_encoding.shape == (seq_len, d_model)
-    # Check that positions are different
-    assert not torch.allclose(pos_encoding[0], pos_encoding[1])
-```
-
-#### Implementation Reference:
-- Study: `jaymody/picoGPT` for minimal implementation
-- Deep dive: `rasbt/LLMs-from-scratch` Chapter 3
+#### Post-Deployment Tests:
+- Health endpoint returns 200
+- Chat API works with real Gemini
+- Database connection successful
+- Voice synthesis ready to test
 
 ### Task 4: Build Transformer Block
 **Learning Objective**: Understand complete transformer architecture
@@ -295,58 +229,21 @@ def test_layer_norm_stabilization():
     assert output.std() < 10.0  # Much smaller than input
 ```
 
-## Week 5-6: LoRA Implementation
+## Future Learning Tasks (Educational)
 
-### Task 5: Implement LoRA Layers
-**Learning Objective**: Understand parameter-efficient fine-tuning
+### Understanding Transformers
+**Resources**: `rasbt/LLMs-from-scratch`, `jaymody/picoGPT`
+- Study self-attention mechanism
+- Implement scaled dot-product attention
+- Build transformer blocks
+- Create positional encodings
 
-#### Tests First:
-```python
-# tests/unit/test_lora.py
-def test_lora_layer_initialization():
-    """Test LoRA layer creation"""
-    from src.models.lora import LoRALayer
-    
-    in_features, out_features, rank = 768, 768, 16
-    lora = LoRALayer(in_features, out_features, rank)
-    
-    assert lora.A.shape == (in_features, rank)
-    assert lora.B.shape == (rank, out_features)
-    # B should be initialized to zero
-    assert torch.allclose(lora.B, torch.zeros_like(lora.B))
-
-def test_lora_forward_pass():
-    """Test LoRA forward computation"""
-    from src.models.lora import LoRALayer
-    
-    batch_size, seq_len, hidden = 2, 10, 768
-    lora = LoRALayer(hidden, hidden, rank=16)
-    
-    x = torch.randn(batch_size, seq_len, hidden)
-    output = lora(x)
-    
-    assert output.shape == x.shape
-    # Initially should be near zero (B initialized to zero)
-    assert torch.allclose(output, torch.zeros_like(output), atol=1e-6)
-
-def test_lora_parameter_efficiency():
-    """Test that LoRA reduces parameters significantly"""
-    from src.models.lora import apply_lora_to_model
-    
-    # Mock model with linear layers
-    model = nn.Sequential(
-        nn.Linear(768, 768),
-        nn.Linear(768, 768),
-        nn.Linear(768, 768)
-    )
-    
-    original_params = sum(p.numel() for p in model.parameters())
-    lora_model = apply_lora_to_model(model, rank=16)
-    lora_params = sum(p.numel() for p in lora_model.parameters() if p.requires_grad)
-    
-    # LoRA should use < 1% of original parameters
-    assert lora_params < original_params * 0.01
-```
+### LoRA Fine-tuning Experiments
+**Resources**: `huggingface/peft`, Microsoft LoRA paper
+- Implement LoRA layers
+- Test parameter efficiency
+- Fine-tune small models
+- Measure performance gains
 
 #### Implementation:
 ```python
@@ -725,85 +622,52 @@ def test_api_health_check():
     assert response.json()["status"] == "healthy"
 ```
 
-## Learning Milestones & Assessment
+## Progress Summary
 
-### ✅ **COMPLETED: Production Foundation + API Migration** 
-- [x] **Next.js application with TypeScript**: Full TDD coverage
-- [x] **Neon PostgreSQL integration**: Database tests and schema
-- [x] **Google Gemini API migration**: Complete replacement of Anthropic Claude
-- [x] **Claude Code hook system**: Agent-specific context loading implemented
-- [x] **GitHub repository setup**: https://github.com/ScientiaCapital/mini-claude-project
-- [x] **ElevenLabs infrastructure**: Voice synthesis preparation (API integration in progress)
-- [x] **Vercel deployment ready**: CI/CD pipeline and monitoring
-- [x] **95%+ test coverage**: All core functionality validated including hooks
-- [x] **Production health monitoring**: API health checks and logging
+### ✅ **COMPLETED: Production MVP** 
+- [x] **Next.js + TypeScript**: Full application with TDD
+- [x] **Neon PostgreSQL**: All tests passing with real connection
+- [x] **Google Gemini API**: Chat fully integrated
+- [x] **Voice Synthesis Module**: ElevenLabs implementation complete
+- [x] **pgvector Extension**: Installed with agent_memory table
+- [x] **Database Schema**: users, conversations, messages tables
+- [x] **Test Coverage**: 95%+ maintained throughout
+- [x] **No Mocks**: All tests use real connections
 
-### 🔄 **IN PROGRESS: Voice Synthesis Integration**
-- [ ] **ElevenLabs API integration**: Voice synthesis endpoint implementation
-- [ ] **Audio response generation**: Text-to-speech with voice selection
-- [ ] **Voice synthesis testing**: Automated tests for audio generation
-- [ ] **Performance optimization**: Audio caching and streaming
+### 🎯 **THIS WEEK: Integration & Deployment**
+- [ ] **Vector Tests**: Implement pgvector functionality tests
+- [ ] **Voice in Chat API**: Integrate voice synthesis module
+- [ ] **Vercel Deployment**: Deploy with environment variables
+- [ ] **Streaming Responses**: Add real-time chat support
 
-### 🎯 **UPCOMING: Week 3-4 Milestone - Transformer Understanding**
-- [ ] Transformer component tests pass
-- [ ] Understanding of attention mechanism
-- [ ] Can explain how transformers work
-- [ ] Implementation of scaled dot-product attention
-- [ ] Positional encoding and causal masking
+### 📚 **FUTURE: Educational Components**
+- [ ] **Transformer Understanding**: Study architecture
+- [ ] **LoRA Experiments**: Parameter-efficient fine-tuning
+- [ ] **RAG Integration**: Knowledge base augmentation
 
-### 🎯 **UPCOMING: Week 5-6 Milestone - LoRA Implementation**
-- [ ] LoRA implementation tests pass
-- [ ] Successfully integrated with base model
-- [ ] Understand parameter efficiency
-- [ ] Working LoRA fine-tuning pipeline
-- [ ] Memory efficiency demonstration
+## Current Development Workflow
 
-### 🎯 **UPCOMING: Week 7-8 Milestone - Training Pipeline**
-- [ ] Training pipeline tests pass
-- [ ] Model shows improvement after training
-- [ ] Can evaluate model performance
-- [ ] Custom dataset preparation
-- [ ] Training metrics and monitoring
+### Running Tests
+```bash
+# Run all tests
+npm test
 
-### 🎯 **UPCOMING: Week 9-10 Milestone - Advanced Features**
-- [ ] Advanced features implemented
-- [ ] Memory system working
-- [ ] Streaming generation functional
-- [ ] Real-time conversation state management
-- [ ] WebSocket integration
+# Run specific tests
+npm test tests/database/
+npm test tests/voice-synthesis/
 
-### 🎯 **UPCOMING: Week 11-12 Milestone - Production Optimization**
-- [ ] Production optimizations complete
-- [ ] API server running
-- [ ] Ready for deployment
-- [ ] Model quantization working
-- [ ] Performance benchmarks met
+# Run with coverage
+npm run test:coverage
+```
 
-## TDD Workflow Reminders
+### TDD Principles Applied
+1. **Write test first** (Red phase)
+2. **Implement minimum code** (Green phase)  
+3. **Refactor with confidence** (Tests stay green)
+4. **Real connections only** (No mocks in production)
 
-1. **Red**: Write a failing test first
-2. **Green**: Write minimal code to pass
-3. **Refactor**: Improve code while keeping tests green
-
-4. **Test Categories**:
-   - Unit tests: Individual components
-   - Integration tests: Component interactions
-   - Performance tests: Speed and resource usage
-   - Safety tests: Output appropriateness
-
-5. **Running Tests**:
-   ```bash
-   # Run all tests
-   pytest
-   
-   # Run with coverage
-   pytest --cov=src
-   
-   # Run specific category
-   pytest tests/unit/
-   
-   # Run single test
-   pytest tests/unit/test_basic_chatbot.py::test_chatbot_responds_to_greeting
-   ```
-
-This task breakdown ensures learning progresses from simple to complex while maintaining test coverage throughout the project.
+### Next Development Cycle
+1. Write vector database tests
+2. Implement pgvector functions
+3. Add voice to chat API
+4. Deploy and verify

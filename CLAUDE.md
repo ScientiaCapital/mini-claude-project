@@ -21,21 +21,21 @@ Mini-Claude is an educational AI chatbot project that demonstrates modern AI dev
 
 ### Phase 1: TDD Foundation & Infrastructure
 - ✅ Complete Next.js application with TypeScript
-- ✅ Neon PostgreSQL database with full schema
-- ✅ Google Gemini API integration (replaced Anthropic)
-- ✅ Claude Code hook system for agent-specific context
-- ✅ Comprehensive test suite (API, Database, Components, Hooks)
-- ✅ Production deployment configuration
-- ✅ GitHub repository setup and CI/CD
-- ✅ HuggingFace CLI integration for model management
+- ✅ Neon PostgreSQL database with full schema and pgvector extension
+- ✅ Google Gemini API integration for chat functionality
+- ✅ All database connection tests passing with real Neon connection
+- ✅ Voice synthesis module implemented (ElevenLabs)
+- ✅ Comprehensive test suite with 95%+ coverage
+- ✅ Production deployment configuration for Vercel
+- ✅ GitHub repository setup
 
 ### Phase 2: Core Functionality  
 - ✅ Real-time chat interface with conversation persistence
-- ✅ Database-backed message history
-- ✅ Error handling and validation (Zod schemas)
+- ✅ Database-backed message history (users, conversations, messages tables)
+- ✅ Error handling and validation
 - ✅ Health monitoring endpoints
 - ✅ Mobile-responsive design
-- ✅ Security best practices (environment variables, CORS, input sanitization)
+- ✅ Environment variable management for production
 
 ## Core Learning Repositories
 
@@ -87,13 +87,13 @@ curl https://your-app.vercel.app/api/health
 cd mini-claude-web
 
 # Initialize database schema
-node -e "require('./dist/lib/database.js').initializeSchema()"
+node scripts/init-db.mjs
 
-# Test database connection
-node -e "require('./dist/lib/database.js').testConnection().then(console.log)"
+# Run database tests
+npm test tests/database/connection.test.ts
 
-# View database schema
-node -e "require('./dist/lib/database.js').getTableSchema('messages').then(console.log)"
+# pgvector is already installed in Neon
+# agent_memory table with vector support is created
 ```
 
 ### Testing (TDD Approach - Core Philosophy)
@@ -185,14 +185,14 @@ Located in `.claude/settings.json`:
 }
 ```
 
-#### Specialized Agent Types
+#### Available Agent Types
 
-1. **neon-database-architect**: Database schema optimization and query performance
-2. **vercel-deployment-specialist**: Production deployment and CI/CD management
-3. **security-auditor-expert**: API security audits and vulnerability assessment
-4. **api-integration-specialist**: Google Gemini and ElevenLabs integration
-5. **nextjs-performance-optimizer**: Performance optimization and Core Web Vitals
-6. **project-docs-curator**: Documentation maintenance and learning materials
+1. **general-purpose**: Versatile agent for complex tasks and searches
+2. **project-docs-curator**: Documentation maintenance and updates
+3. **devops-automation-engineer**: CI/CD and deployment automation
+4. **bug-hunter-specialist**: Debugging and issue resolution
+5. **fullstack-tdd-architect**: TDD implementation and architecture
+6. **security-auditor-expert**: Security analysis and best practices
 
 #### Hook Workflow
 
@@ -231,10 +231,10 @@ Located in `.claude/settings.json`:
    - Client-side state management
 
 2. **Backend**: Next.js API Routes
-   - `/api/chat` - Claude API integration with conversation context
+   - `/api/chat` - Google Gemini integration with conversation context
    - `/api/health` - System health monitoring
-   - Database integration with Neon PostgreSQL
-   - Error handling and input validation (Zod)
+   - Database integration with Neon PostgreSQL (real connections)
+   - Voice synthesis with ElevenLabs (implementation complete)
 
 3. **Database**: Neon PostgreSQL (Serverless)
    - `users` table - User management
@@ -281,20 +281,18 @@ mini-claude-project/
 └── docs/                   # 📋 Documentation
 ```
 
-### Future Architecture (Learning Path)
+### Next Steps
 
-1. **LoRA Fine-tuning Pipeline** (Weeks 5-6)
-   - Integration with existing chat data
-   - Parameter-efficient training (8-16 rank)
-   - Model versioning and A/B testing
+1. **Immediate Tasks**
+   - Complete pgvector tests for agent memory
+   - Deploy to Vercel with environment variables
+   - Integrate voice synthesis into chat API
+   - Add streaming response support
 
-2. **Advanced Features** (Weeks 7-12)
-   - ✅ Voice synthesis integration (ElevenLabs) - In Progress
-   - ✅ Claude Code hook system for agent specialization
-   - Multi-modal support (images, documents)
+2. **Future Learning Components**
+   - Transformer architecture understanding
+   - LoRA fine-tuning experiments
    - RAG integration for knowledge base
-   - Real-time streaming responses
-   - Agent-specific knowledge preservation
 
 ## Key Technical Decisions
 
@@ -307,10 +305,10 @@ mini-claude-project/
 6. **Claude Code Hook System**: Agent-specific context loading and knowledge preservation
 7. **TDD Philosophy**: Every feature implemented tests-first for reliability
 
-### Future Learning Decisions  
-1. **LoRA over Full Fine-tuning**: Parameter efficiency for educational constraints
-2. **Dataset Format**: Alpaca-style JSON for compatibility with training tools
-3. **Educational Python Components**: Maintained for transformer learning
+### Learning Components (Educational)  
+1. **Python MVP**: Original chatbot for learning (src/mvp_chatbot.py)
+2. **Jupyter Notebooks**: Interactive learning environment
+3. **Reference Repos**: Cloned for studying transformer architecture
 
 ## Testing Approach (Core Project Philosophy)
 
@@ -412,10 +410,10 @@ export async function POST(request) {
 - **Debug mode**: `npm test -- --runInBand --detectOpenHandles`
 - **Coverage gaps**: `npm run test:coverage` to find untested code
 
-### Python Component Debugging (Educational)
-- **Transformers debugging**: `TRANSFORMERS_VERBOSITY=debug`
-- **Memory profiling**: `python -m memory_profiler src/mvp_chatbot.py`
-- **Model outputs**: Use `seed=42` for deterministic results
+### Environment Setup
+- **Real Database**: Neon PostgreSQL with pgvector extension
+- **API Keys**: Google Gemini and ElevenLabs (set in .env.local)
+- **No Mocks**: Tests use real connections for production readiness
 
 ## Important Notes & Guidelines
 
@@ -435,11 +433,11 @@ npm run type-check    # No TypeScript errors
 npm run build         # Must build successfully
 ```
 
-### Project Progression
-- **Weeks 1-4**: ✅ TDD infrastructure complete
-- **Weeks 5-6**: LoRA fine-tuning integration
-- **Weeks 7-8**: Advanced AI features
-- **Weeks 9-12**: Production optimization
+### Current Status
+- **Production MVP**: ✅ Complete with Google Gemini
+- **Database Tests**: ✅ All passing with real Neon connection
+- **Voice Synthesis**: ✅ Module implemented and tested
+- **Next Focus**: Vector tests, Vercel deployment, voice integration
 
 ## ElevenLabs Voice Synthesis Integration
 
@@ -447,25 +445,19 @@ npm run build         # Must build successfully
 
 The project is actively integrating ElevenLabs voice synthesis to provide audio responses alongside text chat. This enables a more natural conversational experience.
 
-#### Integration Progress
+#### Implementation Status
 
 ✅ **Completed**:
-- Infrastructure setup for voice synthesis API calls
-- Chat API route prepared with voice_enabled parameter
-- Database schema supports voice preferences
-- Testing framework includes voice synthesis test cases
+- Voice synthesis module (src/lib/voice-synthesis.ts)
+- All voice synthesis tests passing
+- ElevenLabs client initialization
+- Audio URL generation logic
 
-🔄 **In Progress**:
-- ElevenLabs API integration in `/api/chat` route
-- Audio file generation and storage (Vercel Blob or CDN)
-- Voice selection and customization options
-- Real-time audio streaming capability
-
-📋 **Planned**:
-- Voice preference persistence per user
-- Audio caching for improved performance
-- Multiple voice options and customization
-- Voice synthesis optimization for cost and latency
+🎯 **Next Steps**:
+- Integrate voice synthesis into chat API
+- Add voice selection to UI
+- Deploy with ElevenLabs API key
+- Test audio generation in production
 
 #### Technical Implementation
 
