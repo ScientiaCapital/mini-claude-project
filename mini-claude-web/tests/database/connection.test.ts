@@ -75,11 +75,11 @@ describe('Database Schema Validation', () => {
       conversation_id: 'uuid',
       role: 'text',
       content: 'text',
-      created_at: 'timestamptz'
+      created_at: 'timestamp with time zone'
     }
     
     Object.entries(expectedColumns).forEach(([column, type]) => {
-      expect(schema.columns).toHaveProperty(column)
+      expect(schema.columns).toContain(column)
       expect(schema.columnTypes[column]).toBe(type)
     })
   })

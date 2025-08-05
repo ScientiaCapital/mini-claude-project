@@ -5,6 +5,19 @@
  */
 import { neon } from '@neondatabase/serverless'
 
+// In test environment, ensure we have proper fetch polyfill
+if (process.env.NODE_ENV === 'test' && typeof globalThis.fetch === 'undefined') {
+  const nodeFetch = require('node-fetch')
+  // @ts-ignore
+  globalThis.fetch = nodeFetch
+  // @ts-ignore
+  globalThis.Headers = nodeFetch.Headers
+  // @ts-ignore
+  globalThis.Request = nodeFetch.Request
+  // @ts-ignore
+  globalThis.Response = nodeFetch.Response
+}
+
 // Types for our database schema
 export interface DatabaseSchema {
   exists: boolean

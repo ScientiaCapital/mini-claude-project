@@ -1,14 +1,28 @@
-import '@testing-library/jest-dom'
-import dotenv from 'dotenv'
+// Only import jest-dom for DOM tests
+if (typeof document !== 'undefined') {
+  require('@testing-library/jest-dom')
+}
 
-// Load environment variables from .env.local for testing
+const dotenv = require('dotenv')
+
+// Load environment variables - .env.test first, then .env.local can override
+dotenv.config({ path: '.env.test' })
 dotenv.config({ path: '.env.local' })
 
 // Polyfill for Next.js Request/Response in tests
-import { TextEncoder, TextDecoder } from 'util'
+const { TextEncoder, TextDecoder } = require('util')
 
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
+
+// Polyfill fetch for Node environment (needed for Neon serverless driver)
+if (typeof globalThis.fetch === 'undefined') {
+  const fetch = require('node-fetch')
+  globalThis.fetch = fetch
+  globalThis.Headers = fetch.Headers
+  globalThis.Request = fetch.Request
+  globalThis.Response = fetch.Response
+}
 
 // Mock NextResponse.json for test environment
 const mockNextResponse = {
@@ -23,27 +37,9 @@ const mockNextResponse = {
 
 global.NextResponse = mockNextResponse
 
-// Polyfill fetch API for tests
-import 'whatwg-fetch'
-
 // Override environment for testing (keep test keys for safety)
-process.env.GOOGLE_API_KEY = 'test-key-google-gemini'
-process.env.ELEVENLABS_API_KEY = 'test-key-elevenlabs'
-process.env.NEXTAUTH_SECRET = 'test-secret-minimum-32-characters-long'
-process.env.NEXTAUTH_URL = 'http://localhost:3000'
-
-// Mock external API calls in tests (but use real database)
-global.fetch = jest.fn()
-
-// Mock Google Generative AI SDK for testing (prevent real API calls)
-jest.mock('@google/generative-ai', () => ({
-  GoogleGenerativeAI: jest.fn(() => ({
-    getGenerativeModel: jest.fn(() => ({
-      generateContent: jest.fn().mockResolvedValue({
-        response: {
-          text: jest.fn().mockReturnValue('Test response from Gemini')
-        }
-      }),
-    })),
-  })),
-}))
+// Use real NEON_DATABASE_URL from .env.local for database tests
+process.env.GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || 'test-key-google-gemini'
+process.env.ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY || 'test-key-elevenlabs'
+process.env.NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET || 'test-secret-minimum-32-characters-long'
+// NEXTAUTH_URL is handled by Vercel automatically

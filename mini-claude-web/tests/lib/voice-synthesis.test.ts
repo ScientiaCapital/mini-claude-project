@@ -4,32 +4,50 @@
  */
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 
-// Mock ElevenLabs SDK
-jest.mock('@elevenlabs/elevenlabs-js', () => ({
-  ElevenLabs: jest.fn()
+// Mock the ElevenLabs module before any imports
+jest.mock('@elevenlabs/elevenlabs-js', () => {
+  const mockConvert = jest.fn()
+  return {
+    ElevenLabs: jest.fn().mockImplementation(() => ({
+      textToSpeech: {
+        convert: mockConvert
+      }
+    })),
+    __mockConvert: mockConvert // Export for test access
+  }
+})
+
+// Mock the audio-storage module
+jest.mock('@/lib/audio-storage', () => ({
+  uploadAudio: jest.fn()
 }))
 
 describe('Voice Synthesis Utility', () => {
+  let mockElevenLabs: any
+  let mockConvert: jest.Mock
+  let mockUploadAudio: jest.Mock
+
   beforeEach(() => {
     jest.clearAllMocks()
+    jest.resetModules()
     process.env.ELEVENLABS_API_KEY = 'test-api-key'
+    process.env.NODE_ENV = 'test'
+    
+    // Get references to mocked functions
+    const elevenLabsModule = jest.requireMock('@elevenlabs/elevenlabs-js') as any
+    mockElevenLabs = elevenLabsModule.ElevenLabs
+    mockConvert = elevenLabsModule.__mockConvert
+    
+    const audioStorageModule = jest.requireMock('@/lib/audio-storage') as any
+    mockUploadAudio = audioStorageModule.uploadAudio
   })
 
   test('synthesizeVoice should convert text to audio successfully', async () => {
-    // This will be imported from the implementation file
+    const mockAudioBuffer = Buffer.from('mock-audio-data')
+    mockConvert.mockResolvedValue(mockAudioBuffer)
+    
     const { synthesizeVoice } = await import('@/lib/voice-synthesis')
     
-    const mockAudioBuffer = Buffer.from('mock-audio-data')
-    const mockConvert = jest.fn().mockResolvedValue(mockAudioBuffer)
-    
-    jest.doMock('@elevenlabs/elevenlabs-js', () => ({
-      ElevenLabs: jest.fn(() => ({
-        textToSpeech: {
-          convert: mockConvert
-        }
-      }))
-    }))
-
     const result = await synthesizeVoice({
       text: 'Hello, this is a test',
       voiceId: 'rachel'
@@ -39,6 +57,10 @@ describe('Voice Synthesis Utility', () => {
     expect(result.audioBuffer).toBe(mockAudioBuffer)
     expect(result.error).toBeUndefined()
     
+    expect(mockElevenLabs).toHaveBeenCalledWith({
+      apiKey: 'test-api-key'
+    })
+    
     expect(mockConvert).toHaveBeenCalledWith({
       text: 'Hello, this is a test',
       voice_id: 'rachel',
@@ -47,22 +69,16 @@ describe('Voice Synthesis Utility', () => {
   })
 
   test('synthesizeVoice should use default voice when not specified', async () => {
+    const mockAudioBuffer = Buffer.from('audio')
+    mockConvert.mockResolvedValue(mockAudioBuffer)
+    
     const { synthesizeVoice } = await import('@/lib/voice-synthesis')
     
-    const mockConvert = jest.fn().mockResolvedValue(Buffer.from('audio'))
-    
-    jest.doMock('@elevenlabs/elevenlabs-js', () => ({
-      ElevenLabs: jest.fn(() => ({
-        textToSpeech: {
-          convert: mockConvert
-        }
-      }))
-    }))
-
-    await synthesizeVoice({
+    const result = await synthesizeVoice({
       text: 'Test default voice'
     })
 
+    expect(result.success).toBe(true)
     expect(mockConvert).toHaveBeenCalledWith({
       text: 'Test default voice',
       voice_id: 'rachel', // Default voice
@@ -71,18 +87,10 @@ describe('Voice Synthesis Utility', () => {
   })
 
   test('synthesizeVoice should handle API errors gracefully', async () => {
+    mockConvert.mockRejectedValue(new Error('API rate limit exceeded'))
+    
     const { synthesizeVoice } = await import('@/lib/voice-synthesis')
     
-    const mockConvert = jest.fn().mockRejectedValue(new Error('API rate limit exceeded'))
-    
-    jest.doMock('@elevenlabs/elevenlabs-js', () => ({
-      ElevenLabs: jest.fn(() => ({
-        textToSpeech: {
-          convert: mockConvert
-        }
-      }))
-    }))
-
     const result = await synthesizeVoice({
       text: 'This will fail',
       voiceId: 'rachel'
@@ -141,13 +149,13 @@ describe('Voice Synthesis Utility', () => {
   })
 
   test('createAudioUrl should handle storage errors', async () => {
+    mockUploadAudio.mockRejectedValue(new Error('Storage error'))
+    
+    // Set NODE_ENV to production to test the storage path
+    process.env.NODE_ENV = 'production'
+    
     const { createAudioUrl } = await import('@/lib/voice-synthesis')
     
-    // Mock storage failure
-    jest.doMock('@/lib/audio-storage', () => ({
-      uploadAudio: jest.fn().mockRejectedValue(new Error('Storage error'))
-    }))
-
     const audioBuffer = Buffer.from('test-audio-data')
     
     await expect(createAudioUrl(audioBuffer)).rejects.toThrow('Failed to upload audio: Storage error')
@@ -165,5 +173,23 @@ describe('Voice Synthesis Utility', () => {
     delete process.env.ELEVENLABS_API_KEY
     expect(isVoiceEnabled(true)).toBe(false)
     expect(isVoiceEnabled(false)).toBe(false)
+  })
+
+  test('getAvailableVoices should return preset voices', async () => {
+    const { getAvailableVoices } = await import('@/lib/voice-synthesis')
+    
+    const voices = await getAvailableVoices()
+    
+    expect(voices).toHaveLength(3)
+    expect(voices[0]).toHaveProperty('voice_id', 'rachel')
+    expect(voices[0]).toHaveProperty('name', 'Rachel')
+  })
+
+  test('VOICE_PRESETS should contain voice configurations', async () => {
+    const { VOICE_PRESETS } = await import('@/lib/voice-synthesis')
+    
+    expect(VOICE_PRESETS).toHaveProperty('assistant')
+    expect(VOICE_PRESETS.assistant).toHaveProperty('voiceId', 'rachel')
+    expect(VOICE_PRESETS.assistant.settings).toHaveProperty('stability', 0.75)
   })
 })

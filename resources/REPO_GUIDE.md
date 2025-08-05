@@ -66,7 +66,19 @@ This guide documents the educational repositories we use and how they contribute
 
 ## Additional Learning Repositories
 
-### 6. picoGPT
+### 6. adk-samples (Google AI Development Kit)
+**Path**: `resources/repos/adk-samples`  
+**Purpose**: Production-ready AI agent patterns and best practices
+
+**Key Examples**:
+- Python agents: RAG, customer-service, data-science, financial-advisor
+- Java agents: software-bug-assistant, time-series-forecasting
+- Agent architectures and deployment patterns
+- Tool integration and MCP (Model Context Protocol) examples
+
+**How we use it**: Reference for production agent patterns, tool integration, and deployment strategies
+
+### 7. picoGPT
 **Path**: `resources/repos/picoGPT`  
 **Purpose**: Minimal GPT implementation in 40 lines
 
@@ -74,7 +86,7 @@ This guide documents the educational repositories we use and how they contribute
 
 **How we use it**: Understanding the essential components without abstraction
 
-### 7. LoRA
+### 8. LoRA
 **Path**: `resources/repos/LoRA`  
 **Purpose**: Official Microsoft LoRA implementation
 
