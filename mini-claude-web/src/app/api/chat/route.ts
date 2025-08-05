@@ -46,6 +46,14 @@ export async function POST(request: NextRequest): Promise<NextResponse<ChatRespo
       )
     }
 
+    // Check for empty message
+    if (body.message.trim() === '') {
+      return NextResponse.json(
+        { error: 'Message cannot be empty' },
+        { status: 400 }
+      )
+    }
+
     const validatedData = chatRequestSchema.parse(body)
     const { message, conversation_id, voice_enabled, voice_id } = validatedData
 

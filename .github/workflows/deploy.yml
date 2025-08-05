@@ -53,7 +53,9 @@ jobs:
       run: |
         echo "commit-hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         echo "branch-name=$(git branch --show-current)" >> $GITHUB_OUTPUT
-        echo "commit-message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+        # Get commit message safely (escape special characters)
+        COMMIT_MSG=$(git log -1 --pretty=%B | head -1 | tr '\n' ' ' | sed 's/[[:space:]]*$//')
+        echo "commit-message=${COMMIT_MSG}" >> $GITHUB_OUTPUT
     
     - name: Setup Node.js
       uses: actions/setup-node@v4

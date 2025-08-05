@@ -18,18 +18,22 @@ This document captures the technical context, architectural decisions, and engin
 6. **TDD-first development**: 95%+ test coverage maintained throughout
 
 ### ✅ **Recent Technical Achievements (Latest)**
-- **Complete test suite validation**: 27/27 tests passing with comprehensive coverage
+- **Test integrity system implementation**: Pre-commit hooks and CI validation ensure 60+ tests always run
+- **Complete test suite restoration**: 60 tests total (36 passing, 24 failing API tests to fix)
 - **NEON database production optimization**: Pooler endpoint implementation for scalability
 - **API health monitoring standardization**: Google Gemini and ElevenLabs integration validation
 - **Environment variable security**: Complete migration from development to production keys
 - **TypeScript strict mode compliance**: Zero compilation errors with enhanced type safety
-- **MCP server integration**: context7 (vector search) and sequential-thinking (enhanced reasoning) now active
+- **MCP server integration**: context7 (vector search), sequential-thinking (reasoning), memory (knowledge graph) active
 
 ### 🔄 **Current Development Focus**
+- **API test failures**: 24 failing tests need immediate fixes
+- **Test integrity enforcement**: Pre-commit hooks and CI validation prevent test disabling
 - **Voice synthesis integration**: ElevenLabs API integration in progress
 - **Agent specialization**: Claude Code hook system enhanced with MCP server capabilities
 - **Semantic memory optimization**: Leveraging context7 vector database for knowledge retrieval
 - **Enhanced reasoning patterns**: Using sequential-thinking for better problem-solving
+- **Knowledge graph integration**: Memory MCP server for structured knowledge management
 - **Vector database tests**: pgvector and agent_memory table ready for testing
 - **Production monitoring**: Real-time health checks and performance tracking
 
@@ -78,6 +82,15 @@ interface AgentContext {
   - Validate reasoning chains for completeness
   - Generate consistent documentation patterns
   - Improve architectural decision-making quality
+
+**memory - Knowledge Graph System:**
+- **Purpose**: Structured knowledge management
+- **Technology**: Entity and relationship graph storage
+- **Capabilities**:
+  - Store project entities (files, functions, tests, etc.)
+  - Track relationships between components
+  - Maintain observations about entities
+  - Persist knowledge across Claude Code sessions
 
 #### Enhanced Context Loading Pipeline with MCP Integration
 
@@ -135,11 +148,14 @@ interface AgentContext {
 - Environment variables properly configured
 
 #### Testing Status
-- 95%+ test coverage maintained
-- Database tests: ✅ All passing
-- Voice synthesis tests: ✅ All passing
-- API tests: Ready for voice integration
-- Vector tests: Next priority
+- Total tests: 60 (36 passing, 24 failing)
+- Test integrity: Pre-commit hooks prevent disabling
+- Database tests: ✅ All passing (9 tests)
+- Environment tests: ✅ All passing (9 tests)
+- Hooks tests: ✅ All passing (9 tests)
+- Voice synthesis tests: ✅ All passing (5 tests)
+- API tests: ❌ 24 tests failing (need fixes)
+- Vector tests: Next priority after API fixes
 
 ### Hook System Implementation
 
@@ -216,6 +232,21 @@ interface AgentContext {
 - **Real Connections**: No mocks - tests use actual database and APIs
 - **Coverage Target**: 95%+ maintained throughout development
 - **Test Categories**: Unit, Integration, API, Database
+- **Test Integrity**: Pre-commit hooks and CI ensure all tests run
+
+### Test Integrity System
+**Zero Tolerance for Test Disabling:**
+- Pre-commit hooks prevent creation of `tests-disabled/` directory
+- CI validates minimum test count (60+ required)
+- No `.skip()`, `xtest()`, or `xit()` patterns allowed
+- Automated scripts validate test health
+- All tests must be fixed, not disabled
+
+**Enforcement Mechanisms:**
+1. **Pre-commit Hook** (`.husky/pre-commit`): Validates test integrity locally
+2. **CI Validation** (`validate-tests.js`): Ensures minimum test count
+3. **GitHub Actions**: Blocks merges if tests are disabled
+4. **Test Count Script**: Monitors total test count trends
 
 ## Learning Components (Future)
 
@@ -426,11 +457,17 @@ CREATE TABLE messages (
 
 ## Immediate Next Steps
 
+### Critical Priority
+1. **Fix API Test Failures**: 24 failing tests must be resolved
+2. **Maintain Test Integrity**: Ensure pre-commit hooks are working
+3. **Document Test Health**: Track test count and status
+
 ### This Week
-1. **Vector Database Tests**: Test pgvector functionality
-2. **Voice Integration**: Add voice to chat API
-3. **Vercel Deployment**: Deploy with environment variables
-4. **Streaming Responses**: Implement real-time chat
+1. **API Test Fixes**: Resolve all 24 failing tests
+2. **Vector Database Tests**: Test pgvector functionality
+3. **Voice Integration**: Add voice to chat API
+4. **Vercel Deployment**: Deploy with environment variables
+5. **Streaming Responses**: Implement real-time chat
 
 ### Future Learning
 1. **Transformer Architecture**: Study and implement

@@ -145,6 +145,21 @@ jobs:
         npm run test:ci
         echo "✅ Unit tests passed"
     
+    - name: Validate test count and integrity
+      working-directory: mini-claude-web
+      run: |
+        # Check for forbidden tests-disabled directory
+        if [ -d "tests-disabled" ]; then
+          echo "❌ ERROR: tests-disabled directory detected!"
+          echo "This violates test integrity. All tests must remain in tests/"
+          exit 1
+        fi
+        
+        # Validate minimum test count
+        node scripts/validate-tests.js || exit 1
+        
+        echo "✅ Test integrity validation passed"
+    
     - name: Run tests with coverage
       working-directory: mini-claude-web
       run: |

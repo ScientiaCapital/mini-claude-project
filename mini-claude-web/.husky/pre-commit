@@ -1,0 +1,28 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Check for tests-disabled directory
+if [ -d "tests-disabled" ] || [ -d "mini-claude-web/tests-disabled" ]; then
+  echo "❌ ERROR: tests-disabled directory detected!"
+  echo "This violates test integrity. All tests must remain in the tests/ directory."
+  echo "Please move tests back to tests/ and ensure they pass or fix them."
+  exit 1
+fi
+
+# Check for skipped tests
+if grep -r "test\.skip\|describe\.skip\|it\.skip\|xtest\|xdescribe\|xit" --include="*.test.ts" --include="*.test.tsx" tests/ mini-claude-web/tests/ 2>/dev/null; then
+  echo "❌ ERROR: Skipped tests detected!"
+  echo "All tests must run. Please fix failing tests instead of skipping them."
+  exit 1
+fi
+
+# Validate minimum test count
+cd mini-claude-web 2>/dev/null || true
+if command -v npm >/dev/null 2>&1; then
+  echo "📊 Validating test count..."
+  node scripts/validate-tests.js || exit 1
+fi
+
+echo "✅ Pre-commit checks passed!"

@@ -17,8 +17,11 @@ This document outlines the project tasks following TDD principles, where tests a
 - **GitHub Repository**: https://github.com/ScientiaCapital/mini-claude-project
 - **Test Coverage**: 95%+ maintained with no mocks
 
-### ✅ **COMPLETED: Production Hardening & Quality Assurance**
-- **Complete Test Suite Success**: 27/27 tests passing (9 environment + 9 database + 9 hooks)
+### ✅ **COMPLETED: Test Integrity System Implementation**
+- **Test Suite Restoration**: 60 total tests restored (was hidden as 27 by tests-disabled directory)
+- **Test Integrity Enforcement**: Pre-commit hooks prevent test disabling
+- **CI Validation**: GitHub Actions validates minimum test count (60+)
+- **Current Status**: 36/60 tests passing, 24 API tests need fixes
 - **NEON Database Optimization**: Pooler endpoint configuration for production scalability
 - **API Health Monitoring**: Updated health checks for Google Gemini and ElevenLabs APIs
 - **Environment Security**: Complete migration from development to production API keys
@@ -28,15 +31,17 @@ This document outlines the project tasks following TDD principles, where tests a
 ### ✅ **COMPLETED: MCP Server Integration**
 - **context7 MCP Server**: Vector database integration with Upstash for semantic search and memory
 - **sequential-thinking MCP Server**: Enhanced reasoning engine for structured problem-solving
+- **memory MCP Server**: Knowledge graph system for entity and relationship management
 - **Agent Enhancement**: All specialized agents now leverage semantic memory and enhanced reasoning
 - **Knowledge Persistence**: Vector-based storage of successful patterns and solutions
 - **Cross-Session Memory**: Persistent knowledge base across development sessions
 
 ### 🎯 **IMMEDIATE NEXT STEPS**
-1. **Complete ElevenLabs voice synthesis** integration
-2. **Vector Database Tests**: Implement and test pgvector functionality
-3. **Test and optimize agent specialization** with MCP-enhanced capabilities
-4. **Vercel Deployment**: Deploy with production environment variables
+1. **Fix API Test Failures**: Resolve 24 failing tests ASAP
+2. **Complete ElevenLabs voice synthesis** integration
+3. **Vector Database Tests**: Implement and test pgvector functionality
+4. **Test and optimize agent specialization** with MCP-enhanced capabilities
+5. **Vercel Deployment**: Deploy with production environment variables
 
 ## 🏗️ **CURRENT ARCHITECTURE OVERVIEW**
 
@@ -50,7 +55,7 @@ Database: Neon PostgreSQL (serverless)
     ↓
 AI Services: Google Gemini + ElevenLabs (voice)
     ↓
-MCP Servers: context7 (vector search) + sequential-thinking (reasoning)
+MCP Servers: context7 (vector search) + sequential-thinking (reasoning) + memory (knowledge graph)
     ↓
 Vector Database: Upstash (semantic memory & embeddings)
     ↓
@@ -650,14 +655,15 @@ def test_api_health_check():
 - [x] **Neon PostgreSQL integration**: Database tests and schema with pgvector
 - [x] **Google Gemini API migration**: Complete replacement of Anthropic Claude
 - [x] **Claude Code hook system**: Agent-specific context loading implemented
-- [x] **MCP server integration**: context7 (vector search) and sequential-thinking (reasoning)
+- [x] **MCP server integration**: context7 (vector search), sequential-thinking (reasoning), memory (knowledge graph)
 - [x] **Voice Synthesis Module**: ElevenLabs implementation complete
 - [x] **GitHub repository setup**: https://github.com/ScientiaCapital/mini-claude-project
 - [x] **Production health monitoring**: API health checks and logging
-- [x] **95%+ test coverage**: All core functionality validated including hooks
-- [x] **27/27 tests passing**: Complete test suite success
+- [x] **Test integrity system**: Pre-commit hooks and CI validation prevent test disabling
+- [x] **60 tests restored**: 36 passing, 24 API tests need fixes
 
 ### 🎯 **THIS WEEK: Integration & Deployment**
+- [ ] **Fix API Tests**: Resolve 24 failing tests (CRITICAL)
 - [ ] **Vector Tests**: Implement pgvector functionality tests
 - [ ] **Voice in Chat API**: Integrate voice synthesis module
 - [ ] **Vercel Deployment**: Deploy with environment variables
@@ -688,6 +694,8 @@ npm run test:coverage
 2. **Implement minimum code** (Green phase)  
 3. **Refactor with confidence** (Tests stay green)
 4. **Real connections only** (No mocks in production)
+5. **Never disable tests** (Fix them instead)
+6. **Maintain test count** (60+ tests minimum)
 
 ### Next Development Cycle
 1. Write vector database tests

@@ -22,24 +22,16 @@ Mini-Claude is an educational AI chatbot project that demonstrates modern AI dev
 
 ### Phase 1: TDD Foundation & Infrastructure
 - ✅ Complete Next.js application with TypeScript
-<<<<<<< HEAD
 - ✅ Neon PostgreSQL database with full schema and pgvector extension
-- ✅ Google Gemini API integration for chat functionality
+- ✅ Google Gemini API integration (replaced Anthropic)
 - ✅ All database connection tests passing with real Neon connection
 - ✅ Voice synthesis module implemented (ElevenLabs)
-- ✅ Comprehensive test suite with 95%+ coverage
-- ✅ Production deployment configuration for Vercel
-- ✅ GitHub repository setup
-=======
-- ✅ Neon PostgreSQL database with full schema
-- ✅ Google Gemini API integration (replaced Anthropic)
 - ✅ Claude Code hook system for agent-specific context
 - ✅ MCP server integration (context7 + sequential-thinking)
 - ✅ Comprehensive test suite (API, Database, Components, Hooks)
-- ✅ Production deployment configuration
+- ✅ Production deployment configuration for Vercel
 - ✅ GitHub repository setup and CI/CD
 - ✅ HuggingFace CLI integration for model management
->>>>>>> abaad0ec795231e398a5a3ec12889cc29ee1e0b7
 
 ### Phase 2: Core Functionality  
 - ✅ Real-time chat interface with conversation persistence
@@ -210,16 +202,6 @@ Located in `.claude/settings.json`:
 }
 ```
 
-<<<<<<< HEAD
-#### Available Agent Types
-
-1. **general-purpose**: Versatile agent for complex tasks and searches
-2. **project-docs-curator**: Documentation maintenance and updates
-3. **devops-automation-engineer**: CI/CD and deployment automation
-4. **bug-hunter-specialist**: Debugging and issue resolution
-5. **fullstack-tdd-architect**: TDD implementation and architecture
-6. **security-auditor-expert**: Security analysis and best practices
-=======
 #### MCP Server Integration
 
 **Active MCP Servers:**
@@ -236,15 +218,24 @@ Located in `.claude/settings.json`:
    - Structured thinking patterns for technical documentation
    - Enhanced decision-making for architectural choices
 
+3. **memory** - Knowledge Graph System
+   - Entity and relationship management for project knowledge
+   - Persistent storage across Claude Code sessions
+   - Structured knowledge representation
+   - Enhanced context awareness for all agents
+
 #### Specialized Agent Types
 
-1. **neon-database-architect**: Database schema optimization and query performance (enhanced with semantic search)
-2. **vercel-deployment-specialist**: Production deployment and CI/CD management (enhanced with reasoning patterns)
-3. **security-auditor-expert**: API security audits and vulnerability assessment (enhanced with knowledge retrieval)
-4. **api-integration-specialist**: Google Gemini and ElevenLabs integration (enhanced with sequential reasoning)
-5. **nextjs-performance-optimizer**: Performance optimization and Core Web Vitals (enhanced with historical patterns)
-6. **project-docs-curator**: Documentation maintenance and learning materials (enhanced with semantic similarity)
->>>>>>> abaad0ec795231e398a5a3ec12889cc29ee1e0b7
+1. **general-purpose**: Versatile agent for complex tasks and searches
+2. **neon-database-architect**: Database schema optimization and query performance (enhanced with semantic search)
+3. **vercel-deployment-specialist**: Production deployment and CI/CD management (enhanced with reasoning patterns)
+4. **security-auditor-expert**: API security audits and vulnerability assessment (enhanced with knowledge retrieval)
+5. **api-integration-specialist**: Google Gemini and ElevenLabs integration (enhanced with sequential reasoning)
+6. **nextjs-performance-optimizer**: Performance optimization and Core Web Vitals (enhanced with historical patterns)
+7. **project-docs-curator**: Documentation maintenance and learning materials (enhanced with semantic similarity)
+8. **devops-automation-engineer**: CI/CD and deployment automation
+9. **bug-hunter-specialist**: Debugging and issue resolution
+10. **fullstack-tdd-architect**: TDD implementation and architecture
 
 #### Enhanced Hook Workflow with MCP Integration
 
@@ -347,28 +338,27 @@ mini-claude-project/
 ### Next Steps
 
 1. **Immediate Tasks**
+   - Fix ALL API test failures (24 tests failing)
    - Complete pgvector tests for agent memory
    - Deploy to Vercel with environment variables
    - Integrate voice synthesis into chat API
    - Add streaming response support
 
-<<<<<<< HEAD
-2. **Future Learning Components**
-   - Transformer architecture understanding
-   - LoRA fine-tuning experiments
-   - RAG integration for knowledge base
-=======
 2. **Advanced Features** (Weeks 7-12)
    - ✅ Voice synthesis integration (ElevenLabs) - In Progress
    - ✅ Claude Code hook system for agent specialization
-   - ✅ MCP server integration (context7 + sequential-thinking)
+   - ✅ MCP server integration (context7 + sequential-thinking + memory)
    - ✅ Vector-based semantic memory and knowledge retrieval
    - ✅ Enhanced reasoning capabilities with structured thinking
    - Multi-modal support (images, documents)
    - RAG integration for knowledge base (enhanced by context7)
    - Real-time streaming responses
    - Agent-specific knowledge preservation with semantic indexing
->>>>>>> abaad0ec795231e398a5a3ec12889cc29ee1e0b7
+
+3. **Future Learning Components**
+   - Transformer architecture understanding
+   - LoRA fine-tuning experiments
+   - Advanced RAG patterns
 
 ## Key Technical Decisions
 
@@ -379,9 +369,10 @@ mini-claude-project/
 4. **Neon PostgreSQL**: Serverless, auto-scaling database with excellent Vercel integration
 5. **TypeScript**: Type safety for production reliability
 6. **Claude Code Hook System**: Agent-specific context loading and knowledge preservation
-7. **MCP Server Integration**: context7 for semantic search, sequential-thinking for enhanced reasoning
+7. **MCP Server Integration**: context7 for semantic search, sequential-thinking for enhanced reasoning, memory for knowledge graphs
 8. **Vector Database (Upstash)**: Persistent semantic memory and similarity-based knowledge retrieval
-9. **TDD Philosophy**: Every feature implemented tests-first for reliability
+9. **Knowledge Graph (Memory MCP)**: Structured entity and relationship management for project knowledge
+10. **TDD Philosophy**: Every feature implemented tests-first for reliability
 
 ### Learning Components (Educational)  
 1. **Python MVP**: Original chatbot for learning (src/mvp_chatbot.py)
@@ -501,6 +492,20 @@ export async function POST(request) {
 - **Code quality**: ESLint + Prettier for consistency
 - **Documentation**: Update docs with any changes
 - **Security**: Never commit API keys or secrets
+
+### 🚨 **CRITICAL: Test Integrity Rules**
+- **NEVER disable tests**: All tests must remain in `tests/` directory
+- **NEVER skip tests**: No `.skip()`, `xtest()`, or `xit()` allowed
+- **NEVER create tests-disabled/**: This directory is forbidden
+- **Minimum test count**: 60+ tests must exist and run
+- **Fix, don't skip**: If a test fails, fix it - don't disable it
+- **Pre-commit validation**: Hooks enforce these rules automatically
+
+**Incident Prevention**: A `tests-disabled/` directory was discovered with 5 critical test files moved out of the main test suite, reducing visible test count from 60 to 27. This violates system integrity and the guardrails system. Such practices undermine code quality and create false confidence. This has been corrected and preventive measures implemented:
+- Pre-commit hooks prevent test disabling
+- CI validates minimum test count (60+)
+- Automated test integrity validation
+- Scripts to monitor test health
 
 ### Git Workflow
 ```bash
