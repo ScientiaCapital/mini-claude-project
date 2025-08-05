@@ -1,0 +1,532 @@
+name: CI - Pull Request Validation
+
+# Comprehensive CI pipeline for pull request validation
+# Integrates both Next.js web app and Python ML components
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  # Node.js environment
+  NODE_VERSION: '20'
+  PNPM_VERSION: '8'
+  
+  # Python environment
+  PYTHON_VERSION: '3.10'
+  PYTHONPATH: ${{ github.workspace }}/src
+  
+  # Testing configuration
+  JEST_TIMEOUT: 30000
+  PYTEST_TIMEOUT: 300
+  
+  # Performance thresholds
+  MAX_BUNDLE_SIZE: '500kb'
+  MIN_TEST_COVERAGE: 95
+
+jobs:
+  # Quick validation checks that fail fast
+  quick-checks:
+    name: Quick Validation Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+        cache-dependency-path: 'requirements.txt'
+    
+    # Environment validation
+    - name: Validate environment files
+      run: |
+        # Check for required environment files
+        test -f mini-claude-web/.env.local.example || test -f mini-claude-web/.env.example || echo "⚠️ No .env example found"
+        test -f requirements.txt || (echo "❌ requirements.txt missing" && exit 1)
+        test -f mini-claude-web/package.json || (echo "❌ package.json missing" && exit 1)
+        
+        # Validate package.json
+        cd mini-claude-web
+        node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8'))" || (echo "❌ Invalid package.json" && exit 1)
+        echo "✅ Environment files validated"
+    
+    # Code structure validation
+    - name: Validate project structure
+      run: |
+        # Required directories
+        test -d mini-claude-web/src/app || (echo "❌ Next.js app directory missing" && exit 1)
+        test -d mini-claude-web/tests || (echo "❌ Next.js tests directory missing" && exit 1)
+        test -d src/ml || (echo "❌ ML components directory missing" && exit 1)
+        test -d tests/ml || (echo "❌ ML tests directory missing" && exit 1)
+        
+        # Required files
+        test -f mini-claude-web/src/app/api/chat/route.ts || (echo "❌ Chat API route missing" && exit 1)
+        test -f mini-claude-web/src/app/api/health/route.ts || (echo "❌ Health API route missing" && exit 1)
+        test -f src/ml/lora.py || (echo "❌ LoRA implementation missing" && exit 1)
+        test -f src/ml/attention.py || (echo "❌ Attention mechanism missing" && exit 1)
+        
+        echo "✅ Project structure validated"
+    
+    # Security pre-checks
+    - name: Security pre-validation
+      run: |
+        # Check for secrets in code
+        if grep -r "sk-" . --exclude-dir=node_modules --exclude-dir=.git --exclude="*.md" 2>/dev/null; then
+          echo "❌ Potential API keys found in code"
+          exit 1
+        fi
+        
+        # Check for TODO security items
+        if grep -r "TODO.*security\|FIXME.*security" . --exclude-dir=node_modules --exclude-dir=.git 2>/dev/null; then
+          echo "⚠️ Security TODOs found - review before merge"
+        fi
+        
+        echo "✅ Basic security checks passed"
+
+  # Next.js application testing
+  web-app-tests:
+    name: Next.js App Tests
+    runs-on: ubuntu-latest
+    needs: quick-checks
+    timeout-minutes: 20
+    
+    strategy:
+      matrix:
+        node-version: ['18', '20']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: Install dependencies
+      working-directory: mini-claude-web
+      run: |
+        npm ci
+        echo "✅ Dependencies installed"
+    
+    - name: TypeScript type checking
+      working-directory: mini-claude-web
+      run: |
+        npm run type-check
+        echo "✅ TypeScript validation passed"
+    
+    - name: ESLint code quality
+      working-directory: mini-claude-web
+      run: |
+        npm run lint
+        echo "✅ Linting passed"
+    
+    - name: Run Jest unit tests
+      working-directory: mini-claude-web
+      run: |
+        npm run test:ci
+        echo "✅ Unit tests passed"
+    
+    - name: Run tests with coverage
+      working-directory: mini-claude-web
+      run: |
+        npm run test:coverage
+        echo "✅ Coverage tests completed"
+    
+    - name: Check test coverage threshold
+      working-directory: mini-claude-web
+      run: |
+        # Extract coverage percentage from Jest output
+        COVERAGE=$(npm run test:coverage 2>&1 | grep "All files" | awk '{print $10}' | sed 's/%//')
+        if [ -n "$COVERAGE" ] && [ "${COVERAGE%.*}" -lt "$MIN_TEST_COVERAGE" ]; then
+          echo "❌ Test coverage ${COVERAGE}% is below minimum ${MIN_TEST_COVERAGE}%"
+          exit 1
+        fi
+        echo "✅ Test coverage meets requirements"
+    
+    - name: Build application
+      working-directory: mini-claude-web
+      run: |
+        npm run build
+        echo "✅ Build successful"
+    
+    - name: Bundle size analysis
+      working-directory: mini-claude-web
+      run: |
+        # Check if .next directory exists
+        if [ -d ".next" ]; then
+          BUNDLE_SIZE=$(du -sh .next | cut -f1)
+          echo "Bundle size: $BUNDLE_SIZE"
+          echo "✅ Bundle analysis completed"
+        else
+          echo "⚠️ Build directory not found, skipping bundle analysis"
+        fi
+    
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: web-test-results-node-${{ matrix.node-version }}
+        path: |
+          mini-claude-web/coverage/
+          mini-claude-web/.next/
+        retention-days: 3
+
+  # Python ML components testing
+  ml-components-tests:
+    name: ML Components Tests
+    runs-on: ubuntu-latest
+    needs: quick-checks
+    timeout-minutes: 25
+    
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+        os: [ubuntu-latest]
+        include:
+          - os: macos-latest
+            python-version: '3.10'
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+        cache-dependency-path: 'requirements.txt'
+    
+    - name: Cache ML dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/pip
+          ~/.cache/huggingface
+          ~/.cache/torch
+        key: ${{ runner.os }}-ml-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-ml-${{ matrix.python-version }}-
+          ${{ runner.os }}-ml-
+    
+    - name: Install system dependencies
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get update
+          sudo apt-get install -y libsndfile1 ffmpeg
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          brew install ffmpeg
+        fi
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install -r requirements.txt
+        pip install safety bandit
+    
+    - name: Code quality checks
+      run: |
+        # Format check
+        black --check --diff src/ tests/
+        
+        # Linting
+        ruff check src/ tests/
+        
+        # Type checking (allow failures for now)
+        mypy src/ --ignore-missing-imports || echo "⚠️ Type checking has warnings"
+    
+    - name: Security scanning
+      run: |
+        # Dependency security
+        safety check --json --output safety-report.json || true
+        
+        # Code security
+        bandit -r src/ -f json -o bandit-report.json || true
+        
+        echo "✅ Security scans completed"
+      continue-on-error: true
+    
+    - name: Run ML component tests
+      run: |
+        # Core ML tests
+        pytest tests/ml/ -v --tb=short --cov=src/ml --cov-report=xml --timeout=${{ env.PYTEST_TIMEOUT }}
+        
+        # Data pipeline tests
+        pytest tests/data/ -v --tb=short --cov=src/data --timeout=${{ env.PYTEST_TIMEOUT }}
+        
+        # Integration tests
+        pytest tests/integration/ -v --tb=short --timeout=${{ env.PYTEST_TIMEOUT }}
+    
+    - name: Performance benchmarks
+      run: |
+        # LoRA efficiency demo
+        python demo_lora_efficiency.py
+        
+        # Data pipeline demo
+        python demo_pipeline.py
+        
+        echo "✅ Performance benchmarks completed"
+    
+    - name: Upload ML test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: ml-test-results-${{ matrix.os }}-py${{ matrix.python-version }}
+        path: |
+          coverage.xml
+          safety-report.json
+          bandit-report.json
+        retention-days: 7
+
+  # Integration testing combining web app and ML components
+  integration-tests:
+    name: Full Integration Tests
+    runs-on: ubuntu-latest
+    needs: [web-app-tests, ml-components-tests]
+    timeout-minutes: 15
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+        cache-dependency-path: 'requirements.txt'
+    
+    - name: Install all dependencies
+      run: |
+        # Python dependencies
+        pip install -r requirements.txt
+        
+        # Node.js dependencies
+        cd mini-claude-web
+        npm ci
+        cd ..
+    
+    - name: Run integration test suite
+      run: |
+        # Test GitHub workflow compatibility
+        pytest tests/test_github_workflow.py -v
+        
+        # Test project setup
+        pytest tests/test_project_setup.py -v
+        
+        # Test repository structure
+        pytest tests/test_repository_setup.py -v
+        
+        echo "✅ Integration tests passed"
+    
+    - name: Test API health endpoints
+      working-directory: mini-claude-web
+      run: |
+        # Build the app
+        npm run build
+        
+        # Start the app in background
+        npm start &
+        SERVER_PID=$!
+        
+        # Wait for server to start
+        sleep 10
+        
+        # Test health endpoint
+        curl -f http://localhost:3000/api/health || (echo "❌ Health endpoint failed" && kill $SERVER_PID && exit 1)
+        
+        # Test monitoring endpoint (if exists)
+        curl -f http://localhost:3000/api/monitoring || echo "⚠️ Monitoring endpoint not available"
+        
+        # Clean up
+        kill $SERVER_PID
+        
+        echo "✅ API health checks passed"
+
+  # Security scanning job
+  security-scan:
+    name: Security Analysis
+    runs-on: ubuntu-latest
+    needs: quick-checks
+    timeout-minutes: 15
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+    
+    - name: Upload Trivy scan results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+    
+    - name: Setup Node.js for dependency audit
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: NPM security audit
+      working-directory: mini-claude-web
+      run: |
+        npm audit --audit-level=high || echo "⚠️ NPM audit found issues"
+        npm audit --audit-level=critical
+    
+    - name: Setup Python for security scanning
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Python security audit
+      run: |
+        pip install safety bandit
+        safety check
+        bandit -r src/ -ll
+
+  # Performance and quality metrics
+  performance-analysis:
+    name: Performance Analysis
+    runs-on: ubuntu-latest
+    needs: [web-app-tests, ml-components-tests]
+    timeout-minutes: 20
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'mini-claude-web/package-lock.json'
+    
+    - name: Install dependencies and build
+      working-directory: mini-claude-web
+      run: |
+        npm ci
+        npm run build
+    
+    - name: Analyze bundle size
+      working-directory: mini-claude-web
+      run: |
+        # Install bundle analyzer
+        npm install --no-save @next/bundle-analyzer
+        
+        # Create bundle analysis
+        npx next build --no-lint
+        
+        # Check bundle sizes
+        if [ -d ".next/static" ]; then
+          echo "## Bundle Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          find .next/static -name "*.js" -exec du -h {} + | sort -hr | head -10 >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Setup Python for ML performance
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: ML performance benchmarks
+      run: |
+        pip install -r requirements.txt
+        pip install memory-profiler psutil
+        
+        echo "## ML Performance Benchmarks" >> $GITHUB_STEP_SUMMARY
+        echo "```" >> $GITHUB_STEP_SUMMARY
+        
+        # LoRA efficiency benchmarks
+        python demo_lora_efficiency.py >> $GITHUB_STEP_SUMMARY
+        
+        # Memory usage analysis
+        python -c "
+        import psutil
+        import torch
+        print(f'Available CPU cores: {psutil.cpu_count()}')
+        print(f'Available RAM: {psutil.virtual_memory().total / (1024**3):.1f} GB')
+        print(f'PyTorch version: {torch.__version__}')
+        print(f'CUDA available: {torch.cuda.is_available()}')
+        " >> $GITHUB_STEP_SUMMARY
+        
+        echo "```" >> $GITHUB_STEP_SUMMARY
+
+  # Final validation summary
+  ci-summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [quick-checks, web-app-tests, ml-components-tests, integration-tests, security-scan, performance-analysis]
+    if: always()
+    
+    steps:
+    - name: Generate CI Summary
+      run: |
+        echo "# CI Pipeline Results Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Job Status Overview" >> $GITHUB_STEP_SUMMARY
+        echo "- Quick Checks: ${{ needs.quick-checks.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Web App Tests: ${{ needs.web-app-tests.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- ML Components Tests: ${{ needs.ml-components-tests.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Integration Tests: ${{ needs.integration-tests.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Security Scan: ${{ needs.security-scan.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Performance Analysis: ${{ needs.performance-analysis.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Overall status
+        if [[ "${{ needs.quick-checks.result }}" == "success" && 
+              "${{ needs.web-app-tests.result }}" == "success" && 
+              "${{ needs.ml-components-tests.result }}" == "success" && 
+              "${{ needs.integration-tests.result }}" == "success" ]]; then
+          echo "## ✅ All Critical Tests Passed" >> $GITHUB_STEP_SUMMARY
+          echo "This pull request is ready for review and merge." >> $GITHUB_STEP_SUMMARY
+        else
+          echo "## ❌ Some Tests Failed" >> $GITHUB_STEP_SUMMARY
+          echo "Please review the failed jobs and fix issues before merging." >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Generated by Mini-Claude CI Pipeline" >> $GITHUB_STEP_SUMMARY

@@ -5,6 +5,7 @@
  */
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { GoogleGenerativeAI } from '@google/generative-ai'
+import type { MockSqlFunction } from '../types/mocks'
 
 // Mock Google Gemini SDK
 const mockGenerateContent = jest.fn()
@@ -17,7 +18,7 @@ jest.mock('@google/generative-ai', () => ({
 }))
 
 // Mock database connection
-const mockSql = jest.fn()
+const mockSql = jest.fn() as MockSqlFunction
 jest.mock('@/lib/database', () => ({
   getNeonConnection: jest.fn(() => mockSql)
 }))

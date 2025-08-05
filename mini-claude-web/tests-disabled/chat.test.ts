@@ -6,16 +6,17 @@
 import { describe, test, expect, beforeEach, jest } from '@jest/globals'
 import { NextRequest } from 'next/server'
 import { GoogleGenerativeAI } from '@google/generative-ai'
+import type { MockSqlFunction } from '../types/mocks'
 
 // Mock Next.js server components for testing
 jest.mock('next/server', () => ({
   NextRequest: class NextRequest extends Request {
-    constructor(input, init) {
+    constructor(input: any, init?: any) {
       super(input, init)
     }
   },
   NextResponse: {
-    json: (data, init) => new Response(JSON.stringify(data), {
+    json: (data: any, init?: any) => new Response(JSON.stringify(data), {
       status: init?.status || 200,
       headers: {
         'content-type': 'application/json',
@@ -85,7 +86,8 @@ describe('POST /api/chat', () => {
     }))
 
     // Mock database to avoid real DB calls
-    const mockSql = jest.fn()
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql
       .mockResolvedValueOnce([{ id: '123e4567-e89b-12d3-a456-426614174000' }]) // Get conversation history
       .mockResolvedValueOnce([{ id: 'msg_user' }]) // Save user message
       .mockResolvedValueOnce([{ id: 'msg_assistant' }]) // Save assistant message
@@ -121,7 +123,8 @@ describe('POST /api/chat', () => {
     const { POST } = await import('@/app/api/chat/route')
     
     // Mock database SQL template literal function
-    const mockSql = jest.fn()
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql
       .mockResolvedValueOnce([]) // Get conversation history (empty)
       .mockResolvedValueOnce([{ id: 'msg_user' }]) // Save user message
       .mockResolvedValueOnce([{ id: 'msg_assistant' }]) // Save assistant message
@@ -173,7 +176,8 @@ describe('POST /api/chat', () => {
       { role: 'user', content: 'What is your name?' }
     ]
 
-    const mockSql = jest.fn()
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql
       .mockResolvedValueOnce(mockHistory) // Get conversation history
       .mockResolvedValueOnce([{ id: 'msg_user' }]) // Save user message
       .mockResolvedValueOnce([{ id: 'msg_assistant' }]) // Save assistant message
@@ -223,8 +227,8 @@ Current message: Can you remember what we talked about?`
     const { POST } = await import('@/app/api/chat/route')
     
     // Mock database
-    const mockSql = jest.fn()
-      .mockResolvedValueOnce([]) // Get conversation history (empty)
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql.mockResolvedValueOnce([]) // Get conversation history (empty)
     
     jest.doMock('@/lib/database', () => ({
       getNeonConnection: jest.fn().mockResolvedValue(mockSql)
@@ -281,7 +285,8 @@ Current message: Can you remember what we talked about?`
   test('should create new conversation if none provided', async () => {
     const { POST } = await import('@/app/api/chat/route')
     
-    const mockSql = jest.fn()
+    const mockSql = jest.fn() as MockSqlFunction
+    mockSql
       .mockResolvedValueOnce([{ id: '456e7890-e89b-12d3-a456-426614174001' }]) // Create new conversation
       .mockResolvedValueOnce([]) // Get conversation history (empty for new conversation)
       .mockResolvedValueOnce([{ id: 'msg_user' }]) // Save user message

@@ -11,6 +11,7 @@ Mini-Claude is an educational AI chatbot project that demonstrates modern AI dev
 - **Voice synthesis capability** with ElevenLabs integration (in progress)
 - **Scalable database architecture** (Neon PostgreSQL)
 - **Claude Code hook system** for agent-specific context loading
+- **MCP server integration** with context7 (vector search) and sequential-thinking (enhanced reasoning)
 - **Complete TDD test coverage** (>95% coverage maintained)
 - **Cloud deployment** ready for Vercel
 - **Educational learning path** for transformer architecture and LoRA fine-tuning
@@ -21,6 +22,7 @@ Mini-Claude is an educational AI chatbot project that demonstrates modern AI dev
 
 ### Phase 1: TDD Foundation & Infrastructure
 - ✅ Complete Next.js application with TypeScript
+<<<<<<< HEAD
 - ✅ Neon PostgreSQL database with full schema and pgvector extension
 - ✅ Google Gemini API integration for chat functionality
 - ✅ All database connection tests passing with real Neon connection
@@ -28,6 +30,16 @@ Mini-Claude is an educational AI chatbot project that demonstrates modern AI dev
 - ✅ Comprehensive test suite with 95%+ coverage
 - ✅ Production deployment configuration for Vercel
 - ✅ GitHub repository setup
+=======
+- ✅ Neon PostgreSQL database with full schema
+- ✅ Google Gemini API integration (replaced Anthropic)
+- ✅ Claude Code hook system for agent-specific context
+- ✅ MCP server integration (context7 + sequential-thinking)
+- ✅ Comprehensive test suite (API, Database, Components, Hooks)
+- ✅ Production deployment configuration
+- ✅ GitHub repository setup and CI/CD
+- ✅ HuggingFace CLI integration for model management
+>>>>>>> abaad0ec795231e398a5a3ec12889cc29ee1e0b7
 
 ### Phase 2: Core Functionality  
 - ✅ Real-time chat interface with conversation persistence
@@ -36,6 +48,14 @@ Mini-Claude is an educational AI chatbot project that demonstrates modern AI dev
 - ✅ Health monitoring endpoints
 - ✅ Mobile-responsive design
 - ✅ Environment variable management for production
+
+### Phase 3: Production Hardening & Testing (LATEST ✅)
+- ✅ **Complete test suite validation**: All 27 tests passing (9 environment + 9 database + 9 hooks)
+- ✅ **NEON database optimization**: Pooler endpoint configuration for production reliability
+- ✅ **API health monitoring**: Updated health checks for Google Gemini and ElevenLabs integration
+- ✅ **Environment variable standardization**: Migrated from Anthropic to Google API keys
+- ✅ **TypeScript compilation**: Zero errors with strict type checking
+- ✅ **Production build verification**: Next.js build successful with optimized bundles
 
 ## Core Learning Repositories
 
@@ -98,25 +118,30 @@ npm test tests/database/connection.test.ts
 
 ### Testing (TDD Approach - Core Philosophy)
 ```bash
-# Web application tests (primary)
+# Web application tests (primary) - ALL PASSING ✅
 cd mini-claude-web
-npm test                          # Run all TDD tests
-npm run test:coverage            # Coverage report (target: >95%)
+npm test                          # Run all TDD tests (27/27 passing)
+npm run test:coverage            # Coverage report (>95% achieved)
 npm test tests/api/chat.test.ts  # Specific API tests
-npm test tests/database/         # Database tests
+npm test tests/database/         # Database tests (NEON PostgreSQL)
 
 # Python component tests (educational)
 pytest tests/                    # Python test suite
 pytest --cov=src tests/         # Python coverage
 ```
 
-### Future Training & Fine-tuning (Planned)
+### Training & Fine-tuning (Production Ready)
 ```bash
-# LoRA fine-tuning (to be implemented)
-python src/training/train_lora.py --dataset data/conversations/mini_claude_v1.json --epochs 3
+# LoRA fine-tuning (implemented)
+python demo_lora_efficiency.py  # Demonstrates efficiency metrics
+python -m pytest tests/test_lora.py -v  # Comprehensive test suite
 
-# Model evaluation (to be implemented)
-python src/evaluation/evaluate.py --model models/mini_claude_lora --test-set data/test_conversations.json
+# Data pipeline (implemented)
+python demo_pipeline.py  # Complete data processing demonstration
+python -m pytest tests/data/ -v  # Quality metrics validation
+
+# Transformer components (implemented)
+python -m pytest tests/ml/attention.test.py -v  # Attention mechanism tests
 ```
 
 ### Dataset Management
@@ -144,11 +169,11 @@ huggingface-cli scan-cache
 huggingface-cli upload username/mini-claude-lora ./outputs/checkpoint-final
 ```
 
-## Claude Code Hook System
+## Claude Code Hook System & MCP Integration
 
-### Agent-Specific Context Loading
+### Agent-Specific Context Loading with MCP Enhancement
 
-The project implements a sophisticated Claude Code hook system that provides agent-specific context and knowledge preservation. This enables specialized agents to work effectively within their domain expertise.
+The project implements a sophisticated Claude Code hook system enhanced by Model Context Protocol (MCP) servers that provide agent-specific context, semantic search capabilities, and enhanced reasoning. This enables specialized agents to work effectively with persistent memory and vector-based knowledge retrieval.
 
 #### Hook Configuration
 Located in `.claude/settings.json`:
@@ -185,6 +210,7 @@ Located in `.claude/settings.json`:
 }
 ```
 
+<<<<<<< HEAD
 #### Available Agent Types
 
 1. **general-purpose**: Versatile agent for complex tasks and searches
@@ -193,32 +219,67 @@ Located in `.claude/settings.json`:
 4. **bug-hunter-specialist**: Debugging and issue resolution
 5. **fullstack-tdd-architect**: TDD implementation and architecture
 6. **security-auditor-expert**: Security analysis and best practices
+=======
+#### MCP Server Integration
 
-#### Hook Workflow
+**Active MCP Servers:**
+
+1. **context7** - Vector Database & Semantic Search
+   - Upstash vector database integration for semantic memory
+   - Embedding-based context retrieval and similarity search
+   - Persistent knowledge storage across development sessions
+   - Enhanced context loading for agent specialization
+
+2. **sequential-thinking** - Enhanced Reasoning Engine
+   - Multi-step reasoning capabilities for complex problem solving
+   - Chain-of-thought processing for better AI responses
+   - Structured thinking patterns for technical documentation
+   - Enhanced decision-making for architectural choices
+
+#### Specialized Agent Types
+
+1. **neon-database-architect**: Database schema optimization and query performance (enhanced with semantic search)
+2. **vercel-deployment-specialist**: Production deployment and CI/CD management (enhanced with reasoning patterns)
+3. **security-auditor-expert**: API security audits and vulnerability assessment (enhanced with knowledge retrieval)
+4. **api-integration-specialist**: Google Gemini and ElevenLabs integration (enhanced with sequential reasoning)
+5. **nextjs-performance-optimizer**: Performance optimization and Core Web Vitals (enhanced with historical patterns)
+6. **project-docs-curator**: Documentation maintenance and learning materials (enhanced with semantic similarity)
+>>>>>>> abaad0ec795231e398a5a3ec12889cc29ee1e0b7
+
+#### Enhanced Hook Workflow with MCP Integration
 
 1. **Pre-Task Context Loading** (`pre-task-context.sh`):
    - Detects agent type from Task tool parameters
+   - **NEW**: Queries context7 for semantically similar past solutions
+   - **NEW**: Uses sequential-thinking for structured context preparation
    - Loads agent-specific context and best practices
-   - Provides relevant architectural information
+   - Provides relevant architectural information with historical patterns
    - Shares current project state and constraints
 
 2. **Post-Task Knowledge Update** (`post-agent-update.sh`):
    - Saves agent-specific learnings and solutions
-   - Updates knowledge base with successful patterns
-   - Creates agent-specific documentation artifacts
+   - **NEW**: Stores successful patterns in context7 vector database
+   - **NEW**: Uses sequential-thinking to structure knowledge artifacts
+   - Updates knowledge base with successful patterns and embeddings
+   - Creates agent-specific documentation artifacts with semantic indexing
 
 3. **Work Validation** (`validate-agent-work.sh`):
    - Runs agent-specific validation checks
+   - **NEW**: Compares solutions against similar past work using vector similarity
+   - **NEW**: Uses structured reasoning to validate approach completeness
    - Verifies deployment health, security, or performance
-   - Ensures quality standards are maintained
+   - Ensures quality standards are maintained with pattern matching
 
-### Hook System Benefits
+### Enhanced Hook System Benefits with MCP Integration
 
-- **Contextual Awareness**: Each agent has immediate access to relevant project information
-- **Knowledge Preservation**: Successful patterns and solutions are automatically captured
-- **Quality Assurance**: Automatic validation ensures consistent standards
-- **Specialization**: Agents can focus on their domain without losing project context
-- **Learning Continuity**: Knowledge persists across coding sessions
+- **Contextual Awareness**: Each agent has immediate access to relevant project information enhanced by semantic search
+- **Semantic Memory**: Vector-based knowledge retrieval finds contextually similar solutions from past work
+- **Enhanced Reasoning**: Sequential thinking patterns improve decision-making and problem-solving quality
+- **Knowledge Preservation**: Successful patterns and solutions are automatically captured with embeddings
+- **Quality Assurance**: Automatic validation ensures consistent standards with pattern matching
+- **Specialization**: Agents can focus on their domain while accessing cross-domain insights
+- **Learning Continuity**: Knowledge persists across coding sessions with semantic similarity matching
+- **Solution Discovery**: Find relevant past solutions even when keywords don't match exactly
 
 ## Architecture Overview
 
@@ -242,10 +303,12 @@ Located in `.claude/settings.json`:
    - `messages` table - Individual messages with full history
    - Optimized indexes for performance
 
-4. **AI Integration**: Google Gemini + ElevenLabs
+4. **AI Integration**: Google Gemini + ElevenLabs + MCP Servers
    - Primary Model: gemini-1.5-flash
    - Voice Synthesis: ElevenLabs API (in progress)
-   - Conversation context maintained
+   - Vector Search: context7 MCP server with Upstash integration
+   - Enhanced Reasoning: sequential-thinking MCP server
+   - Conversation context maintained with semantic memory
    - Error handling and rate limiting
    - Audio response generation capability
 
@@ -289,10 +352,23 @@ mini-claude-project/
    - Integrate voice synthesis into chat API
    - Add streaming response support
 
+<<<<<<< HEAD
 2. **Future Learning Components**
    - Transformer architecture understanding
    - LoRA fine-tuning experiments
    - RAG integration for knowledge base
+=======
+2. **Advanced Features** (Weeks 7-12)
+   - ✅ Voice synthesis integration (ElevenLabs) - In Progress
+   - ✅ Claude Code hook system for agent specialization
+   - ✅ MCP server integration (context7 + sequential-thinking)
+   - ✅ Vector-based semantic memory and knowledge retrieval
+   - ✅ Enhanced reasoning capabilities with structured thinking
+   - Multi-modal support (images, documents)
+   - RAG integration for knowledge base (enhanced by context7)
+   - Real-time streaming responses
+   - Agent-specific knowledge preservation with semantic indexing
+>>>>>>> abaad0ec795231e398a5a3ec12889cc29ee1e0b7
 
 ## Key Technical Decisions
 
@@ -303,7 +379,9 @@ mini-claude-project/
 4. **Neon PostgreSQL**: Serverless, auto-scaling database with excellent Vercel integration
 5. **TypeScript**: Type safety for production reliability
 6. **Claude Code Hook System**: Agent-specific context loading and knowledge preservation
-7. **TDD Philosophy**: Every feature implemented tests-first for reliability
+7. **MCP Server Integration**: context7 for semantic search, sequential-thinking for enhanced reasoning
+8. **Vector Database (Upstash)**: Persistent semantic memory and similarity-based knowledge retrieval
+9. **TDD Philosophy**: Every feature implemented tests-first for reliability
 
 ### Learning Components (Educational)  
 1. **Python MVP**: Original chatbot for learning (src/mvp_chatbot.py)

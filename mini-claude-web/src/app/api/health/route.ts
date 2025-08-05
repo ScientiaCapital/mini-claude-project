@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     // Check environment variables
     const requiredEnvVars = [
       'NEON_DATABASE_URL',
-      'ANTHROPIC_API_KEY',
+      'GOOGLE_API_KEY',
       'NEXTAUTH_SECRET'
     ]
     
@@ -32,7 +32,8 @@ export async function GET(request: NextRequest) {
         database: dbConnected,
         environment_variables: missingEnvVars.length === 0,
         api_keys: {
-          anthropic: !!process.env.ANTHROPIC_API_KEY,
+          google: !!process.env.GOOGLE_API_KEY,
+          elevenlabs: !!process.env.ELEVENLABS_API_KEY,
         }
       }
     }

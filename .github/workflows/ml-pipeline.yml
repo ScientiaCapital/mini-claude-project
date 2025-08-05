@@ -1,0 +1,407 @@
+name: ML Pipeline - Testing & Model Validation
+
+# Trigger workflow on push to main/master and all pull requests
+"on":
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - '.github/workflows/**'
+  workflow_dispatch:  # Allow manual triggering
+
+# Global environment variables
+env:
+  PYTHONPATH: ${{ github.workspace }}/src
+  PYTEST_TIMEOUT: 300  # 5 minutes timeout for tests
+  MODEL_CACHE_PATH: ~/.cache/huggingface
+  
+jobs:
+  # Main testing job with matrix strategy for multiple environments
+  test:
+    name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    
+    strategy:
+      fail-fast: false  # Don't cancel other jobs if one fails
+      matrix:
+        os: [ubuntu-latest, ubuntu-20.04]  # Test on multiple Ubuntu versions
+        python-version: ['3.9', '3.10', '3.11']
+        include:
+          # Add a Windows test for broader compatibility
+          - os: windows-latest
+            python-version: '3.10'
+          # Add macOS test for Apple Silicon compatibility
+          - os: macos-latest
+            python-version: '3.10'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        lfs: true  # Enable Git LFS for large model files
+        fetch-depth: 0  # Full history for better caching
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'  # Cache pip dependencies
+        cache-dependency-path: 'requirements.txt'
+    
+    # Advanced dependency caching strategy
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pip
+          ~/.cache/huggingface
+          ~/.cache/torch
+        key: ${{ runner.os }}-python-${{ matrix.python-version }}-deps-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-python-${{ matrix.python-version }}-deps-
+          ${{ runner.os }}-python-${{ matrix.python-version }}-
+          ${{ runner.os }}-python-
+    
+    # Install system dependencies for ML workloads
+    - name: Install system dependencies
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get update
+          sudo apt-get install -y libsndfile1 ffmpeg  # For audio processing if needed
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          brew install ffmpeg
+        fi
+      shell: bash
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install -r requirements.txt
+        pip install safety bandit  # Security scanning tools
+    
+    # Code quality and security checks
+    - name: Run security scan with Safety
+      run: |
+        safety check --json --output safety-report.json || true
+        if [ -f safety-report.json ]; then
+          echo "Security scan completed. Check safety-report.json for details."
+        fi
+      continue-on-error: true  # Don't fail the workflow on security warnings
+    
+    - name: Run security linting with Bandit
+      run: |
+        bandit -r src/ -f json -o bandit-report.json || true
+        if [ -f bandit-report.json ]; then
+          echo "Security linting completed. Check bandit-report.json for details."
+        fi
+      continue-on-error: true
+    
+    - name: Code formatting check with Black
+      run: |
+        black --check --diff src/ tests/
+    
+    - name: Lint with Ruff
+      run: |
+        ruff check src/ tests/
+    
+    - name: Type checking with MyPy
+      run: |
+        mypy src/ --ignore-missing-imports
+      continue-on-error: true  # Type checking warnings shouldn't fail the build
+    
+    # Core testing phase
+    - name: Run unit tests with pytest
+      run: |
+        pytest tests/unit/ -v --tb=short --cov=src --cov-report=xml --cov-report=term-missing --timeout=${{ env.PYTEST_TIMEOUT }}
+      continue-on-error: false
+    
+    - name: Run integration tests
+      run: |
+        pytest tests/integration/ -v --tb=short --timeout=${{ env.PYTEST_TIMEOUT }}
+      continue-on-error: false
+    
+    - name: Run main test suite
+      run: |
+        pytest tests/ -v --tb=short --cov=src --cov-report=xml --timeout=${{ env.PYTEST_TIMEOUT }} --durations=10
+    
+    # Model validation and performance testing
+    - name: Model validation tests
+      run: |
+        pytest tests/test_mvp_chatbot.py::test_chatbot_response_time -v
+        pytest tests/test_mvp_chatbot.py::test_chatbot_generates_different_responses -v
+        pytest tests/test_mvp_chatbot.py::test_chatbot_handles_long_input -v
+      timeout-minutes: 10
+    
+    # Performance benchmarking
+    - name: Performance benchmark tests
+      run: |
+        python -c "
+        import time
+        import sys
+        sys.path.append('src')
+        from mvp_chatbot import MVPChatbot
+        
+        print('Running performance benchmarks...')
+        bot = MVPChatbot()
+        
+        # Benchmark response time
+        start_time = time.time()
+        response = bot.generate('Hello, how are you?')
+        end_time = time.time()
+        
+        response_time = end_time - start_time
+        print(f'Response time: {response_time:.2f}s')
+        
+        if response_time > 5.0:
+            print('WARNING: Response time is slower than expected')
+            sys.exit(1)
+        
+        # Benchmark memory usage (basic check)
+        import psutil
+        process = psutil.Process()
+        memory_mb = process.memory_info().rss / 1024 / 1024
+        print(f'Memory usage: {memory_mb:.1f} MB')
+        
+        print('Performance benchmarks completed successfully')
+        "
+      timeout-minutes: 5
+    
+    # Upload test results and coverage
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false  # Don't fail if codecov upload fails
+    
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v3
+      if: always()  # Upload even if tests fail
+      with:
+        name: test-results-${{ matrix.os }}-${{ matrix.python-version }}
+        path: |
+          coverage.xml
+          safety-report.json
+          bandit-report.json
+        retention-days: 30
+  
+  # Specialized model validation job
+  model-validation:
+    name: Model Validation & ML-specific Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: test  # Run only if basic tests pass
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+    
+    - name: Cache HuggingFace models
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/huggingface
+        key: ${{ runner.os }}-hf-models-${{ hashFiles('src/mvp_chatbot.py') }}
+        restore-keys: |
+          ${{ runner.os }}-hf-models-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install torch-audio  # Additional ML dependencies for validation
+    
+    - name: Validate model loading and basic functionality
+      run: |
+        python -c "
+        import sys
+        sys.path.append('src')
+        from mvp_chatbot import MVPChatbot
+        
+        print('Testing model loading...')
+        bot = MVPChatbot()
+        print('✓ Model loaded successfully')
+        
+        print('Testing basic generation...')
+        response = bot.generate('Hello')
+        assert len(response) > 0, 'Model should generate non-empty response'
+        print(f'✓ Generated response: {response[:50]}...')
+        
+        print('Testing edge cases...')
+        empty_response = bot.generate('')
+        assert len(empty_response) > 0, 'Model should handle empty input'
+        print('✓ Empty input handled correctly')
+        
+        print('All model validation tests passed!')
+        "
+    
+    - name: Test model memory efficiency
+      run: |
+        python -c "
+        import sys
+        import psutil
+        import gc
+        sys.path.append('src')
+        from mvp_chatbot import MVPChatbot
+        
+        # Memory before loading
+        process = psutil.Process()
+        mem_before = process.memory_info().rss / 1024 / 1024
+        print(f'Memory before model loading: {mem_before:.1f} MB')
+        
+        # Load model
+        bot = MVPChatbot()
+        mem_after = process.memory_info().rss / 1024 / 1024
+        print(f'Memory after model loading: {mem_after:.1f} MB')
+        
+        model_memory = mem_after - mem_before
+        print(f'Model memory usage: {model_memory:.1f} MB')
+        
+        # Generate response
+        response = bot.generate('Test memory usage')
+        mem_final = process.memory_info().rss / 1024 / 1024
+        print(f'Memory after generation: {mem_final:.1f} MB')
+        
+        # Cleanup
+        del bot
+        gc.collect()
+        
+        print('Memory efficiency test completed')
+        "
+    
+    - name: Test model consistency and determinism
+      run: |
+        python -c "
+        import sys
+        import torch
+        sys.path.append('src')
+        from mvp_chatbot import MVPChatbot
+        
+        print('Testing model consistency...')
+        
+        # Test that the model loads consistently
+        bot1 = MVPChatbot()
+        bot2 = MVPChatbot()
+        
+        # Both models should have the same architecture
+        assert bot1.model.config.vocab_size == bot2.model.config.vocab_size
+        print('✓ Model architecture consistency verified')
+        
+        # Test with fixed seed for some determinism
+        torch.manual_seed(42)
+        response1 = bot1.generate('Test determinism')
+        
+        torch.manual_seed(42)
+        response2 = bot2.generate('Test determinism')
+        
+        print(f'Response 1: {response1[:30]}...')
+        print(f'Response 2: {response2[:30]}...')
+        print('✓ Model consistency tests completed')
+        "
+  
+  # Integration testing with the complete pipeline
+  integration-test:
+    name: Integration Testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [test, model-validation]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run comprehensive integration tests
+      run: |
+        pytest tests/test_github_workflow.py -v --tb=short
+        pytest tests/test_project_setup.py -v --tb=short
+        pytest tests/test_repository_setup.py -v --tb=short
+    
+    - name: Test end-to-end chatbot workflow
+      run: |
+        python -c "
+        import sys
+        sys.path.append('src')
+        from mvp_chatbot import MVPChatbot
+        
+        print('Running end-to-end integration test...')
+        
+        # Initialize chatbot
+        bot = MVPChatbot()
+        
+        # Test conversation flow
+        conversations = [
+            'Hello!',
+            'What is your name?',
+            'Tell me a joke',
+            'How are you today?',
+            'Goodbye'
+        ]
+        
+        for i, message in enumerate(conversations):
+            print(f'Turn {i+1}: {message}')
+            response = bot.generate(message)
+            print(f'Response: {response[:50]}...')
+            assert len(response) > 0, f'Response {i+1} should not be empty'
+        
+        # Verify conversation history
+        assert len(bot.conversation_history) == len(conversations)
+        print(f'✓ Conversation history: {len(bot.conversation_history)} turns')
+        
+        print('✓ End-to-end integration test passed!')
+        "
+  
+  # Final summary job
+  pipeline-summary:
+    name: Pipeline Summary
+    runs-on: ubuntu-latest
+    needs: [test, model-validation, integration-test]
+    if: always()  # Run even if some jobs fail
+    
+    steps:
+    - name: Pipeline Results Summary
+      run: |
+        echo "## ML Pipeline Results Summary" >> $GITHUB_STEP_SUMMARY
+        echo "### Job Status:" >> $GITHUB_STEP_SUMMARY
+        echo "- Test Job: ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Model Validation: ${{ needs.model-validation.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Integration Test: ${{ needs.integration-test.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Recommendations:" >> $GITHUB_STEP_SUMMARY
+        
+        if [[ "${{ needs.test.result }}" == "success" && "${{ needs.model-validation.result }}" == "success" && "${{ needs.integration-test.result }}" == "success" ]]; then
+          echo "✅ All tests passed! Ready for deployment." >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Some tests failed. Please review the job outputs above." >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Generated by GitHub Actions ML Pipeline" >> $GITHUB_STEP_SUMMARY

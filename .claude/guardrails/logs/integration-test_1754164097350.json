@@ -1,0 +1,889 @@
+{
+  "sessionId": "integration-test_1754164097350",
+  "agentType": "integration-test",
+  "taskDescription": "Test data flow",
+  "startTime": "2025-08-02T19:48:17.350Z",
+  "toolCalls": [
+    {
+      "tool": "Read",
+      "parameters": {
+        "file_path": "test.txt"
+      },
+      "result": {
+        "success": true,
+        "error": null,
+        "truncated": true
+      },
+      "timestamp": "2025-08-02T19:48:17.430Z",
+      "success": true
+    }
+  ],
+  "gitSnapshotBefore": {
+    "hash": "57d37e8ff7ccbf74bfecd0f6a45bb7de142064be",
+    "status": " M CLAUDE.md\n M ProjectContextEngineering.md\n M ProjectTasks.md\n M mini-claude-web/.claude/agents/context-requirements.json\n M mini-claude-web/package.json\n M mini-claude-web/tests/api/chat.test.ts\n M mini-claude-web/tsconfig.tsbuildinfo\n M src/__init__.py\n?? .claude/guardrails/\n?? .github/\n?? DELIVERABLES_SUMMARY.md\n?? data/\n?? demo_lora_efficiency.py\n?? demo_pipeline.py\n?? docs/implementation_roadmap_tdd.md\n?? docs/learning_priority_queue.md\n?? docs/research_analysis_2025.md\n?? src/data/\n?? src/ml/\n?? test_basic_lora.py\n?? tests/data/\n?? tests/ml/\n?? tests/test_experiment_tracking.py\n?? tests/test_github_workflow.py\n?? tests/test_lora.py\n",
+    "timestamp": "2025-08-02T19:48:17.368Z",
+    "stage": "before"
+  },
+  "fileStateBefore": {
+    "/Users/tmk/Documents/mini-claude-project/.claude/agents/context-requirements.json": {
+      "size": 4148,
+      "mtime": "2025-08-02T16:55:20.991Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/checkpoint-manager.js": {
+      "size": 17553,
+      "mtime": "2025-08-02T19:23:27.145Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/execution-monitor.js": {
+      "size": 21990,
+      "mtime": "2025-08-02T19:17:42.469Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_1.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_2.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_4.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_5.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_1.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_2.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_4.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_5.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754163966093_1.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754163966093_2.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754163966093_3.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754164097219_1.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.220Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754164097219_2.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.220Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754164097219_3.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.221Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754163966095_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754163966095_2.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754163966095_3.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754164097222_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.223Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754164097222_2.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.223Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754164097222_3.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.224Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754163966094_1.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754163966094_2.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754163966094_3.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754164097220_1.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.221Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754164097220_2.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.222Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754164097220_3.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.222Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754163966097_1.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754163966097_2.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754163966097_3.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754164097226_1.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.227Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754164097226_2.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.227Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754164097226_3.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.228Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754163966096_1.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754163966096_2.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754163966096_3.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754164097224_1.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.224Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754164097224_2.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.225Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754164097224_3.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.226Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/excellent-agent_reliability_test_1754163966085_1.json": {
+      "size": 1081,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/excellent-agent_reliability_test_1754164097209_1.json": {
+      "size": 1081,
+      "mtime": "2025-08-02T19:48:17.212Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_1.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_2.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_4.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_5.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_1.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.217Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_2.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.217Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.218Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_4.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.218Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_5.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.218Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/integration-test-agent_1754163740078.json": {
+      "size": 35979,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/integration-test-agent_1754164096616.json": {
+      "size": 38004,
+      "mtime": "2025-08-02T19:48:17.176Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-agent_reliability_test_1754163966089_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.176Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-agent_reliability_test_1754164097215_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.217Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-test-agent_1754163594222.json": {
+      "size": 1873,
+      "mtime": "2025-08-02T19:48:17.176Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-test-agent_1754163594222_verification.json": {
+      "size": 33598,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/perfect-test-agent_1754163625605.json": {
+      "size": 1768,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-agent_reliability_test_1754163966087_1.json": {
+      "size": 1049,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-agent_reliability_test_1754164097213_1.json": {
+      "size": 1049,
+      "mtime": "2025-08-02T19:48:17.215Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-1_1754163530884.json": {
+      "size": 1235,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-1_1754163530884_verification.json": {
+      "size": 33426,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-2_1754163562794.json": {
+      "size": 1497,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-2_1754163562794_verification.json": {
+      "size": 33181,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754163851837.json": {
+      "size": 1601,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754163851837_verification.json": {
+      "size": 3174,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754164097023.json": {
+      "size": 1601,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754164097023_verification.json": {
+      "size": 3174,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-legitimate-agent_1754163851901.json": {
+      "size": 1613,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-legitimate-agent_1754164097080.json": {
+      "size": 1613,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-phantom-agent_1754163851900.json": {
+      "size": 1071,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-phantom-agent_1754164097079.json": {
+      "size": 1071,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-phantom-agent_1754163851780.json": {
+      "size": 1059,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-phantom-agent_1754164096978.json": {
+      "size": 1059,
+      "mtime": "2025-08-02T19:48:17.180Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/pre-commit-hook.js": {
+      "size": 13395,
+      "mtime": "2025-08-02T19:22:03.766Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/reliability-data.json": {
+      "size": 32053,
+      "mtime": "2025-08-02T19:48:17.228Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/reliability-tracker.js": {
+      "size": 18798,
+      "mtime": "2025-08-02T19:21:07.852Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/component-test-report.json": {
+      "size": 1590,
+      "mtime": "2025-08-02T19:48:16.920Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/legitimate-test-file.js": {
+      "size": 68,
+      "mtime": "2025-08-02T19:48:17.079Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/perfect-agent-file1.py": {
+      "size": 67,
+      "mtime": "2025-08-02T19:40:25.606Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/perfect-agent-file2.py": {
+      "size": 67,
+      "mtime": "2025-08-02T19:40:25.606Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/precommit-blocking-test-report.json": {
+      "size": 2231,
+      "mtime": "2025-08-02T19:48:17.180Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/reliability-scoring-test-report.json": {
+      "size": 3806,
+      "mtime": "2025-08-02T19:48:17.229Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/test-mixed-scenario.txt": {
+      "size": 31,
+      "mtime": "2025-08-02T19:39:54.222Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-guardrail-components.js": {
+      "size": 16536,
+      "mtime": "2025-08-02T19:41:51.005Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-phantom-scenarios.js": {
+      "size": 28051,
+      "mtime": "2025-08-02T19:38:20.394Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-precommit-phantom-blocking.js": {
+      "size": 20332,
+      "mtime": "2025-08-02T19:43:44.114Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-reliability-scoring.js": {
+      "size": 23742,
+      "mtime": "2025-08-02T19:45:35.169Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-runner.js": {
+      "size": 23512,
+      "mtime": "2025-08-02T19:47:45.847Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/verify-agent.js": {
+      "size": 25547,
+      "mtime": "2025-08-02T19:19:36.675Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/post-agent-update.sh": {
+      "size": 4781,
+      "mtime": "2025-08-02T17:18:45.743Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/post-task.json": {
+      "size": 2448,
+      "mtime": "2025-08-02T16:55:00.234Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/pre-task-context.sh": {
+      "size": 3667,
+      "mtime": "2025-08-02T17:18:00.290Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/pre-task.json": {
+      "size": 1937,
+      "mtime": "2025-08-02T16:54:44.545Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/validate-agent-work.sh": {
+      "size": 3530,
+      "mtime": "2025-08-02T17:19:11.369Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/knowledge/agents/project-docs-curator/docs_update_20250802_115949.json": {
+      "size": 299,
+      "mtime": "2025-08-02T17:59:49.298Z"
+    }
+  },
+  "claims": [
+    {
+      "type": "test_work",
+      "description": "Test integration claim",
+      "expectedFiles": [],
+      "timestamp": "2025-08-02T19:48:17.429Z"
+    }
+  ],
+  "verificationStatus": "PASS",
+  "endTime": "2025-08-02T19:48:17.430Z",
+  "gitSnapshotAfter": {
+    "hash": "57d37e8ff7ccbf74bfecd0f6a45bb7de142064be",
+    "status": " M CLAUDE.md\n M ProjectContextEngineering.md\n M ProjectTasks.md\n M mini-claude-web/.claude/agents/context-requirements.json\n M mini-claude-web/package.json\n M mini-claude-web/tests/api/chat.test.ts\n M mini-claude-web/tsconfig.tsbuildinfo\n M src/__init__.py\n?? .claude/guardrails/\n?? .github/\n?? DELIVERABLES_SUMMARY.md\n?? data/\n?? demo_lora_efficiency.py\n?? demo_pipeline.py\n?? docs/implementation_roadmap_tdd.md\n?? docs/learning_priority_queue.md\n?? docs/research_analysis_2025.md\n?? src/data/\n?? src/ml/\n?? test_basic_lora.py\n?? tests/data/\n?? tests/ml/\n?? tests/test_experiment_tracking.py\n?? tests/test_github_workflow.py\n?? tests/test_lora.py\n",
+    "timestamp": "2025-08-02T19:48:17.448Z",
+    "stage": "after"
+  },
+  "fileStateAfter": {
+    "/Users/tmk/Documents/mini-claude-project/.claude/agents/context-requirements.json": {
+      "size": 4148,
+      "mtime": "2025-08-02T16:55:20.991Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/checkpoint-manager.js": {
+      "size": 17553,
+      "mtime": "2025-08-02T19:23:27.145Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/execution-monitor.js": {
+      "size": 21990,
+      "mtime": "2025-08-02T19:17:42.469Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_1.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_2.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_4.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754163966090_5.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_1.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_2.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_4.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/declining-agent_reliability_test_1754164097216_5.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.219Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754163966093_1.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.172Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754163966093_2.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754163966093_3.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754164097219_1.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.220Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754164097219_2.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.220Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-excellent_reliability_test_1754164097219_3.json": {
+      "size": 1083,
+      "mtime": "2025-08-02T19:48:17.221Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754163966095_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754163966095_2.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754163966095_3.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754164097222_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.223Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754164097222_2.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.223Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-fair_reliability_test_1754164097222_3.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.224Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754163966094_1.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.173Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754163966094_2.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754163966094_3.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754164097220_1.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.221Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754164097220_2.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.222Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-good_reliability_test_1754164097220_3.json": {
+      "size": 1068,
+      "mtime": "2025-08-02T19:48:17.222Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754163966097_1.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754163966097_2.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754163966097_3.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754164097226_1.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.227Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754164097226_2.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.227Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-phantom_reliability_test_1754164097226_3.json": {
+      "size": 1052,
+      "mtime": "2025-08-02T19:48:17.228Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754163966096_1.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754163966096_2.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.174Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754163966096_3.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754164097224_1.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.224Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754164097224_2.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.225Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/deploy-poor_reliability_test_1754164097224_3.json": {
+      "size": 1098,
+      "mtime": "2025-08-02T19:48:17.226Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/excellent-agent_reliability_test_1754163966085_1.json": {
+      "size": 1081,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/excellent-agent_reliability_test_1754164097209_1.json": {
+      "size": 1081,
+      "mtime": "2025-08-02T19:48:17.212Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_1.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_2.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_4.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754163966090_5.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_1.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.217Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_2.json": {
+      "size": 1110,
+      "mtime": "2025-08-02T19:48:17.217Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_3.json": {
+      "size": 1116,
+      "mtime": "2025-08-02T19:48:17.218Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_4.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.218Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/improving-agent_reliability_test_1754164097216_5.json": {
+      "size": 1080,
+      "mtime": "2025-08-02T19:48:17.218Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/integration-test-agent_1754163740078.json": {
+      "size": 35979,
+      "mtime": "2025-08-02T19:48:17.175Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/integration-test-agent_1754164096616.json": {
+      "size": 38004,
+      "mtime": "2025-08-02T19:48:17.176Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/integration-test_1754164097350.json": {
+      "size": 20174,
+      "mtime": "2025-08-02T19:48:17.430Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-agent_reliability_test_1754163966089_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.176Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-agent_reliability_test_1754164097215_1.json": {
+      "size": 1104,
+      "mtime": "2025-08-02T19:48:17.217Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-test-agent_1754163594222.json": {
+      "size": 1873,
+      "mtime": "2025-08-02T19:48:17.176Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/mixed-test-agent_1754163594222_verification.json": {
+      "size": 33598,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/perfect-test-agent_1754163625605.json": {
+      "size": 1768,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-agent_reliability_test_1754163966087_1.json": {
+      "size": 1049,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-agent_reliability_test_1754164097213_1.json": {
+      "size": 1049,
+      "mtime": "2025-08-02T19:48:17.215Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-1_1754163530884.json": {
+      "size": 1235,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-1_1754163530884_verification.json": {
+      "size": 33426,
+      "mtime": "2025-08-02T19:48:17.177Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-2_1754163562794.json": {
+      "size": 1497,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/phantom-test-agent-2_1754163562794_verification.json": {
+      "size": 33181,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754163851837.json": {
+      "size": 1601,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754163851837_verification.json": {
+      "size": 3174,
+      "mtime": "2025-08-02T19:48:17.178Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754164097023.json": {
+      "size": 1601,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-legitimate-agent_1754164097023_verification.json": {
+      "size": 3174,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-legitimate-agent_1754163851901.json": {
+      "size": 1613,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-legitimate-agent_1754164097080.json": {
+      "size": 1613,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-phantom-agent_1754163851900.json": {
+      "size": 1071,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-mixed-phantom-agent_1754164097079.json": {
+      "size": 1071,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-phantom-agent_1754163851780.json": {
+      "size": 1059,
+      "mtime": "2025-08-02T19:48:17.179Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/test-phantom-agent_1754164096978.json": {
+      "size": 1059,
+      "mtime": "2025-08-02T19:48:17.180Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/pre-commit-hook.js": {
+      "size": 13395,
+      "mtime": "2025-08-02T19:22:03.766Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/reliability-data.json": {
+      "size": 32053,
+      "mtime": "2025-08-02T19:48:17.228Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/reliability-tracker.js": {
+      "size": 18798,
+      "mtime": "2025-08-02T19:21:07.852Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/component-test-report.json": {
+      "size": 1590,
+      "mtime": "2025-08-02T19:48:16.920Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/legitimate-test-file.js": {
+      "size": 68,
+      "mtime": "2025-08-02T19:48:17.079Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/perfect-agent-file1.py": {
+      "size": 67,
+      "mtime": "2025-08-02T19:40:25.606Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/perfect-agent-file2.py": {
+      "size": 67,
+      "mtime": "2025-08-02T19:40:25.606Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/precommit-blocking-test-report.json": {
+      "size": 2231,
+      "mtime": "2025-08-02T19:48:17.180Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/reliability-scoring-test-report.json": {
+      "size": 3806,
+      "mtime": "2025-08-02T19:48:17.229Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-data/test-mixed-scenario.txt": {
+      "size": 31,
+      "mtime": "2025-08-02T19:39:54.222Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-guardrail-components.js": {
+      "size": 16536,
+      "mtime": "2025-08-02T19:41:51.005Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-phantom-scenarios.js": {
+      "size": 28051,
+      "mtime": "2025-08-02T19:38:20.394Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-precommit-phantom-blocking.js": {
+      "size": 20332,
+      "mtime": "2025-08-02T19:43:44.114Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-reliability-scoring.js": {
+      "size": 23742,
+      "mtime": "2025-08-02T19:45:35.169Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/test-runner.js": {
+      "size": 23512,
+      "mtime": "2025-08-02T19:47:45.847Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/verify-agent.js": {
+      "size": 25547,
+      "mtime": "2025-08-02T19:19:36.675Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/post-agent-update.sh": {
+      "size": 4781,
+      "mtime": "2025-08-02T17:18:45.743Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/post-task.json": {
+      "size": 2448,
+      "mtime": "2025-08-02T16:55:00.234Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/pre-task-context.sh": {
+      "size": 3667,
+      "mtime": "2025-08-02T17:18:00.290Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/pre-task.json": {
+      "size": 1937,
+      "mtime": "2025-08-02T16:54:44.545Z"
+    },
+    "/Users/tmk/Documents/mini-claude-project/.claude/hooks/validate-agent-work.sh": {
+      "size": 3530,
+      "mtime": "2025-08-02T17:19:11.369Z"
+    }
+  },
+  "verification": {
+    "overall": {
+      "status": "PASS",
+      "score": 1
+    },
+    "toolCallVerification": {
+      "score": 1,
+      "issues": [],
+      "toolCallCount": 1,
+      "claimCount": 1,
+      "hasFileCreationClaims": false,
+      "hasWriteToolCalls": false
+    },
+    "fileVerification": {
+      "score": 1,
+      "issues": [],
+      "expectedFiles": [],
+      "existingFiles": [],
+      "actualChanges": [
+        {
+          "type": "CREATED",
+          "file": "/Users/tmk/Documents/mini-claude-project/.claude/guardrails/logs/integration-test_1754164097350.json"
+        },
+        {
+          "type": "DELETED",
+          "file": "/Users/tmk/Documents/mini-claude-project/.claude/knowledge/agents/project-docs-curator/docs_update_20250802_115949.json"
+        }
+      ],
+      "missingFiles": []
+    },
+    "claimVerification": {
+      "score": 1,
+      "issues": [],
+      "totalClaims": 1,
+      "verifiedClaims": 1
+    },
+    "phantomDetection": {
+      "detected": false,
+      "phantoms": [],
+      "riskLevel": "LOW"
+    }
+  }
+}

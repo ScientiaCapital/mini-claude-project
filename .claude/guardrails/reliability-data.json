@@ -1,0 +1,1109 @@
+{
+  "agents": {
+    "mixed-test-agent": {
+      "totalSessions": 2,
+      "successfulSessions": 0,
+      "phantomWorkCount": 0,
+      "averageScore": 0,
+      "lastScore": 0,
+      "reliabilityTrend": [
+        {
+          "sessionId": "mixed-test-agent_1754163594222",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:39:54.222Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-test-agent_1754163594222",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:39:54.222Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:42:20.074Z",
+      "lastSeen": "2025-08-02T19:48:16.612Z"
+    },
+    "perfect-test-agent": {
+      "totalSessions": 2,
+      "successfulSessions": 0,
+      "phantomWorkCount": 0,
+      "averageScore": 0,
+      "lastScore": 0,
+      "reliabilityTrend": [
+        {
+          "sessionId": "perfect-test-agent_1754163625605",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:40:25.605Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "perfect-test-agent_1754163625605",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:40:25.605Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:42:20.075Z",
+      "lastSeen": "2025-08-02T19:48:16.612Z"
+    },
+    "phantom-test-agent-1": {
+      "totalSessions": 2,
+      "successfulSessions": 0,
+      "phantomWorkCount": 0,
+      "averageScore": 0,
+      "lastScore": 0,
+      "reliabilityTrend": [
+        {
+          "sessionId": "phantom-test-agent-1_1754163530884",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:38:50.885Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "phantom-test-agent-1_1754163530884",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:38:50.885Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:42:20.075Z",
+      "lastSeen": "2025-08-02T19:48:16.612Z"
+    },
+    "phantom-test-agent-2": {
+      "totalSessions": 2,
+      "successfulSessions": 0,
+      "phantomWorkCount": 0,
+      "averageScore": 0,
+      "lastScore": 0,
+      "reliabilityTrend": [
+        {
+          "sessionId": "phantom-test-agent-2_1754163562794",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:39:22.794Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "phantom-test-agent-2_1754163562794",
+          "score": 0,
+          "status": "pending",
+          "timestamp": "2025-08-02T19:39:22.794Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:42:20.075Z",
+      "lastSeen": "2025-08-02T19:48:16.612Z"
+    },
+    "excellent-agent": {
+      "totalSessions": 9,
+      "successfulSessions": 9,
+      "phantomWorkCount": 0,
+      "averageScore": 0.9166666666666666,
+      "lastScore": 0.85,
+      "reliabilityTrend": [
+        {
+          "sessionId": "excellent-agent_reliability_test_1754163966085_1",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.085Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754163966085_1",
+          "score": 0.95,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.085Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754163966085_1",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.085Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754163966085_1",
+          "score": 0.85,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.085Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754163966085_1",
+          "score": 0.85,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.085Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754164097209_1",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.209Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754164097209_1",
+          "score": 0.95,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.209Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754164097209_1",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.209Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "excellent-agent_reliability_test_1754164097209_1",
+          "score": 0.85,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.209Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:46:06.086Z",
+      "lastSeen": "2025-08-02T19:48:17.212Z"
+    },
+    "phantom-agent": {
+      "totalSessions": 9,
+      "successfulSessions": 0,
+      "phantomWorkCount": 9,
+      "averageScore": 0.08888888888888889,
+      "lastScore": 0.2,
+      "reliabilityTrend": [
+        {
+          "sessionId": "phantom-agent_reliability_test_1754163966087_1",
+          "score": 0,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.087Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754163966087_1",
+          "score": 0.1,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.087Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754163966087_1",
+          "score": 0,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.087Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754163966087_1",
+          "score": 0.2,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.087Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754163966087_1",
+          "score": 0.2,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.087Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754164097213_1",
+          "score": 0,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.213Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754164097213_1",
+          "score": 0.1,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.213Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754164097213_1",
+          "score": 0,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.213Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "phantom-agent_reliability_test_1754164097213_1",
+          "score": 0.2,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.213Z",
+          "phantomDetected": true
+        }
+      ],
+      "issues": [
+        {
+          "type": "Test failure",
+          "count": 9,
+          "firstSeen": "2025-08-02T19:46:06.088Z",
+          "lastSeen": "2025-08-02T19:48:17.214Z"
+        }
+      ],
+      "firstSeen": "2025-08-02T19:46:06.088Z",
+      "lastSeen": "2025-08-02T19:48:17.214Z"
+    },
+    "mixed-agent": {
+      "totalSessions": 11,
+      "successfulSessions": 4,
+      "phantomWorkCount": 0,
+      "averageScore": 0.6,
+      "lastScore": 0.6,
+      "reliabilityTrend": [
+        {
+          "sessionId": "mixed-agent_reliability_test_1754163966089_1",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:42:06.089Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754163966089_1",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.089Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754163966089_1",
+          "score": 0.4,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.089Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754163966089_1",
+          "score": 0.6,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:42:06.089Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754163966089_1",
+          "score": 0.6,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:42:06.089Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754164097215_1",
+          "score": 0.8,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.215Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754164097215_1",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:44:17.215Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754164097215_1",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.215Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754164097215_1",
+          "score": 0.4,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.215Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mixed-agent_reliability_test_1754164097215_1",
+          "score": 0.6,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:44:17.215Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [
+        {
+          "type": "Test failure",
+          "count": 7,
+          "firstSeen": "2025-08-02T19:46:06.089Z",
+          "lastSeen": "2025-08-02T19:48:17.216Z"
+        }
+      ],
+      "firstSeen": "2025-08-02T19:46:06.089Z",
+      "lastSeen": "2025-08-02T19:48:17.216Z"
+    },
+    "improving-agent": {
+      "totalSessions": 15,
+      "successfulSessions": 6,
+      "phantomWorkCount": 0,
+      "averageScore": 0.56,
+      "lastScore": 0.8,
+      "reliabilityTrend": [
+        {
+          "sessionId": "improving-agent_reliability_test_1754163966090_1",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754163966090_2",
+          "score": 0.4,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:38:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754163966090_3",
+          "score": 0.6,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:34:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754163966090_4",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:30:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754163966090_5",
+          "score": 0.8,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:26:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754164097216_1",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754164097216_2",
+          "score": 0.4,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:40:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754164097216_3",
+          "score": 0.6,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:36:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754164097216_4",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:32:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "improving-agent_reliability_test_1754164097216_5",
+          "score": 0.8,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:28:17.216Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [
+        {
+          "type": "Test failure",
+          "count": 9,
+          "firstSeen": "2025-08-02T19:46:06.090Z",
+          "lastSeen": "2025-08-02T19:48:17.217Z"
+        }
+      ],
+      "firstSeen": "2025-08-02T19:46:06.090Z",
+      "lastSeen": "2025-08-02T19:48:17.218Z"
+    },
+    "declining-agent": {
+      "totalSessions": 15,
+      "successfulSessions": 6,
+      "phantomWorkCount": 0,
+      "averageScore": 0.58,
+      "lastScore": 0.2,
+      "reliabilityTrend": [
+        {
+          "sessionId": "declining-agent_reliability_test_1754163966090_1",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754163966090_2",
+          "score": 0.8,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:38:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754163966090_3",
+          "score": 0.6,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:34:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754163966090_4",
+          "score": 0.4,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:30:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754163966090_5",
+          "score": 0.2,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:26:06.090Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754164097216_1",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754164097216_2",
+          "score": 0.8,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:40:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754164097216_3",
+          "score": 0.6,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:36:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754164097216_4",
+          "score": 0.4,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:32:17.216Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "declining-agent_reliability_test_1754164097216_5",
+          "score": 0.2,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:28:17.216Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [
+        {
+          "type": "Test failure",
+          "count": 9,
+          "firstSeen": "2025-08-02T19:46:06.093Z",
+          "lastSeen": "2025-08-02T19:48:17.219Z"
+        }
+      ],
+      "firstSeen": "2025-08-02T19:46:06.092Z",
+      "lastSeen": "2025-08-02T19:48:17.219Z"
+    },
+    "deploy-excellent": {
+      "totalSessions": 9,
+      "successfulSessions": 9,
+      "phantomWorkCount": 0,
+      "averageScore": 0.9000000000000001,
+      "lastScore": 0.9,
+      "reliabilityTrend": [
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754163966093_1",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.093Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754163966093_2",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:38:06.093Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754163966093_3",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:34:06.093Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754163966093_1",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.093Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754163966093_2",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:38:06.093Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754163966093_3",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:34:06.093Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754164097219_1",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.219Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754164097219_2",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:40:17.219Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-excellent_reliability_test_1754164097219_3",
+          "score": 0.9,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:36:17.219Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:46:06.093Z",
+      "lastSeen": "2025-08-02T19:48:17.220Z"
+    },
+    "deploy-good": {
+      "totalSessions": 9,
+      "successfulSessions": 9,
+      "phantomWorkCount": 0,
+      "averageScore": 0.7000000000000001,
+      "lastScore": 0.7,
+      "reliabilityTrend": [
+        {
+          "sessionId": "deploy-good_reliability_test_1754163966094_1",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.094Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754163966094_2",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:38:06.094Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754163966094_3",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:34:06.094Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754163966094_1",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:06.094Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754163966094_2",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:38:06.094Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754163966094_3",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:34:06.094Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754164097220_1",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:17.220Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754164097220_2",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:40:17.220Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-good_reliability_test_1754164097220_3",
+          "score": 0.7,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:36:17.220Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:46:06.094Z",
+      "lastSeen": "2025-08-02T19:48:17.222Z"
+    },
+    "deploy-fair": {
+      "totalSessions": 9,
+      "successfulSessions": 0,
+      "phantomWorkCount": 0,
+      "averageScore": 0.5,
+      "lastScore": 0.5,
+      "reliabilityTrend": [
+        {
+          "sessionId": "deploy-fair_reliability_test_1754163966095_1",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:42:06.095Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754163966095_2",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:38:06.095Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754163966095_3",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:34:06.095Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754163966095_1",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:42:06.095Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754163966095_2",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:38:06.095Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754163966095_3",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:34:06.095Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754164097222_1",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:44:17.222Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754164097222_2",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:40:17.222Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-fair_reliability_test_1754164097222_3",
+          "score": 0.5,
+          "status": "WARNING",
+          "timestamp": "2025-08-02T19:36:17.222Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [
+        {
+          "type": "Test failure",
+          "count": 9,
+          "firstSeen": "2025-08-02T19:46:06.095Z",
+          "lastSeen": "2025-08-02T19:48:17.223Z"
+        }
+      ],
+      "firstSeen": "2025-08-02T19:46:06.095Z",
+      "lastSeen": "2025-08-02T19:48:17.223Z"
+    },
+    "deploy-poor": {
+      "totalSessions": 9,
+      "successfulSessions": 0,
+      "phantomWorkCount": 0,
+      "averageScore": 0.29999999999999993,
+      "lastScore": 0.3,
+      "reliabilityTrend": [
+        {
+          "sessionId": "deploy-poor_reliability_test_1754163966096_1",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.096Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754163966096_2",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:38:06.096Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754163966096_3",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:34:06.096Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754163966096_1",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.096Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754163966096_2",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:38:06.096Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754163966096_3",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:34:06.096Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754164097224_1",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.224Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754164097224_2",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:40:17.224Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "deploy-poor_reliability_test_1754164097224_3",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:36:17.224Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [
+        {
+          "type": "Test failure",
+          "count": 9,
+          "firstSeen": "2025-08-02T19:46:06.096Z",
+          "lastSeen": "2025-08-02T19:48:17.225Z"
+        }
+      ],
+      "firstSeen": "2025-08-02T19:46:06.096Z",
+      "lastSeen": "2025-08-02T19:48:17.225Z"
+    },
+    "deploy-phantom": {
+      "totalSessions": 9,
+      "successfulSessions": 0,
+      "phantomWorkCount": 9,
+      "averageScore": 0.7999999999999999,
+      "lastScore": 0.8,
+      "reliabilityTrend": [
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754163966097_1",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.097Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754163966097_2",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:38:06.097Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754163966097_3",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:34:06.097Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754163966097_1",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:42:06.097Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754163966097_2",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:38:06.097Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754163966097_3",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:34:06.097Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754164097226_1",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:17.226Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754164097226_2",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:40:17.226Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "deploy-phantom_reliability_test_1754164097226_3",
+          "score": 0.8,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:36:17.226Z",
+          "phantomDetected": true
+        }
+      ],
+      "issues": [
+        {
+          "type": "Test failure",
+          "count": 9,
+          "firstSeen": "2025-08-02T19:46:06.097Z",
+          "lastSeen": "2025-08-02T19:48:17.227Z"
+        }
+      ],
+      "firstSeen": "2025-08-02T19:46:06.097Z",
+      "lastSeen": "2025-08-02T19:48:17.227Z"
+    },
+    "integration-test-agent": {
+      "totalSessions": 1,
+      "successfulSessions": 1,
+      "phantomWorkCount": 0,
+      "averageScore": 1,
+      "lastScore": 1,
+      "reliabilityTrend": [
+        {
+          "sessionId": "integration-test-agent_1754163740078",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:42:20.325Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:48:16.612Z",
+      "lastSeen": "2025-08-02T19:48:16.612Z"
+    },
+    "test-legitimate-agent": {
+      "totalSessions": 1,
+      "successfulSessions": 1,
+      "phantomWorkCount": 0,
+      "averageScore": 1,
+      "lastScore": 1,
+      "reliabilityTrend": [
+        {
+          "sessionId": "test-legitimate-agent_1754163851837",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:11.836Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:48:16.613Z",
+      "lastSeen": "2025-08-02T19:48:16.613Z"
+    },
+    "test-mixed-legitimate-agent": {
+      "totalSessions": 1,
+      "successfulSessions": 1,
+      "phantomWorkCount": 0,
+      "averageScore": 1,
+      "lastScore": 1,
+      "reliabilityTrend": [
+        {
+          "sessionId": "test-mixed-legitimate-agent_1754163851901",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:44:11.900Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:48:16.613Z",
+      "lastSeen": "2025-08-02T19:48:16.613Z"
+    },
+    "test-mixed-phantom-agent": {
+      "totalSessions": 1,
+      "successfulSessions": 0,
+      "phantomWorkCount": 1,
+      "averageScore": 0,
+      "lastScore": 0,
+      "reliabilityTrend": [
+        {
+          "sessionId": "test-mixed-phantom-agent_1754163851900",
+          "score": 0,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:11.900Z",
+          "phantomDetected": true
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:48:16.613Z",
+      "lastSeen": "2025-08-02T19:48:16.613Z"
+    },
+    "test-phantom-agent": {
+      "totalSessions": 1,
+      "successfulSessions": 0,
+      "phantomWorkCount": 1,
+      "averageScore": 0,
+      "lastScore": 0,
+      "reliabilityTrend": [
+        {
+          "sessionId": "test-phantom-agent_1754163851780",
+          "score": 0,
+          "status": "FAIL",
+          "timestamp": "2025-08-02T19:44:11.781Z",
+          "phantomDetected": true
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:48:16.613Z",
+      "lastSeen": "2025-08-02T19:48:16.613Z"
+    },
+    "integration-test": {
+      "totalSessions": 1,
+      "successfulSessions": 1,
+      "phantomWorkCount": 0,
+      "averageScore": 1,
+      "lastScore": 1,
+      "reliabilityTrend": [
+        {
+          "sessionId": "integration-test_1754164097350",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-02T19:48:17.430Z",
+          "phantomDetected": false
+        }
+      ],
+      "issues": [],
+      "firstSeen": "2025-08-02T19:48:17.519Z",
+      "lastSeen": "2025-08-02T19:48:17.519Z"
+    },
+    "test-agent": {
+      "totalSessions": 6,
+      "successfulSessions": 3,
+      "phantomWorkCount": 3,
+      "averageScore": 0.6499999999999999,
+      "lastScore": 0.3,
+      "reliabilityTrend": [
+        {
+          "sessionId": "mock_test-agent_1754324939995",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-04T16:28:59.995Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mock_test-agent_1754324939995",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-04T16:28:59.995Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "mock_test-agent_1754324981150",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-04T16:29:41.150Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mock_test-agent_1754324981150",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-04T16:29:41.150Z",
+          "phantomDetected": true
+        },
+        {
+          "sessionId": "mock_test-agent_1754325057187",
+          "score": 1,
+          "status": "PASS",
+          "timestamp": "2025-08-04T16:30:57.187Z",
+          "phantomDetected": false
+        },
+        {
+          "sessionId": "mock_test-agent_1754325057188",
+          "score": 0.3,
+          "status": "FAIL",
+          "timestamp": "2025-08-04T16:30:57.188Z",
+          "phantomDetected": true
+        }
+      ],
+      "issues": [
+        {
+          "type": "phantom_work",
+          "count": 3,
+          "firstSeen": "2025-08-04T16:28:59.995Z",
+          "lastSeen": "2025-08-04T16:30:57.188Z"
+        }
+      ],
+      "firstSeen": "2025-08-04T16:28:59.995Z",
+      "lastSeen": "2025-08-04T16:30:57.188Z"
+    }
+  },
+  "summary": {
+    "totalSessions": 124,
+    "successfulSessions": 50,
+    "phantomWorkDetected": 23,
+    "lastUpdated": "2025-08-04T16:30:57.188Z"
+  }
+}

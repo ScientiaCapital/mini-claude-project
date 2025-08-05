@@ -1,0 +1,142 @@
+{
+  "timestamp": "2025-08-02T19:48:17.228Z",
+  "summary": {
+    "totalTests": 5,
+    "passedTests": 4,
+    "failedTests": 1,
+    "accuracy": 0.8,
+    "scoringAccuracy": 0.75
+  },
+  "results": [
+    {
+      "scenario": "Excellent Agent Scoring",
+      "agentType": "excellent-agent",
+      "expected": "excellent reliability, DEPLOY recommendation",
+      "actual": {
+        "reliabilityLevel": "excellent",
+        "averageScore": 0.9166666666666666,
+        "successRate": 1,
+        "recommendation": "DEPLOY"
+      },
+      "passed": true,
+      "details": {
+        "totalSessions": 9,
+        "successRate": 1,
+        "phantomRate": 0,
+        "averageScore": 0.9166666666666666,
+        "lastScore": 0.85,
+        "reliabilityLevel": "excellent",
+        "trendDirection": "stable"
+      }
+    },
+    {
+      "scenario": "Phantom Work Agent Scoring",
+      "agentType": "phantom-agent",
+      "expected": "poor/unreliable reliability, AVOID recommendation",
+      "actual": {
+        "reliabilityLevel": "unreliable",
+        "phantomRate": 1,
+        "averageScore": 0.08888888888888889,
+        "recommendation": "AVOID"
+      },
+      "passed": true,
+      "details": {
+        "totalSessions": 9,
+        "successRate": 0,
+        "phantomRate": 1,
+        "averageScore": 0.08888888888888889,
+        "lastScore": 0.2,
+        "reliabilityLevel": "unreliable",
+        "trendDirection": "stable"
+      }
+    },
+    {
+      "scenario": "Mixed Performance Scoring",
+      "agentType": "mixed-agent",
+      "expected": "fair/good reliability, cautious deployment",
+      "actual": {
+        "reliabilityLevel": "poor",
+        "averageScore": 0.6,
+        "successRate": 0.36363636363636365,
+        "recommendation": "AVOID"
+      },
+      "passed": false,
+      "details": {
+        "totalSessions": 11,
+        "successRate": 0.36363636363636365,
+        "phantomRate": 0,
+        "averageScore": 0.6,
+        "lastScore": 0.6,
+        "reliabilityLevel": "poor",
+        "trendDirection": "stable"
+      }
+    },
+    {
+      "scenario": "Trend Analysis",
+      "expected": "Detect improving and declining trends",
+      "actual": {
+        "improvingTrend": "improving",
+        "decliningTrend": "declining"
+      },
+      "passed": true,
+      "details": {
+        "improving": {
+          "totalSessions": 15,
+          "successRate": 0.4,
+          "phantomRate": 0,
+          "averageScore": 0.56,
+          "lastScore": 0.8,
+          "reliabilityLevel": "fair",
+          "trendDirection": "improving"
+        },
+        "declining": {
+          "totalSessions": 15,
+          "successRate": 0.4,
+          "phantomRate": 0,
+          "averageScore": 0.58,
+          "lastScore": 0.2,
+          "reliabilityLevel": "fair",
+          "trendDirection": "declining"
+        }
+      }
+    },
+    {
+      "scenario": "Deployment Recommendations",
+      "expected": "Correct deployment recommendations for different reliability levels",
+      "actual": "4/5 correct",
+      "passed": true,
+      "details": [
+        {
+          "agent": "deploy-excellent",
+          "expected": "DEPLOY",
+          "actual": "DEPLOY",
+          "correct": true
+        },
+        {
+          "agent": "deploy-good",
+          "expected": "DEPLOY_WITH_MONITORING",
+          "actual": "DEPLOY_WITH_MONITORING",
+          "correct": true
+        },
+        {
+          "agent": "deploy-fair",
+          "expected": "DEPLOY_WITH_CAUTION",
+          "actual": "AVOID",
+          "correct": false
+        },
+        {
+          "agent": "deploy-poor",
+          "expected": "AVOID",
+          "actual": "AVOID",
+          "correct": true
+        },
+        {
+          "agent": "deploy-phantom",
+          "expected": "AVOID",
+          "actual": "AVOID",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

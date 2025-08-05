@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-08-04T16:30:57.919Z",
+  "components": {
+    "hookSystem": {
+      "status": "operational",
+      "lastChecked": "2025-08-04T16:30:57.919Z",
+      "metrics": {
+        "preTaskHooks": {
+          "executed": 0,
+          "failed": 0
+        },
+        "postTaskHooks": {
+          "executed": 0,
+          "failed": 0
+        },
+        "validationHooks": {
+          "executed": 0,
+          "failed": 0
+        }
+      }
+    },
+    "guardrails": {
+      "status": "operational",
+      "components": {
+        "verifyAgent": "active",
+        "executionMonitor": "active",
+        "reliabilityTracker": "active",
+        "checkpointManager": "active"
+      }
+    },
+    "phantomDetection": {
+      "status": "operational",
+      "detections": {
+        "last24h": 0,
+        "lastWeek": 0,
+        "total": 0
+      }
+    },
+    "reliability": {
+      "overallScore": 100,
+      "agentScores": {},
+      "trends": []
+    }
+  }
+}

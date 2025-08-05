@@ -68,6 +68,7 @@ export async function getNeonConnection(customUrl?: string) {
     
     return sql
   } catch (error: any) {
+    console.error('Database connection creation failed:', error)
     throw new Error(`Failed to connect to database: ${error.message}`)
   }
 }
@@ -79,7 +80,7 @@ export async function getNeonConnection(customUrl?: string) {
 export async function testConnection(): Promise<boolean> {
   try {
     const sql = await getNeonConnection()
-    await sql`SELECT 1 as test`
+    const result = await sql`SELECT 1 as test`
     return true
   } catch (error) {
     console.error('Database connection test failed:', error)

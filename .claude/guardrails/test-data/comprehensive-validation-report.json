@@ -1,0 +1,362 @@
+{
+  "overall": {
+    "totalTests": 5,
+    "passedTests": 2,
+    "failedTests": 3,
+    "startTime": "2025-08-02T19:48:16.271Z",
+    "endTime": "2025-08-02T19:48:17.520Z",
+    "successRate": 0.4,
+    "duration": "0m 1s"
+  },
+  "components": {
+    "passed": true,
+    "details": {
+      "timestamp": "2025-08-02T19:48:16.920Z",
+      "summary": {
+        "totalComponents": 5,
+        "passedComponents": 5,
+        "failedComponents": 0
+      },
+      "results": [
+        {
+          "component": "Execution Monitor CLI",
+          "tests": [
+            {
+              "name": "Help Command",
+              "passed": true
+            },
+            {
+              "name": "Report Command",
+              "passed": true
+            }
+          ],
+          "overall": true
+        },
+        {
+          "component": "Agent Verifier CLI",
+          "tests": [
+            {
+              "name": "Help Command",
+              "passed": true
+            },
+            {
+              "name": "List Command",
+              "passed": true
+            }
+          ],
+          "overall": true
+        },
+        {
+          "component": "Pre-commit Hook CLI",
+          "tests": [
+            {
+              "name": "Help Command",
+              "passed": true
+            },
+            {
+              "name": "Test Command",
+              "passed": true
+            }
+          ],
+          "overall": true
+        },
+        {
+          "component": "Reliability Tracker CLI",
+          "tests": [
+            {
+              "name": "Help Command",
+              "passed": true
+            },
+            {
+              "name": "Report Command",
+              "passed": true
+            },
+            {
+              "name": "Sync Command",
+              "passed": true
+            }
+          ],
+          "overall": true
+        },
+        {
+          "component": "Component Integration",
+          "tests": [
+            {
+              "name": "Monitor Session Creation",
+              "passed": true
+            },
+            {
+              "name": "Verifier Session Discovery",
+              "passed": true
+            }
+          ],
+          "overall": true
+        }
+      ]
+    },
+    "timestamp": "2025-08-02T19:48:16.923Z"
+  },
+  "phantomDetection": {
+    "algorithmsPassed": true,
+    "timestamp": "2025-08-02T19:48:16.950Z"
+  },
+  "precommitBlocking": {
+    "passed": false,
+    "details": {
+      "timestamp": "2025-08-02T19:48:17.179Z",
+      "summary": {
+        "totalTests": 4,
+        "passedTests": 2,
+        "failedTests": 2
+      },
+      "results": [
+        {
+          "scenario": "Phantom Work Blocking",
+          "phantomSessionId": "test-phantom-agent_1754164096978",
+          "expected": "Pre-commit should block phantom work",
+          "actual": "ALLOWED",
+          "passed": false,
+          "details": {
+            "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+          }
+        },
+        {
+          "scenario": "Legitimate Work Allowing",
+          "sessionId": "test-legitimate-agent_1754164097023",
+          "expected": "Pre-commit should allow legitimate work",
+          "actual": "ALLOWED",
+          "passed": true,
+          "details": {
+            "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+          }
+        },
+        {
+          "scenario": "Mixed Scenario Handling",
+          "sessions": [
+            "test-mixed-phantom-agent_1754164097079",
+            "test-mixed-legitimate-agent_1754164097080"
+          ],
+          "expected": "Pre-commit should block when any phantom work is present",
+          "actual": "ALLOWED",
+          "passed": false,
+          "details": {
+            "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+          }
+        },
+        {
+          "scenario": "No Recent Sessions",
+          "expected": "Pre-commit should allow when no recent sessions exist",
+          "actual": "ALLOWED",
+          "passed": true,
+          "details": {
+            "validationOutput": "🧪 Testing pre-commit validation...\n🔍 Running agent work validation before commit...\n📁 Found 0 staged files\n✅ No recent agent sessions found - commit allowed\nResult: WOULD ALLOW\nReason: No agent work to verify\n"
+          }
+        }
+      ]
+    },
+    "timestamp": "2025-08-02T19:48:17.181Z"
+  },
+  "reliabilityScoring": {
+    "passed": false,
+    "details": {
+      "timestamp": "2025-08-02T19:48:17.228Z",
+      "summary": {
+        "totalTests": 5,
+        "passedTests": 4,
+        "failedTests": 1,
+        "accuracy": 0.8,
+        "scoringAccuracy": 0.75
+      },
+      "results": [
+        {
+          "scenario": "Excellent Agent Scoring",
+          "agentType": "excellent-agent",
+          "expected": "excellent reliability, DEPLOY recommendation",
+          "actual": {
+            "reliabilityLevel": "excellent",
+            "averageScore": 0.9166666666666666,
+            "successRate": 1,
+            "recommendation": "DEPLOY"
+          },
+          "passed": true,
+          "details": {
+            "totalSessions": 9,
+            "successRate": 1,
+            "phantomRate": 0,
+            "averageScore": 0.9166666666666666,
+            "lastScore": 0.85,
+            "reliabilityLevel": "excellent",
+            "trendDirection": "stable"
+          }
+        },
+        {
+          "scenario": "Phantom Work Agent Scoring",
+          "agentType": "phantom-agent",
+          "expected": "poor/unreliable reliability, AVOID recommendation",
+          "actual": {
+            "reliabilityLevel": "unreliable",
+            "phantomRate": 1,
+            "averageScore": 0.08888888888888889,
+            "recommendation": "AVOID"
+          },
+          "passed": true,
+          "details": {
+            "totalSessions": 9,
+            "successRate": 0,
+            "phantomRate": 1,
+            "averageScore": 0.08888888888888889,
+            "lastScore": 0.2,
+            "reliabilityLevel": "unreliable",
+            "trendDirection": "stable"
+          }
+        },
+        {
+          "scenario": "Mixed Performance Scoring",
+          "agentType": "mixed-agent",
+          "expected": "fair/good reliability, cautious deployment",
+          "actual": {
+            "reliabilityLevel": "poor",
+            "averageScore": 0.6,
+            "successRate": 0.36363636363636365,
+            "recommendation": "AVOID"
+          },
+          "passed": false,
+          "details": {
+            "totalSessions": 11,
+            "successRate": 0.36363636363636365,
+            "phantomRate": 0,
+            "averageScore": 0.6,
+            "lastScore": 0.6,
+            "reliabilityLevel": "poor",
+            "trendDirection": "stable"
+          }
+        },
+        {
+          "scenario": "Trend Analysis",
+          "expected": "Detect improving and declining trends",
+          "actual": {
+            "improvingTrend": "improving",
+            "decliningTrend": "declining"
+          },
+          "passed": true,
+          "details": {
+            "improving": {
+              "totalSessions": 15,
+              "successRate": 0.4,
+              "phantomRate": 0,
+              "averageScore": 0.56,
+              "lastScore": 0.8,
+              "reliabilityLevel": "fair",
+              "trendDirection": "improving"
+            },
+            "declining": {
+              "totalSessions": 15,
+              "successRate": 0.4,
+              "phantomRate": 0,
+              "averageScore": 0.58,
+              "lastScore": 0.2,
+              "reliabilityLevel": "fair",
+              "trendDirection": "declining"
+            }
+          }
+        },
+        {
+          "scenario": "Deployment Recommendations",
+          "expected": "Correct deployment recommendations for different reliability levels",
+          "actual": "4/5 correct",
+          "passed": true,
+          "details": [
+            {
+              "agent": "deploy-excellent",
+              "expected": "DEPLOY",
+              "actual": "DEPLOY",
+              "correct": true
+            },
+            {
+              "agent": "deploy-good",
+              "expected": "DEPLOY_WITH_MONITORING",
+              "actual": "DEPLOY_WITH_MONITORING",
+              "correct": true
+            },
+            {
+              "agent": "deploy-fair",
+              "expected": "DEPLOY_WITH_CAUTION",
+              "actual": "AVOID",
+              "correct": false
+            },
+            {
+              "agent": "deploy-poor",
+              "expected": "AVOID",
+              "actual": "AVOID",
+              "correct": true
+            },
+            {
+              "agent": "deploy-phantom",
+              "expected": "AVOID",
+              "actual": "AVOID",
+              "correct": true
+            }
+          ]
+        }
+      ]
+    },
+    "timestamp": "2025-08-02T19:48:17.230Z"
+  },
+  "integration": {
+    "cliIntegration": {
+      "passed": true,
+      "workingCLIs": 4,
+      "totalCLIs": 4,
+      "details": [
+        {
+          "cli": "execution-monitor.js",
+          "working": true,
+          "output": "Usage: execution-monitor.js [start|end|report]\n  start <agent-type> <task> - Start monitoring sessio"
+        },
+        {
+          "cli": "verify-agent.js",
+          "working": true,
+          "output": "Agent Work Verification CLI\n\nUsage:\n  verify-agent.js verify <session-id> [options]  - Verify agent "
+        },
+        {
+          "cli": "pre-commit-hook.js",
+          "working": true,
+          "output": "Pre-commit Hook for Agent Validation\n\nUsage:\n  pre-commit-hook.js install     - Install git pre-comm"
+        },
+        {
+          "cli": "reliability-tracker.js",
+          "working": true,
+          "output": "Agent Reliability Tracker\n\nUsage:\n  reliability-tracker.js report                    - Generate full"
+        }
+      ]
+    },
+    "dataFlow": {
+      "passed": true,
+      "sessionCreated": true,
+      "verificationCompleted": true,
+      "reliabilityUpdated": true,
+      "sessionId": "integration-test_1754164097350"
+    },
+    "passed": true,
+    "timestamp": "2025-08-02T19:48:17.520Z"
+  },
+  "recommendations": [
+    {
+      "type": "CRITICAL",
+      "component": "Pre-commit Hook",
+      "issue": "Pre-commit hook not properly blocking phantom work",
+      "action": "Review pre-commit hook session verification logic"
+    },
+    {
+      "type": "CRITICAL",
+      "message": "Guardrail system validation failed",
+      "action": "Do not deploy until all issues are resolved"
+    },
+    {
+      "type": "HIGH",
+      "component": "Reliability Scoring",
+      "issue": "Agent reliability scoring failed",
+      "action": "Review scoring algorithms and deployment recommendations"
+    }
+  ]
+}

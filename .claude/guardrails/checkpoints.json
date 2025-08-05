@@ -1,0 +1,77 @@
+{
+  "checkpoints": [
+    {
+      "id": "recovery-test_1754324940175",
+      "agentType": "recovery-test",
+      "description": {
+        "sessionId": "recovery-test",
+        "agentType": "test-agent",
+        "files": [
+          "test.js"
+        ],
+        "timestamp": 1754324940090
+      },
+      "timestamp": "2025-08-04T16:29:00.175Z",
+      "gitHash": "57d37e8ff7ccbf74bfecd0f6a45bb7de142064be",
+      "stashRef": "68e6619 refs/stash@{0}",
+      "hasUncommittedChanges": true,
+      "fileCount": 78292,
+      "workingDirectory": {
+        "src": 21,
+        "tests": 24,
+        "mini-claude-web/src": 15,
+        "mini-claude-web/tests": 10,
+        ".claude": 36
+      }
+    },
+    {
+      "id": "recovery-test_1754324981252",
+      "agentType": "recovery-test",
+      "description": {
+        "sessionId": "recovery-test",
+        "agentType": "test-agent",
+        "files": [
+          "test.js"
+        ],
+        "timestamp": 1754324981220
+      },
+      "timestamp": "2025-08-04T16:29:41.252Z",
+      "gitHash": "57d37e8ff7ccbf74bfecd0f6a45bb7de142064be",
+      "stashRef": "68e6619 refs/stash@{0}",
+      "hasUncommittedChanges": true,
+      "fileCount": 78293,
+      "workingDirectory": {
+        "src": 21,
+        "tests": 24,
+        "mini-claude-web/src": 15,
+        "mini-claude-web/tests": 10,
+        ".claude": 37
+      }
+    },
+    {
+      "id": "recovery-test_1754325057292",
+      "agentType": "recovery-test",
+      "description": {
+        "sessionId": "recovery-test",
+        "agentType": "test-agent",
+        "files": [
+          "test.js"
+        ],
+        "timestamp": 1754325057260
+      },
+      "timestamp": "2025-08-04T16:30:57.292Z",
+      "gitHash": "57d37e8ff7ccbf74bfecd0f6a45bb7de142064be",
+      "stashRef": "68e6619 refs/stash@{0}",
+      "hasUncommittedChanges": true,
+      "fileCount": 78293,
+      "workingDirectory": {
+        "src": 21,
+        "tests": 24,
+        "mini-claude-web/src": 15,
+        "mini-claude-web/tests": 10,
+        ".claude": 37
+      }
+    }
+  ],
+  "lastCleanup": "2025-08-04T16:29:00.090Z"
+}

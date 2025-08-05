@@ -43,3 +43,35 @@ process.env.GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || 'test-key-google-gemi
 process.env.ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY || 'test-key-elevenlabs'
 process.env.NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET || 'test-secret-minimum-32-characters-long'
 // NEXTAUTH_URL is handled by Vercel automatically
+
+// Store original fetch for NEON database calls
+const originalFetch = global.fetch
+
+// Mock external API calls in tests but allow database calls
+global.fetch = jest.fn().mockImplementation((url, options) => {
+  // Allow real fetch for NEON database calls
+  if (typeof url === 'string' && url.includes('neon.tech')) {
+    return originalFetch(url, options)
+  }
+  
+  // Mock other API calls  
+  return Promise.resolve({
+    ok: true,
+    status: 200,
+    json: () => Promise.resolve({ message: 'Mocked API response' }),
+    text: () => Promise.resolve('Mocked API response'),
+  })
+})
+
+// Mock Google Generative AI SDK for testing (prevent real API calls)
+jest.mock('@google/generative-ai', () => ({
+  GoogleGenerativeAI: jest.fn(() => ({
+    getGenerativeModel: jest.fn(() => ({
+      generateContent: jest.fn().mockResolvedValue({
+        response: {
+          text: jest.fn().mockReturnValue('Test response from Gemini')
+        }
+      }),
+    })),
+  })),
+}))

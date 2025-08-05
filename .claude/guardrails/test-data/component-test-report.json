@@ -1,0 +1,84 @@
+{
+  "timestamp": "2025-08-02T19:48:16.920Z",
+  "summary": {
+    "totalComponents": 5,
+    "passedComponents": 5,
+    "failedComponents": 0
+  },
+  "results": [
+    {
+      "component": "Execution Monitor CLI",
+      "tests": [
+        {
+          "name": "Help Command",
+          "passed": true
+        },
+        {
+          "name": "Report Command",
+          "passed": true
+        }
+      ],
+      "overall": true
+    },
+    {
+      "component": "Agent Verifier CLI",
+      "tests": [
+        {
+          "name": "Help Command",
+          "passed": true
+        },
+        {
+          "name": "List Command",
+          "passed": true
+        }
+      ],
+      "overall": true
+    },
+    {
+      "component": "Pre-commit Hook CLI",
+      "tests": [
+        {
+          "name": "Help Command",
+          "passed": true
+        },
+        {
+          "name": "Test Command",
+          "passed": true
+        }
+      ],
+      "overall": true
+    },
+    {
+      "component": "Reliability Tracker CLI",
+      "tests": [
+        {
+          "name": "Help Command",
+          "passed": true
+        },
+        {
+          "name": "Report Command",
+          "passed": true
+        },
+        {
+          "name": "Sync Command",
+          "passed": true
+        }
+      ],
+      "overall": true
+    },
+    {
+      "component": "Component Integration",
+      "tests": [
+        {
+          "name": "Monitor Session Creation",
+          "passed": true
+        },
+        {
+          "name": "Verifier Session Discovery",
+          "passed": true
+        }
+      ],
+      "overall": true
+    }
+  ]
+}
