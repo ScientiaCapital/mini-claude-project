@@ -50,5 +50,13 @@
   "memory": {
     "enabled": true,
     "autoSave": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-code": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/anthropics/claude-code.git"
+      }
+    }
   }
 }
